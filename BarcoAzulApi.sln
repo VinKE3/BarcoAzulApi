@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcoAzulApi", "BarcoAzulApi\BarcoAzulApi.csproj", "{22E65F0E-6A90-4063-A85A-B399BB7AE82F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9E8FCC08-D70F-48BB-92C7-F7ADCA4E27E2} = {9E8FCC08-D70F-48BB-92C7-F7ADCA4E27E2}
+		{ABB4111C-B3DA-4D28-9433-4086F78DEDA0} = {ABB4111C-B3DA-4D28-9433-4086F78DEDA0}
+		{D385F42B-F662-419A-ACAF-23D204576316} = {D385F42B-F662-419A-ACAF-23D204576316}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcoAzul.Api.Modelos", "BarcoAzul.Api.Modelos\BarcoAzul.Api.Modelos.csproj", "{E03EA8E8-D689-4050-B43F-F610F2DD74D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcoAzul.Api.Repositorio", "BarcoAzul.Api.Repositorio\BarcoAzul.Api.Repositorio.csproj", "{ABB4111C-B3DA-4D28-9433-4086F78DEDA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcoAzul.Api.Logica", "BarcoAzul.Api.Logica\BarcoAzul.Api.Logica.csproj", "{D385F42B-F662-419A-ACAF-23D204576316}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcoAzul.Api.Utilidades", "BarcoAzul.Api.Utilidades\BarcoAzul.Api.Utilidades.csproj", "{9E8FCC08-D70F-48BB-92C7-F7ADCA4E27E2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{22E65F0E-6A90-4063-A85A-B399BB7AE82F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22E65F0E-6A90-4063-A85A-B399BB7AE82F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22E65F0E-6A90-4063-A85A-B399BB7AE82F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22E65F0E-6A90-4063-A85A-B399BB7AE82F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E03EA8E8-D689-4050-B43F-F610F2DD74D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E03EA8E8-D689-4050-B43F-F610F2DD74D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E03EA8E8-D689-4050-B43F-F610F2DD74D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E03EA8E8-D689-4050-B43F-F610F2DD74D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABB4111C-B3DA-4D28-9433-4086F78DEDA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABB4111C-B3DA-4D28-9433-4086F78DEDA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABB4111C-B3DA-4D28-9433-4086F78DEDA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABB4111C-B3DA-4D28-9433-4086F78DEDA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D385F42B-F662-419A-ACAF-23D204576316}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D385F42B-F662-419A-ACAF-23D204576316}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D385F42B-F662-419A-ACAF-23D204576316}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D385F42B-F662-419A-ACAF-23D204576316}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E8FCC08-D70F-48BB-92C7-F7ADCA4E27E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E8FCC08-D70F-48BB-92C7-F7ADCA4E27E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E8FCC08-D70F-48BB-92C7-F7ADCA4E27E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E8FCC08-D70F-48BB-92C7-F7ADCA4E27E2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AE61F335-6DC9-4C58-AA8C-51E0CCD5FFA7}
+	EndGlobalSection
+EndGlobal

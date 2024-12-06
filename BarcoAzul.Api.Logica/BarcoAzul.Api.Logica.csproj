@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BarcoAzul.Api.Modelos\BarcoAzul.Api.Modelos.csproj" />
+    <ProjectReference Include="..\BarcoAzul.Api.Repositorio\BarcoAzul.Api.Repositorio.csproj" />
+  </ItemGroup>
+
+</Project>
