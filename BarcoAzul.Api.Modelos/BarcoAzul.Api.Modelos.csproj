@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\BarcoAzul.Api.Utilidades\BarcoAzul.Api.Utilidades.csproj" />
   </ItemGroup>
 
