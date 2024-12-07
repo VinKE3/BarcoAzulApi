@@ -1,9 +1,9 @@
 ﻿using BarcoAzul.Api.Modelos.Otros;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 
-namespace BarcoAzulApi.Configuracion
+namespace BarcoAzulApi.Controllers
 {
     public class GlobalController : ControllerBase
     {

@@ -5,7 +5,7 @@ using BarcoAzul.Api.Repositorio.Mantenimiento;
 
 namespace BarcoAzul.Api.Logica.Mantenimiento
 {
-    internal class bTipoCambio : bComun, ILogicaService
+    public class bTipoCambio : bComun, ILogicaService
     {
         public bTipoCambio(oDatosUsuario datosUsuario, IConnectionManager connectionManager)
             : base(connectionManager, origen: "Tipo de Cambio", datosUsuario) { }
