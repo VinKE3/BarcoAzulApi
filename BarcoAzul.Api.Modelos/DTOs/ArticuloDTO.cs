@@ -1,10 +1,9 @@
-﻿using BarcoAzul.Api.Modelos.Otros;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace BarcoAzul.Api.Modelos.Entidades
+
+namespace BarcoAzul.Api.Modelos.DTOs
 {
-    public class oArticulo
+    public class ArticuloDTO
     {
         public string Id => $"{LineaId}{SubLineaId}{ArticuloId}";
         [Required(ErrorMessage = "La línea es requerida.")]
@@ -40,34 +39,5 @@ namespace BarcoAzul.Api.Modelos.Entidades
         public bool IsActivo { get; set; }
         public bool ControlarStock { get; set; }
         public bool ActualizarPrecioCompra { get; set; }
-
-        #region Adicionales
-        [JsonIgnore]
-        public string UsuarioId { get; set; }
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string UnidadMedidaDescripcion { get; set; }
-        #endregion
-
-        #region Referencias
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public oLinea Linea { get; set; }
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public oSubLinea SubLinea { get; set; }
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public oTipoExistencia TipoExistencia { get; set; }
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public oUnidadMedida UnidadMedida { get; set; }
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public oMarca Marca { get; set; }
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public oMoneda Moneda { get; set; }
-        #endregion
-
-        public void ProcesarDatos()
-        {
-            Descripcion = Descripcion?.Trim();
-            CodigoBarras = CodigoBarras?.Trim();
-            Observacion = Observacion?.Trim();
-        }
     }
 }

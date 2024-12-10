@@ -5,11 +5,6 @@ using BarcoAzul.Api.Modelos.Interfaces;
 using BarcoAzul.Api.Modelos.Otros;
 using BarcoAzul.Api.Modelos.Vistas;
 using BarcoAzul.Api.Repositorio.Mantenimiento;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BarcoAzul.Api.Logica.Mantenimiento
 {
