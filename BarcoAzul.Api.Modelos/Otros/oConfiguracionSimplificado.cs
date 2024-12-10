@@ -1,9 +1,4 @@
 ﻿using BarcoAzul.Api.Modelos.Entidades;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BarcoAzul.Api.Modelos.Otros
 {
@@ -29,8 +24,8 @@ namespace BarcoAzul.Api.Modelos.Otros
         public decimal PorcentajeIGV { get; set; }
 
         //TODO: DESCOMENTAR CUANDO AGREGUE CLIENTE Y PROVEEDOR
-        //public oCliente Cliente { get; set; }
-        //public oProveedor Proveedor { get; set; }
+        public oCliente Cliente { get; set; }
+        public oProveedor Proveedor { get; set; }
         public oArticulo Articulo { get; set; }
     }
 }

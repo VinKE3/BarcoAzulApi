@@ -1,6 +1,4 @@
-﻿
-
-namespace BarcoAzul.Api.Modelos.Interfaces
+﻿namespace BarcoAzul.Api.Modelos.Interfaces
 {
     public interface IConnectionManager
     {
