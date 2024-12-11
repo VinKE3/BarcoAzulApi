@@ -11,7 +11,7 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
         #region CRUD
         public async Task Registrar(oUnidadMedida unidadMedida)
         {
-            string query = "INSERT INTO Unidad_Medida (Uni_Codigo, Uni_Nombre, Uni_CodigoSunat) VALUES (@Id, @Descripcion, @CodigoSunat)";
+            string query = "INSERT INTO Unidad_Medida (Uni_Codigo, Uni_Nombre, sunat_codigo) VALUES (@Id, @Descripcion, @CodigoSunat)";
 
             using (var db = GetConnection())
             {
@@ -21,7 +21,7 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
 
         public async Task Modificar(oUnidadMedida unidadMedida)
         {
-            string query = @"UPDATE Unidad_Medida SET Uni_Nombre = @Descripcion, Uni_CodigoSunat = @CodigoSunat WHERE Uni_Codigo = @Id";
+            string query = @"UPDATE Unidad_Medida SET Uni_Nombre = @Descripcion, sunat_codigo = @CodigoSunat WHERE Uni_Codigo = @Id";
 
             using (var db = GetConnection())
             {
@@ -46,7 +46,7 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
             string query = @"   SELECT 
                                     Uni_Codigo AS Id,
                                     Uni_Nombre AS Descripcion,
-                                    Uni_CodigoSunat AS CodigoSunat
+                                    sunat_codigo AS CodigoSunat
                                 FROM 
                                     Unidad_Medida 
                                 WHERE 
@@ -63,7 +63,7 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
             string query = @"   SELECT 
                                     Uni_Codigo AS Id,
                                     Uni_Nombre AS Descripcion,
-                                    Uni_CodigoSunat AS CodigoSunat
+                                    sunat_codigo AS CodigoSunat
                                 FROM
                                     Unidad_Medida
                                 ORDER BY
@@ -80,7 +80,7 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
             string query = @$"SELECT 
                                     Uni_Codigo AS Id,
                                     Uni_Nombre AS Descripcion,
-                                    Uni_CodigoSunat AS CodigoSunat
+                                    sunat_codigo AS CodigoSunat
                                 FROM 
                                     Unidad_Medida 
                                 WHERE 
