@@ -11,8 +11,8 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
         #region CRUD
         public async Task Registrar(oTipoCambio tipoCambio)
         {
-            string query = @"   INSERT INTO Tipo_Cambio (tipc_fecha, tipc_compra, tipc_venta, tipc_activo, usu_codigo, tipc_fechacreacion, tipc_terminalcpu, tipc_prod)
-                                VALUES (@Id, @PrecioCompra, @PrecioVenta, 'S', @UsuarioId, GETDATE(), @Origen, @PrecioProduccion)";
+            string query = @"   INSERT INTO Tipo_Cambio (tipc_fecha, tipc_compra, tipc_venta, tipc_activo, usu_codigo, tipc_fechacreacion, tipc_terminalcpu)
+                                VALUES (@Id, @PrecioCompra, @PrecioVenta, 'S', @UsuarioId, GETDATE(), @Origen)";
 
             using (var db = GetConnection())
             {
@@ -23,7 +23,7 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
         public async Task Modificar(oTipoCambio tipoCambio)
         {
             string query = @"   UPDATE Tipo_Cambio SET tipc_compra = @PrecioCompra, tipc_venta = @PrecioVenta, tipc_fechamodificacion = GETDATE(),
-                                tipc_usumodifica = @UsuarioId, tipc_prod = @PrecioProduccion WHERE tipc_fecha = @Id";
+                                tipc_usumodifica = @UsuarioId WHERE tipc_fecha = @Id";
 
             using (var db = GetConnection())
             {
@@ -48,8 +48,7 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
             string query = @"   SELECT 
                                     tipc_fecha AS Id,
                                     tipc_compra AS PrecioCompra,
-                                    tipc_venta AS PrecioVenta,
-                                    ISNULL(tipc_prod, 0) AS PrecioProduccion
+                                    tipc_venta AS PrecioVenta
                                 FROM 
                                     Tipo_Cambio
                                 WHERE 
@@ -66,8 +65,7 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
             string query = $@"  SELECT
                                     tipc_fecha AS Id,
                                     tipc_compra AS PrecioCompra,
-                                    tipc_venta AS PrecioVenta,
-                                    ISNULL(tipc_prod, 0) AS PrecioProduccion
+                                    tipc_venta AS PrecioVenta                            
                                 FROM
                                     Tipo_Cambio
                                 WHERE

@@ -103,9 +103,7 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
 	                                P.TeleFax AS Celular,
 	                                B.Ban_Nombre AS EntidadBancariaNombre,
 	                                P.Numero AS NumeroCuentaBancaria,
-	                                P.Moneda AS MonedaId,
-	                                P.Vendedor AS VendedorNombreCompleto,
-	                                P.VendedorCel AS VendedorCelular
+	                                P.Moneda AS MonedaId
                                 FROM 
 	                                v_lst_proveedor P
 	                                LEFT JOIN Entidad_Bancaria B ON P.Banco = B.Ban_Codigo

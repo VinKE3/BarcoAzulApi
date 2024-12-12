@@ -15,10 +15,10 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
         {
             string query = @"   INSERT INTO Cliente (Cli_Codigo, Cli_Ruc, Cli_RazonSocial, Cli_Telefono, Cli_Correo, Cli_Direccion, Dep_Codigo, Pro_Codigo, Dis_Codigo, 
                                 Car_Codigo, Ban_Codigo, Cli_CreditoSol, Cli_CreditoDol, Cli_MaxCredSol, Cli_MaxCredDol, Cli_FechaReg, Usu_Codigo, Cli_DescPorc, 
-		                        Cli_DescGral, Cli_Moneda, Cli_direcc, Cli_TipoDoc, Zon_Codigo, Cli_Telefax, Cli_Observacion, Cli_TVenta, Cli_TPago)
+		                        Cli_DescGral, Cli_Moneda, Cli_direcc, Cli_TipoDoc, Zon_Codigo, Cli_Telefax, Cli_Observacion)
 		                        VALUES (@Id, @NumeroDocumentoIdentidad, @Nombre, @Telefono, @CorreoElectronico, @DireccionPrincipal, @DepartamentoId, @ProvinciaId, @DistritoId,
 		                        1, 1, @CreditoPEN, @CreditoUSD, @MaximoCreditoPEN, @MaximoCreditoUSD, GETDATE(), @UsuarioId, 0, 
-		                        0, 'S', null, @TipoDocumentoIdentidadId, @ZonaId, @Celular, @Observacion, @TipoVentaId, @TipoCobroId)";
+		                        0, 'S', null, @TipoDocumentoIdentidadId, @ZonaId, @Celular, @Observacion)";
 
             using (var db = GetConnection())
             {
@@ -47,8 +47,6 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
 	                                Cli_CreditoDol = @CreditoUSD,
 	                                Cli_CreditoSol = @CreditoPEN,
 	                                Cli_Observacion = @Observacion,
-	                                Cli_TVenta = @TipoVentaId,
-                                    Cli_TPago = @TipoCobroId,
 	                                Usu_Codigo = @UsuarioId
                                 WHERE 
                                     Cli_Codigo = @Id";
@@ -90,9 +88,7 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
 	                                Cli_MaxCredSol AS MaximoCreditoPEN,
 	                                Cli_CreditoDol AS CreditoUSD,
 	                                Cli_CreditoSol AS CreditoPEN,
-	                                Cli_Observacion AS Observacion,
-                                    Cli_TVenta AS TipoVentaId,
-                                    Cli_TPago AS TipoCobroId
+	                                Cli_Observacion AS Observacion
                                 FROM 
                                     Cliente
                                 WHERE 
@@ -112,7 +108,7 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
 	                                RTRIM(Razon_Social) AS Nombre,
 	                                Direccion AS DireccionPrincipal,
 	                                Distrito,
-	                                Personal AS PersonalNombreCompleto
+	                                Vendedor AS PersonalNombreCompleto
                                 FROM 
                                     v_lst_cliente
                                 WHERE   

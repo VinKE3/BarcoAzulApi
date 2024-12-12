@@ -2,6 +2,7 @@
 using BarcoAzul.Api.Modelos.Vistas;
 using BarcoAzul.Api.Modelos.Otros;
 using AutoMapper;
+using BarcoAzul.Api.Modelos.DTOs;
 
 namespace BarcoAzul.Api.Logica.Configuracion
 {
@@ -27,20 +28,20 @@ namespace BarcoAzul.Api.Logica.Configuracion
         public MappingProfile()
         {
             CreateMap<vEntidadBancaria, oEntidadBancaria>();
-            //CreateMap<CuentaCorrienteDTO, oCuentaCorriente>();
-            //CreateMap<ProvinciaDTO, oProvincia>();
-            //CreateMap<DistritoDTO, oDistrito>();
-            //CreateMap<PersonalDTO, oPersonal>();
+            CreateMap<CuentaCorrienteDTO, oCuentaCorriente>();
+            CreateMap<ProvinciaDTO, oProvincia>();
+            CreateMap<DistritoDTO, oDistrito>();
+            CreateMap<PersonalDTO, oPersonal>();
             //CreateMap<TipoCobroPagoDTO, oTipoCobroPago>();
-            //CreateMap<ClienteDTO, oCliente>();
-            //CreateMap<ClientePersonalDTO, oClientePersonal>();
-            //CreateMap<ProveedorDTO, oProveedor>();
+            CreateMap<ClienteDTO, oCliente>();
+            CreateMap<ClientePersonalDTO, oClientePersonal>();
+            CreateMap<ProveedorDTO, oProveedor>();
             //CreateMap<EmpresaTransporteDTO, oEmpresaTransporte>();
             //CreateMap<VehiculoDTO, oVehiculo>();
             //CreateMap<ConductorDTO, oConductor>();
             //CreateMap<UsuarioRegistrarDTO, oUsuario>();
             //CreateMap<UsuarioModificarDTO, oUsuario>();
-            //CreateMap<ArticuloDTO, oArticulo>();
+            CreateMap<ArticuloDTO, oArticulo>();
             //CreateMap<CuadreStockDTO, oCuadreStock>();
             //CreateMap<SalidaCilindrosDTO, oSalidaCilindros>();
             //CreateMap<EntradaCilindrosDTO, oEntradaCilindros>();
@@ -58,7 +59,7 @@ namespace BarcoAzul.Api.Logica.Configuracion
             //CreateMap<oCorrelativo, oTipoDocumentoSerie>();
             //CreateMap<RetencionDTO, oRetencion>();
             //CreateMap<GuiaRemisionDTO, oGuiaRemision>();
-            //MapConfiguracionGlobal();
+            MapConfiguracionGlobal();
             //CreateMap<PlanillaCobroDTO, oPlanillaCobro>();
             //CreateMap<LetraCambioVentaDTO, oLetraCambioVenta>();
             //CreateMap<EntradaAlmacenDTO, oEntradaAlmacen>();

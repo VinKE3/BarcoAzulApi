@@ -22,8 +22,6 @@ namespace BarcoAzul.Api.Modelos.Otros
         public int MarcaId { get; set; }
         public string ConductorId { get; set; }
         public decimal PorcentajeIGV { get; set; }
-
-        //TODO: DESCOMENTAR CUANDO AGREGUE CLIENTE Y PROVEEDOR
         public oCliente Cliente { get; set; }
         public oProveedor Proveedor { get; set; }
         public oArticulo Articulo { get; set; }

@@ -31,8 +31,8 @@ namespace BarcoAzul.Api.Modelos.Entidades
         public decimal CreditoUSD { get; set; }
         public decimal CreditoPEN { get; set; }
         public string Observacion { get; set; }
-        //public string CodigoEstablecimiento { get; set; }
-        //public bool IsAgenteRetencion { get; set; }
+        public string CodigoEstablecimiento { get; set; }
+        public bool IsAgenteRetencion { get; set; }
 
         #region Adicionales
         [JsonIgnore]
