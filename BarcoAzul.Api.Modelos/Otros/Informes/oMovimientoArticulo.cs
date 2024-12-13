@@ -1,4 +1,4 @@
-﻿namespace BarcoAzul.Api.Modelos.Entidades
+﻿namespace BarcoAzul.Api.Modelos.Otros.Informes
 {
     public class oMovimientoArticulo
     {
