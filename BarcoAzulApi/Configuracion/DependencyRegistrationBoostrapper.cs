@@ -42,9 +42,9 @@ namespace BarcoAzulApi.Configuracion
             services.AddScoped<bCargo>();
             services.AddScoped<bPersonal>();
             //services.AddScoped<bTipoCobroPago>();
-            //services.AddScoped<bEmpresaTransporte>();
-            //services.AddScoped<bVehiculo>();
-            //services.AddScoped<bConductor>();
+            services.AddScoped<bEmpresaTransporte>();
+            services.AddScoped<bVehiculo>();
+            services.AddScoped<bConductor>();
             //services.AddScoped<bCorrelativo>();
             //services.AddScoped<bMovimientoArticulo>();
             //services.AddScoped<bCuadreStock>();
