@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EPPlus" Version="4.5.3.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\WebAPI-Kevin\RdlCri.Core\RdlCri.Core.csproj" />
+    <ProjectReference Include="..\..\WebAPI-Kevin\RdlEngine.Core\RdlEngine.Core.csproj" />
+    <ProjectReference Include="..\BarcoAzul.Api.Modelos\BarcoAzul.Api.Modelos.csproj" />
+  </ItemGroup>
+
+</Project>

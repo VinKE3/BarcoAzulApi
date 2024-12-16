@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BarcoAzul.Api.Informes\BarcoAzul.Api.Informes.csproj" />
     <ProjectReference Include="..\BarcoAzul.Api.Modelos\BarcoAzul.Api.Modelos.csproj" />
     <ProjectReference Include="..\BarcoAzul.Api.Repositorio\BarcoAzul.Api.Repositorio.csproj" />
   </ItemGroup>

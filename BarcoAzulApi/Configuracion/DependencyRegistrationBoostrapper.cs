@@ -1,5 +1,6 @@
 ﻿using BarcoAzul.Api.Logica.Configuracion;
 using BarcoAzul.Api.Logica.Empresa;
+using BarcoAzul.Api.Logica.Informes.Articulos;
 using BarcoAzul.Api.Logica.Mantenimiento;
 using BarcoAzul.Api.Modelos.Interfaces;
 
@@ -78,7 +79,7 @@ namespace BarcoAzulApi.Configuracion
             //services.AddScoped<bTomaInventario>();
             //services.AddScoped<bStockValorizado>();
             //services.AddScoped<bListadoCostos>();
-            //services.AddScoped<bMovimientoArticulo>();
+            services.AddScoped<bMovimientoArticulo>();
             //services.AddScoped<bKardexMarca>();
             services.AddScoped<bSesion>();
             //services.AddScoped<bReporteCuentaBancaria>();

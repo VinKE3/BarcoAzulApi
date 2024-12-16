@@ -15,8 +15,15 @@
         public decimal CantidadEntrada { get; set; }
         public decimal CantidadSalida { get; set; }
         public decimal SaldoFinal { get; set; }
+        //NO SE USA
         public string TipoExistenciaId { get; set; }
         public string TipoExistenciaDescripcion { get; set; }
+        //NO SE USA
+        public decimal Precio {  get; set; }
+        public decimal Total {  get; set; }
         public string MonedaId { get; set; }
+        public string StockMinimo {  get; set; }
+        public string StockMaximo { get; set; }
+        public string EstadoStock { get; set; }
     }
 }
