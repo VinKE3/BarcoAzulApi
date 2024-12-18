@@ -13,10 +13,10 @@ namespace BarcoAzul.Api.Repositorio.Almacen
         {
             string query = @"   INSERT INTO Cuadrar_Stock (Conf_Codigo, TDoc_Codigo, Ven_Serie, Ven_Numero, Lin_Codigo, SubL_Codigo, Art_Codigo, Det_Int, Det_StockFinal, Det_Inventario, Det_Precio, 
                                 Det_CantFalta, Det_TotalFalta, Det_CantSobra, Det_TotalSobra, Det_CantSaldo, Det_TotalSaldo, Mar_Codigo, Det_Marca, Det_Linea, Det_SubLinea, 
-                                Det_Descripcion, Det_CodBarra, Det_Unidad, Uni_Codigo, TipE_Codigo)
+                                Det_Descripcion, Det_CodBarra, Det_Unidad, Uni_Codigo)
                                 VALUES (@EmpresaId, @TipoDocumentoId, @Serie, @Numero, @LineaId, @SubLineaId, @ArticuloId, @DetalleId, @StockFinal, @Inventario, @PrecioUnitario,
                                 @CantidadFalta, @TotalFalta, @CantidadSobra, @TotalSobra, @CantidadSaldo, @TotalSaldo, @MarcaId, @MarcaNombre, @LineaDescripcion, @SubLineaDescripcion,
-                                @Descripcion, @CodigoBarras, @UnidadMedidaDescripcion, @UnidadMedidaId, @TipoExistenciaId)";
+                                @Descripcion, @CodigoBarras, @UnidadMedidaDescripcion, @UnidadMedidaId)";
 
             using (var db = GetConnection())
             {
@@ -80,7 +80,6 @@ namespace BarcoAzul.Api.Repositorio.Almacen
                                     Det_Descripcion AS Descripcion,
                                     Det_CodBarra AS CodigoBarras,
                                     Det_Unidad AS UnidadMedidaDescripcion,
-                                    TipE_Codigo AS TipoExistenciaId,
                                     Uni_Codigo AS UnidadMedidaId
                                 FROM 
 	                                Cuadrar_Stock

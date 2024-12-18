@@ -1,4 +1,5 @@
-﻿using BarcoAzul.Api.Logica.Configuracion;
+﻿using BarcoAzul.Api.Logica.Almacen;
+using BarcoAzul.Api.Logica.Configuracion;
 using BarcoAzul.Api.Logica.Empresa;
 using BarcoAzul.Api.Logica.Informes.Articulos;
 using BarcoAzul.Api.Logica.Mantenimiento;
@@ -47,8 +48,8 @@ namespace BarcoAzulApi.Configuracion
             services.AddScoped<bVehiculo>();
             services.AddScoped<bConductor>();
             //services.AddScoped<bCorrelativo>();
-            //services.AddScoped<bMovimientoArticulo>();
-            //services.AddScoped<bCuadreStock>();
+            services.AddScoped<bMovimientoArticulo>();
+            services.AddScoped<bCuadreStock>();
             //services.AddScoped<bSalidaCilindros>();
             //services.AddScoped<bEntradaCilindros>();
             //services.AddScoped<bMovimientoBancario>();

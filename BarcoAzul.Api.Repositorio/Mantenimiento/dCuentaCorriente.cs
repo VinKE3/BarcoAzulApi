@@ -113,6 +113,7 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
         public async Task<oPagina<vCuentaCorriente>> Listar(string numero, oPaginacion paginacion)
         {
             string query = @$"  SELECT
+                                   CC.Conf_Codigo + CC.CC_Codigo AS Id,
 	                                CC.Conf_Codigo AS EmpresaId,
 	                                CC.CC_Codigo AS CuentaCorrienteId,
 	                                CC.CC_Numero AS Numero,

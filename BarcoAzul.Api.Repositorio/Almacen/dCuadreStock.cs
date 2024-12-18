@@ -262,8 +262,7 @@ namespace BarcoAzul.Api.Repositorio.Almacen
                                     Mar_Nombre AS MarcaNombre,
                                     Uni_Nombre AS UnidadMedidaDescripcion,
                                     Art_Stock01 AS Stock,
-                                    Art_PCompra AS PrecioCompra,
-                                    TipE_Codigo AS TipoExistenciaId
+                                    Art_PCompra AS PrecioCompra                                   
                                 FROM
 	                                v_lst_articulocuadrestock
                                 WHERE 

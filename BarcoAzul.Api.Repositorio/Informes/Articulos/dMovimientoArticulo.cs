@@ -30,7 +30,7 @@ namespace BarcoAzul.Api.Repositorio.Informes.Articulos
         {
             using (var db = GetConnection())
             {
-                var detalles = await db.QueryAsync<oKardexArticuloDetalle>("SP_VentasPromedio_V2", new
+                var detalles = await db.QueryAsync<oKardexArticuloDetalle>("Sp_KardexArticuloPromedio_V2", new
                 {
                     LineaId = new DbString { Value = lineaId, IsAnsi = true, IsFixedLength = true, Length = 2 },
                     SubLineaId = new DbString { Value = subLineaId, IsAnsi = true, IsFixedLength = true, Length = 2 },

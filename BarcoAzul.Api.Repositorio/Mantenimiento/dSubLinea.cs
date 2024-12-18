@@ -94,10 +94,11 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
         public async Task<oPagina<vSubLinea>> Listar(string descripcion, oPaginacion paginacion)
         {
             string query = @$"SELECT
+                                    SL.Lin_Codigo + SL.SubL_Codigo AS Id,
                                     SL.Lin_Codigo AS LineaId,
 									SL.SubL_Codigo AS SubLineaId,
                                     SL.SubL_Nombre AS Descripcion,
-									L.Lin_Nombre AS SubLineaDescripcion
+									L.Lin_Nombre AS LineaDescripcion
                                 FROM
                                     SubLinea SL
 								    INNER JOIN Linea L ON SL.Lin_Codigo = L.Lin_Codigo

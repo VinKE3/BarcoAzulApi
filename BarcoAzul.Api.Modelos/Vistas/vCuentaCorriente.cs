@@ -2,6 +2,7 @@
 {
     public class vCuentaCorriente
     {
+        public string Id { get; set; }
         public string EmpresaId { get; set; }
         public string CuentaCorrienteId { get; set; }
         public string Numero { get; set; }
