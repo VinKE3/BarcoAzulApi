@@ -17,13 +17,13 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
                             Art_CtrlStock, Art_Stock01, Art_Stock02, Art_StockMin, Art_StockMax, Art_Moneda, Art_PCompra, Art_Utilidad01, 
                             Art_Utilidad02, Art_Utilidad03, Art_Utilidad04, Art_PVenta01, Art_PVenta02, Art_PVenta03, Art_PVenta04, Art_IncluyeIgv,
                             Art_TipoArt, Art_Imagen, Art_FechaReg, Usu_Codigo, Art_ActPCompra, Art_ConIgv, Art_UltCompra, Art_Derivado, Art_DerEquival, 
-                            Art_Activo, Art_Peso, TipE_Codigo, Art_Detraccion, Art_PercepCompra, Art_Observ, Art_PCompraDscto, Art_ActPComDscto)
+                            Art_Activo, Art_Peso, TipE_Codigo, Art_Detraccion, Art_PercepCompra, Art_Observ, Art_Exportado)
                             VALUES 
                             (@LineaId, @SubLineaId, @ArticuloId, @CodigoBarras, @Descripcion, @MarcaId, @UnidadMedidaId, 
                             @ControlarStock, 0, 0, @StockMinimo, 0, @MonedaId, @PrecioCompra, @PorcentajeUtilidad1, 
                             @PorcentajeUtilidad2, @PorcentajeUtilidad3, @PorcentajeUtilidad4, @PrecioVenta1, @PrecioVenta2, @PrecioVenta3, @PrecioVenta4, @PrecioIncluyeIGV,
                             'ME', '', GETDATE(), @UsuarioId, @ActualizarPrecioCompra, 'S', 0, 'N', 0,
-                            @IsActivo, @Peso, @TipoExistenciaId, 'N', 'N', @Observacion, @PrecioCompraDescuento, @ActivarCostoDescuento)";
+                            @IsActivo, @Peso, @TipoExistenciaId, 'N', 'N', @Observacion, 'N')";
 
             using (var db = GetConnection())
             {
@@ -56,7 +56,8 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
                     articulo.Observacion,
                     articulo.PrecioCompraDescuento,
                     PrecioIncluyeIGV = articulo.PrecioIncluyeIGV ? "S" : "N",
-                    ActivarCostoDescuento = articulo.ActivarCostoDescuento ? "S" : "N"
+                    PercepcionCompra = articulo.PercepcionCompra ? "S" : "N",
+                    Detraccion = articulo.Detraccion ? "S" : "N",
                 });
             }
         }
@@ -67,8 +68,8 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
                                 Art_CtrlStock = @ControlarStock, Art_Moneda = @MonedaId, Art_PCompra = @PrecioCompra, Art_Utilidad01 = @PorcentajeUtilidad1, Art_Utilidad02 = @PorcentajeUtilidad2,
                                 Art_Utilidad03 = @PorcentajeUtilidad3, Art_Utilidad04 = @PorcentajeUtilidad4, Art_PVenta01 = @PrecioVenta1, Art_PVenta02 = @PrecioVenta2, Art_PVenta03 = @PrecioVenta3,
                                 Art_PVenta04 = @PrecioVenta4, Art_Observ = @Observacion, Art_FechaMod = GETDATE(), Usu_Codigo = @UsuarioId, Art_ActPCompra = @ActualizarPrecioCompra,
-                                Art_Activo = @IsActivo, Art_Peso = @Peso, TipE_Codigo = @TipoExistenciaId, Art_StockMin = @StockMinimo, Art_PCompraDscto = @PrecioCompraDescuento, 
-                                Art_IncluyeIgv = @PrecioIncluyeIGV, Art_ActPComDscto = @ActivarCostoDescuento WHERE Lin_Codigo = @LineaId AND SubL_Codigo = @SubLineaId AND Art_Codigo = @ArticuloId";
+                                Art_Activo = @IsActivo, Art_Peso = @Peso, TipE_Codigo = @TipoExistenciaId, Art_StockMin = @StockMinimo, 
+                                Art_IncluyeIgv = @PrecioIncluyeIGV WHERE Lin_Codigo = @LineaId AND SubL_Codigo = @SubLineaId AND Art_Codigo = @ArticuloId";
 
             using (var db = GetConnection())
             {
@@ -98,7 +99,8 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
                     articulo.StockMinimo,
                     articulo.PrecioCompraDescuento,
                     PrecioIncluyeIGV = articulo.PrecioIncluyeIGV ? "S" : "N",
-                    ActivarCostoDescuento = articulo.ActivarCostoDescuento ? "S" : "N",
+                    PercepcionCompra = articulo.PercepcionCompra ? "S" : "N",
+                    Detraccion = articulo.Detraccion ? "S" : "N",
                     articulo.LineaId,
                     articulo.SubLineaId,
                     articulo.ArticuloId
@@ -150,8 +152,8 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
                                     A.Art_CodBarra AS CodigoBarras,
                                     A.Art_Peso AS Peso,
                                     A.Art_Moneda AS MonedaId,
+                                    A.Art_Exportado AS Exportado,
                                     A.Art_PCompra AS PrecioCompra,
-	                                A.Art_PCompraDscto AS PrecioCompraDescuento,
                                     A.Art_PVenta01 AS PrecioVenta1,
                                     A.Art_PVenta02 AS PrecioVenta2,
                                     A.Art_PVenta03 AS PrecioVenta3,
@@ -163,10 +165,11 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
                                     A.Art_Stock01 As Stock,
 	                                A.Art_StockMin AS StockMinimo,
 	                                CAST(CASE WHEN A.Art_IncluyeIgv = 'S' THEN 1 ELSE 0 END AS BIT) AS PrecioIncluyeIGV,
-	                                CAST(CASE WHEN A.Art_ActPComDscto = 'S' THEN 1 ELSE 0 END AS BIT) AS ActivarCostoDescuento,
+	                                CAST(CASE WHEN A.Art_PercepCompra = 'S' THEN 1 ELSE 0 END AS BIT) AS PercepcionCompra,
                                     CAST(CASE WHEN A.Art_Activo = 'S' THEN 1 ELSE 0 END AS BIT) AS IsActivo,
                                     CAST(CASE WHEN A.Art_CtrlStock = 'S' THEN 1 ELSE 0 END AS BIT) AS ControlarStock,
                                     CAST(CASE WHEN A.Art_ActPCompra = 'S' THEN 1 ELSE 0 END AS BIT) AS ActualizarPrecioCompra,
+                                    CAST(CASE WHEN A.Art_Detraccion = 'S' THEN 1 ELSE 0 END AS BIT) AS Detraccion,
                                     UM.Uni_Nombre AS UnidadMedidaDescripcion
                                 FROM 
                                     Articulo A
@@ -201,6 +204,8 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
 									Moneda AS MonedaId,
 									CAST(CASE WHEN Contro_Stock = 'S' THEN 1 ELSE 0 END AS BIT) AS ControlarStock,
 									CAST(CASE WHEN Actualizar_Precio = 'S' THEN 1 ELSE 0 END AS BIT) AS ActualizarPrecio,
+                                    CAST(CASE WHEN Detraccion = 'S' THEN 1 ELSE 0 END AS BIT) AS Detraccion,
+                                    CAST(CASE WHEN Percepcion_Compra = 'S' THEN 1 ELSE 0 END AS BIT) AS PercepcionCompra,
 									CAST(CASE WHEN Activo = 'S' THEN 1 ELSE 0 END AS BIT) AS IsActivo
 								FROM
 									v_lst_articulo

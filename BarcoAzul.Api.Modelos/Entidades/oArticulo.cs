@@ -23,6 +23,7 @@ namespace BarcoAzul.Api.Modelos.Entidades
         public string CodigoBarras { get; set; }
         public decimal Peso { get; set; }
         public string MonedaId { get; set; }
+        public string Exportado { get; set; }
         public decimal PrecioCompra { get; set; }
         public decimal PrecioCompraDescuento { get; set; }
         public decimal PrecioVenta1 { get; set; }
@@ -36,10 +37,11 @@ namespace BarcoAzul.Api.Modelos.Entidades
         public decimal Stock { get; set; }
         public decimal StockMinimo { get; set; }
         public bool PrecioIncluyeIGV { get; set; }
-        public bool ActivarCostoDescuento { get; set; }
+        public bool PercepcionCompra { get; set; }
         public bool IsActivo { get; set; }
         public bool ControlarStock { get; set; }
         public bool ActualizarPrecioCompra { get; set; }
+        public bool Detraccion { get; set; }
 
         #region Adicionales
         [JsonIgnore]
