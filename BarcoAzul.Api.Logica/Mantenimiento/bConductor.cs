@@ -129,11 +129,18 @@ namespace BarcoAzul.Api.Logica.Mantenimiento
             var departamentos = await new dDepartamento(GetConnectionString()).ListarTodos();
             var provincias = await new dProvincia(GetConnectionString()).ListarTodos();
             var distritos = await new dDistrito(GetConnectionString()).ListarTodos();
-
+            // Definir el array de tipoTransportista
+            var tiposTransportista = new[]
+            {
+        new { id = "01", descripcion = "01 TRANSPORTISTA" },
+        new { id = "02", descripcion = "02 CONDUCTOR" }
+    };
             return new
             {
                 empresasTransporte,
-                departamentos = bUtilidad.ListarDepartamentosProvinciasDistritos(departamentos, provincias, distritos)
+                tiposDocumentoIdentidad,
+                departamentos = bUtilidad.ListarDepartamentosProvinciasDistritos(departamentos, provincias, distritos),
+                tiposTransportista // Agregar el array al resultado
             };
         }
     }

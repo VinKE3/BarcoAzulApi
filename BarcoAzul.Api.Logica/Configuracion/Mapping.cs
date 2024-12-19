@@ -36,9 +36,9 @@ namespace BarcoAzul.Api.Logica.Configuracion
             CreateMap<ClienteDTO, oCliente>();
             CreateMap<ClientePersonalDTO, oClientePersonal>();
             CreateMap<ProveedorDTO, oProveedor>();
-            //CreateMap<EmpresaTransporteDTO, oEmpresaTransporte>();
-            //CreateMap<VehiculoDTO, oVehiculo>();
-            //CreateMap<ConductorDTO, oConductor>();
+            CreateMap<EmpresaTransporteDTO, oEmpresaTransporte>();
+            CreateMap<VehiculoDTO, oVehiculo>();
+            CreateMap<ConductorDTO, oConductor>();
             //CreateMap<UsuarioRegistrarDTO, oUsuario>();
             //CreateMap<UsuarioModificarDTO, oUsuario>();
             CreateMap<ArticuloDTO, oArticulo>();

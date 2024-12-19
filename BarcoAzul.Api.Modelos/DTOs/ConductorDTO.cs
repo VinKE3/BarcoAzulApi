@@ -13,7 +13,7 @@ namespace BarcoAzul.Api.Modelos.DTOs
         public string TipoConductor { get; set; }
 
         [Required(ErrorMessage = "El tipo de documento de identidad es requerido.")]
-        public string TipoDocumentoIdentidad { get; set; }
+        public string TipoDocumentoIdentidadId { get; set; }
 
         [Required(ErrorMessage = "El número de documento de identidad es requerido.")]
         public string NumeroDocumentoIdentidad { get; set; }

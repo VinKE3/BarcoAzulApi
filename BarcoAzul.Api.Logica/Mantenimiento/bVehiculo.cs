@@ -10,7 +10,7 @@ namespace BarcoAzul.Api.Logica.Mantenimiento
 {
     public class bVehiculo : bComun, ILogicaService
     {
-        public bVehiculo(IConnectionManager connectionManager) : base(connectionManager, origen: "Vehículo") { }
+        public bVehiculo(oConfiguracionGlobal configuracionGlobal, IConnectionManager connectionManager) : base(connectionManager, origen: "Vehículo", configuracionGlobal: configuracionGlobal) { }
 
         public async Task<bool> Registrar(VehiculoDTO model)
         {
@@ -21,6 +21,7 @@ namespace BarcoAzul.Api.Logica.Mantenimiento
 
                 dVehiculo dVehiculo = new(GetConnectionString());
                 vehiculo.Id = model.Id = await dVehiculo.GetNuevoId();
+                vehiculo.EmpresaId = model.EmpresaId = _configuracionGlobal.EmpresaId;
 
                 await dVehiculo.Registrar(vehiculo);
 

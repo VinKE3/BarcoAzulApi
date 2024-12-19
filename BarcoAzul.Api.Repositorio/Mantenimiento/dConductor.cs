@@ -12,9 +12,9 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
         #region CRUD
         public async Task Registrar(oConductor conductor)
         {
-            string query = @"   INSERT INTO Transportista (Tra_Codigo, Conf_Codigo, Tran_Codigo, @Tra_Tipo, Tra_RazonSocial, Tra_Apellidos, Tra_TipoDocIde, Tra_RucDni, Tra_Licencia, Tra_Telefono,
+            string query = @"   INSERT INTO Transportista (Tra_Codigo, Conf_Codigo, Tran_Codigo, Tra_Tipo, Tra_RazonSocial, Tra_Apellidos, Tra_TipoDocIde, Tra_RucDni, Tra_Licencia, Tra_Telefono,
                                 Tra_TeleFax, Tra_Correo, Tra_Direccion, Dep_Codigo, Pro_Codigo, Dis_codigo, Tra_nroregistrotransp, Tra_FechaReg)
-                                VALUES (@Id, @EmpresaId, @EmpresaTransporteId, @TipoCondunctor, @Nombre, @Apellidos, @TipoDocumentoIdentidad, @NumeroDocumentoIdentidad, @LicenciaConducir, @Telefono,
+                                VALUES (@Id, @EmpresaId, @EmpresaTransporteId, @TipoConductor, @Nombre, @Apellidos, @TipoDocumentoIdentidadId, @NumeroDocumentoIdentidad, @LicenciaConducir, @Telefono,
                                 @Celular, @CorreoElectronico, @Direccion, @DepartamentoId, @ProvinciaId, @DistritoId, @NroRegistro, GETDATE())";
 
             using (var db = GetConnection())
@@ -24,10 +24,10 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
                     conductor.Id,
                     conductor.EmpresaId,
                     conductor.EmpresaTransporteId,
-                    conductor.TipoConductor, // nuevo
+                    conductor.TipoConductor,
                     conductor.Nombre,
                     conductor.Apellidos, // nuevo
-                    conductor.TipoDocumentoIdentidad, // nuevo
+                    conductor.TipoDocumentoIdentidadId, // nuevo
                     conductor.NumeroDocumentoIdentidad,
                     conductor.LicenciaConducir,
                     conductor.Telefono,
@@ -50,7 +50,7 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
                         Tra_Tipo = @TipoConductor, 
                         Tra_RazonSocial = @Nombre, 
                         Tra_Apellidos = @Apellidos, 
-                        Tra_TipoDocIde = @TipoDocumentoIdentidad, 
+                        Tra_TipoDocIde = @TipoDocumentoIdentidadId, 
                         Tra_RucDni = @NumeroDocumentoIdentidad, 
                         Tra_Licencia = @LicenciaConducir, 
                         Tra_Telefono = @Telefono, 
@@ -73,7 +73,7 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
                     conductor.TipoConductor,
                     conductor.Nombre,
                     conductor.Apellidos,
-                    conductor.TipoDocumentoIdentidad,
+                    conductor.TipoDocumentoIdentidadId,
                     conductor.NumeroDocumentoIdentidad,
                     conductor.LicenciaConducir,
                     conductor.Telefono,
@@ -110,7 +110,7 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
                         Tra_Tipo AS TipoConductor, 
                         Tra_RazonSocial AS Nombre, 
                         Tra_Apellidos AS Apellidos, 
-                        Tra_TipoDocIde AS TipoDocumentoIdentidad, 
+                        Tra_TipoDocIde AS TipoDocumentoIdentidadId, 
                         Tra_RucDni AS NumeroDocumentoIdentidad, 
                         Tra_Licencia AS LicenciaConducir, 
                         Tra_Telefono AS Telefono, 
@@ -154,7 +154,8 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
 	                                Razon_Social AS Nombre,
 	                                RucDni AS NumeroDocumentoIdentidad,
 	                                Licencia AS LicenciaConducir,
-                                    Tran_Codigo AS EmpresaTransporteId
+                                    Tran_Codigo AS EmpresaTransporteId,
+                                    TipoConductor
                                 FROM
 	                                v_lst_transportista
                                 WHERE
