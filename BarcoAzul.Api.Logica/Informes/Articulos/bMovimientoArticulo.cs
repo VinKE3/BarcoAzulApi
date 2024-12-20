@@ -20,7 +20,7 @@ namespace BarcoAzul.Api.Logica.Informes.Articulos
             {
                 fechaInicio ??= _configuracionGlobal.FiltroFechaInicio;
                 fechaFin ??= _configuracionGlobal.FiltroFechaFin;
-                estadoStock = "";
+                estadoStock ??= string.Empty;
 
                 dMovimientoArticulo dMovimientoArticulo = new(GetConnectionString());
                 return await dMovimientoArticulo.Listar(fechaInicio.Value, fechaFin.Value, estadoStock);

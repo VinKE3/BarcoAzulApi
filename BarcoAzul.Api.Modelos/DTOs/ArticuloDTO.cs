@@ -35,6 +35,7 @@ namespace BarcoAzul.Api.Modelos.DTOs
         public decimal PorcentajeUtilidad4 { get; set; }
         public decimal Stock { get; set; }
         public decimal StockMinimo { get; set; }
+        public decimal StockMax { get; set; }
         public bool PrecioIncluyeIGV { get; set; }
         public bool PercepcionCompra { get; set; }
         public bool IsActivo { get; set; }

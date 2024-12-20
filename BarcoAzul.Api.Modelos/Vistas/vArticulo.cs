@@ -19,5 +19,6 @@ namespace BarcoAzul.Api.Modelos.Vistas
         public bool ControlarStock { get; set; }
         public bool ActualizarPrecio { get; set; }
         public bool IsActivo { get; set; }
+        public string EstadoStock { get; set; }
     }
 }

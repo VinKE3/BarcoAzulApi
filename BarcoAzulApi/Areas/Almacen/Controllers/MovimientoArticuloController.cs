@@ -25,9 +25,9 @@ namespace BarcoAzulApi.Areas.Almacen.Controllers
 
         [HttpGet(nameof(Listar))]
         [AuthorizeAction(NombresMenus.MovimientoArticulo, UsuarioPermiso.Consultar)]
-        public async Task<IActionResult> Listar(DateTime? fechaInicio, DateTime? fechaFin)
+        public async Task<IActionResult> Listar(DateTime? fechaInicio, DateTime? fechaFin, string estadoStock)
         {
-            var movimientosArticulos = await _bMovimientoArticulo.Listar(fechaInicio, fechaFin, "");
+            var movimientosArticulos = await _bMovimientoArticulo.Listar(fechaInicio, fechaFin, estadoStock);
             AgregarMensajes(_bMovimientoArticulo.Mensajes);
 
             if (movimientosArticulos is not null)

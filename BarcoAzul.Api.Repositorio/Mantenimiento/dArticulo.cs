@@ -20,7 +20,7 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
                             Art_Activo, Art_Peso, TipE_Codigo, Art_Detraccion, Art_PercepCompra, Art_Observ, Art_Exportado)
                             VALUES 
                             (@LineaId, @SubLineaId, @ArticuloId, @CodigoBarras, @Descripcion, @MarcaId, @UnidadMedidaId, 
-                            @ControlarStock, 0, 0, @StockMinimo, 0, @MonedaId, @PrecioCompra, @PorcentajeUtilidad1, 
+                            @ControlarStock, 0, 0, @StockMinimo, @StockMax, @MonedaId, @PrecioCompra, @PorcentajeUtilidad1, 
                             @PorcentajeUtilidad2, @PorcentajeUtilidad3, @PorcentajeUtilidad4, @PrecioVenta1, @PrecioVenta2, @PrecioVenta3, @PrecioVenta4, @PrecioIncluyeIGV,
                             'ME', '', GETDATE(), @UsuarioId, @ActualizarPrecioCompra, 'S', 0, 'N', 0,
                             @IsActivo, @Peso, @TipoExistenciaId, 'N', 'N', @Observacion, 'N')";
@@ -38,6 +38,7 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
                     articulo.UnidadMedidaId,
                     ControlarStock = articulo.ControlarStock ? "S" : "N",
                     articulo.StockMinimo,
+                    articulo.StockMax,
                     articulo.MonedaId,
                     articulo.PrecioCompra,
                     articulo.PorcentajeUtilidad1,
@@ -68,7 +69,7 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
                                 Art_CtrlStock = @ControlarStock, Art_Moneda = @MonedaId, Art_PCompra = @PrecioCompra, Art_Utilidad01 = @PorcentajeUtilidad1, Art_Utilidad02 = @PorcentajeUtilidad2,
                                 Art_Utilidad03 = @PorcentajeUtilidad3, Art_Utilidad04 = @PorcentajeUtilidad4, Art_PVenta01 = @PrecioVenta1, Art_PVenta02 = @PrecioVenta2, Art_PVenta03 = @PrecioVenta3,
                                 Art_PVenta04 = @PrecioVenta4, Art_Observ = @Observacion, Art_FechaMod = GETDATE(), Usu_Codigo = @UsuarioId, Art_ActPCompra = @ActualizarPrecioCompra,
-                                Art_Activo = @IsActivo, Art_Peso = @Peso, TipE_Codigo = @TipoExistenciaId, Art_StockMin = @StockMinimo, 
+                                Art_Activo = @IsActivo, Art_Peso = @Peso, TipE_Codigo = @TipoExistenciaId, Art_StockMin = @StockMinimo, Art_StockMax = @StockMax,
                                 Art_IncluyeIgv = @PrecioIncluyeIGV WHERE Lin_Codigo = @LineaId AND SubL_Codigo = @SubLineaId AND Art_Codigo = @ArticuloId";
 
             using (var db = GetConnection())
@@ -96,6 +97,7 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
                     IsActivo = articulo.IsActivo ? "S" : "N",
                     articulo.Peso,
                     articulo.TipoExistenciaId,
+                    articulo.StockMax,
                     articulo.StockMinimo,
                     articulo.PrecioCompraDescuento,
                     PrecioIncluyeIGV = articulo.PrecioIncluyeIGV ? "S" : "N",
@@ -164,6 +166,7 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
                                     A.Art_Utilidad04 AS PorcentajeUtilidad4,
                                     A.Art_Stock01 As Stock,
 	                                A.Art_StockMin AS StockMinimo,
+                                    A.Art_StockMax as StockMax,
 	                                CAST(CASE WHEN A.Art_IncluyeIgv = 'S' THEN 1 ELSE 0 END AS BIT) AS PrecioIncluyeIGV,
 	                                CAST(CASE WHEN A.Art_PercepCompra = 'S' THEN 1 ELSE 0 END AS BIT) AS PercepcionCompra,
                                     CAST(CASE WHEN A.Art_Activo = 'S' THEN 1 ELSE 0 END AS BIT) AS IsActivo,
@@ -206,7 +209,8 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
 									CAST(CASE WHEN Actualizar_Precio = 'S' THEN 1 ELSE 0 END AS BIT) AS ActualizarPrecio,
                                     CAST(CASE WHEN Detraccion = 'S' THEN 1 ELSE 0 END AS BIT) AS Detraccion,
                                     CAST(CASE WHEN Percepcion_Compra = 'S' THEN 1 ELSE 0 END AS BIT) AS PercepcionCompra,
-									CAST(CASE WHEN Activo = 'S' THEN 1 ELSE 0 END AS BIT) AS IsActivo
+									CAST(CASE WHEN Activo = 'S' THEN 1 ELSE 0 END AS BIT) AS IsActivo,
+									EstadoStock
 								FROM
 									v_lst_articulo
 								WHERE
