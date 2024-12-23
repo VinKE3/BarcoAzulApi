@@ -1,13 +1,8 @@
 ﻿using BarcoAzul.Api.Modelos.Entidades;
-using BarcoAzul.Api.Modelos.Otr;
 using BarcoAzul.Api.Modelos.Otros;
 using BarcoAzul.Api.Modelos.Vistas;
 using Dapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MCWebAPI.Modelos.Otros;
 
 namespace BarcoAzul.Api.Repositorio.Compra
 {

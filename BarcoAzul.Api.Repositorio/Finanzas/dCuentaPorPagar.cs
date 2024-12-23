@@ -111,9 +111,7 @@ namespace BarcoAzul.Api.Repositorio.Finanzas
 	                                Documento,
 	                                Moneda AS MonedaId,
 	                                Documento + ' / ' + Proveedor AS Descripcion,
-	                                Saldo,
-                                    (CASE WHEN TipoDoc IN ('LC', 'CF', 'CH') THEN RTRIM(Com_LlegViaNom) ELSE NULL END) AS DocumentoRelacionado,
-                                    RTRIM(Com_OrdCompra) AS OrdenCompraRelacionada
+	                                Saldo
                                 FROM 
 	                                v_lst_compra
                                 WHERE 

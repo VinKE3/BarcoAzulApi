@@ -1,13 +1,8 @@
 ﻿using BarcoAzul.Api.Modelos.Entidades;
-using BarcoAzul.Api.Modelos.Otr;
 using BarcoAzul.Api.Modelos.Otros;
 using BarcoAzul.Api.Modelos.Vistas;
 using Dapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MCWebAPI.Modelos.Otros;
 
 namespace BarcoAzul.Api.Repositorio.Compra
 {
@@ -249,8 +244,7 @@ namespace BarcoAzul.Api.Repositorio.Compra
 									CAST(CASE WHEN Cancelado = 'S' THEN 1 ELSE 0 END AS BIT) AS IsCancelado,
 									CAST(CASE WHEN Bloqueado = 'S' THEN 1 ELSE 0 END AS BIT) AS IsBloqueado,
 									CAST(CASE WHEN AfectarStock = 'S' THEN 1 ELSE 0 END AS BIT) AS AfectarStock,
-									GuiaRemision,
-									com_ordcompra AS OrdenCompra
+									GuiaRemision
 								FROM 
 									v_lst_compra
 								WHERE 
@@ -302,7 +296,6 @@ namespace BarcoAzul.Api.Repositorio.Compra
 	                                TipoDoc = '01'
 	                                AND (Fecha BETWEEN @fechaInicio AND @fechaFin)
 	                                AND Anulado = 'N'
-	                                AND Com_Facturado = 'N'
 	                                AND Prov_codigo = @proveedorId
                                 ORDER BY
 									Fecha DESC,

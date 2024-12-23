@@ -1,6 +1,6 @@
 ﻿
-
-namespace BarcoAzul.Api.Modelos.Otr{
+namespace MCWebAPI.Modelos.Otros
+{
     public enum Operacion
     {
         Aumentar,

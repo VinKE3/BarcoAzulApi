@@ -57,13 +57,13 @@ namespace BarcoAzulApi.Configuracion
             services.AddScoped<bMovimientoBancario>();
             //services.AddScoped<bCuentaPorCobrar>();
             services.AddScoped<bOrdenCompra>();
-            //services.AddScoped<bDocumentoCompra>();
+            services.AddScoped<bDocumentoCompra>();
             //services.AddScoped<bFacturaNegociable>();
             //services.AddScoped<bLetraCambioCompra>();
             //services.AddScoped<bCEF>();
             //services.AddScoped<bCheque>();
-            //services.AddScoped<bGuiaCompra>();
-            //services.AddScoped<bCuentaPorPagar>();
+            services.AddScoped<bGuiaCompra>();
+            services.AddScoped<bCuentaPorPagar>();
             services.AddScoped<bAbonoCompra>();
             //services.AddScoped<bCotizacion>();
             //services.AddScoped<bDocumentoVenta>();
@@ -73,8 +73,8 @@ namespace BarcoAzulApi.Configuracion
             //services.AddScoped<bLetraCambioVenta>();
             //services.AddScoped<bProcesoLetra>();
             //services.AddScoped<bVentaLetra>();
-            //services.AddScoped<bEntradaAlmacen>();
-            //services.AddScoped<bSalidaAlmacen>();
+            services.AddScoped<bEntradaAlmacen>();
+            services.AddScoped<bSalidaAlmacen>();
             //services.AddScoped<bReporteClientes>();
             //services.AddScoped<bReporteProveedores>();
             //services.AddScoped<bReportePersonal>();
