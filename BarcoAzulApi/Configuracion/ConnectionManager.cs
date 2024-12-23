@@ -11,6 +11,6 @@ namespace BarcoAzulApi.Configuracion
             _configuration = configuration;
         }
 
-        public string GetConnectionString(string connectionName = "Default") => _configuration.GetConnectionString(connectionName);
+        public string GetConnectionString(string connectionName = "http://localhost:5173") => _configuration.GetConnectionString(connectionName);
     }
 }

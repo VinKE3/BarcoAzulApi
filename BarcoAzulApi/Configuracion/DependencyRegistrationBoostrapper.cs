@@ -1,6 +1,8 @@
 ﻿using BarcoAzul.Api.Logica.Almacen;
+using BarcoAzul.Api.Logica.Compra;
 using BarcoAzul.Api.Logica.Configuracion;
 using BarcoAzul.Api.Logica.Empresa;
+using BarcoAzul.Api.Logica.Finanzas;
 using BarcoAzul.Api.Logica.Informes.Articulos;
 using BarcoAzul.Api.Logica.Mantenimiento;
 using BarcoAzul.Api.Modelos.Interfaces;
@@ -52,9 +54,9 @@ namespace BarcoAzulApi.Configuracion
             services.AddScoped<bCuadreStock>();
             //services.AddScoped<bSalidaCilindros>();
             //services.AddScoped<bEntradaCilindros>();
-            //services.AddScoped<bMovimientoBancario>();
+            services.AddScoped<bMovimientoBancario>();
             //services.AddScoped<bCuentaPorCobrar>();
-            //services.AddScoped<bOrdenCompra>();
+            services.AddScoped<bOrdenCompra>();
             //services.AddScoped<bDocumentoCompra>();
             //services.AddScoped<bFacturaNegociable>();
             //services.AddScoped<bLetraCambioCompra>();
@@ -62,7 +64,7 @@ namespace BarcoAzulApi.Configuracion
             //services.AddScoped<bCheque>();
             //services.AddScoped<bGuiaCompra>();
             //services.AddScoped<bCuentaPorPagar>();
-            //services.AddScoped<bAbonoCompra>();
+            services.AddScoped<bAbonoCompra>();
             //services.AddScoped<bCotizacion>();
             //services.AddScoped<bDocumentoVenta>();
             //services.AddScoped<bRetencion>();
