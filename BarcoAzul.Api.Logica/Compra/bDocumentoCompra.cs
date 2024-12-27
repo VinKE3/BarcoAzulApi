@@ -263,7 +263,7 @@ namespace BarcoAzul.Api.Logica.Compra
             var porcentajesIGV = await new dEmpresaIGV(GetConnectionString()).ListarTodos();
             var motivosNota = await new dMotivoNota(GetConnectionString()).ListarTodos();
             var cuentasCorrientes = await new dCuentaCorriente(GetConnectionString()).ListarTodos();
-
+            var porcentajesPercepcion = await new dEmpresaPercepcion(GetConnectionString()).ListarTodos();
             return new
             {
                 tiposDocumento,
@@ -271,6 +271,7 @@ namespace BarcoAzul.Api.Logica.Compra
                 tiposPago,
                 monedas,
                 porcentajesIGV,
+                porcentajesPercepcion,
                 motivosNota,
                 cuentasCorrientes
             };
