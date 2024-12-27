@@ -9,7 +9,7 @@ namespace BarcoAzulApi.Configuracion
         #endregion
 
         #region Área Venta
-        public const string Cotizacion = "Cotizacion";
+        public const string NotaPedido = "NotaPedido";
         public const string DocumentoVenta = "DocumentoVenta";
         public const string Retencion = "Retencion";
         public const string GuiaRemision = "GuiaRemision";

@@ -21,11 +21,17 @@ namespace BarcoAzul.Api.Modelos.DTOs
         public string ClienteId { get; set; }
         public string ClienteNombre { get; set; }
         public string ClienteNumeroDocumentoIdentidad { get; set; }
+        public string PersonalId { get; set; }
         public string MonedaId { get; set; }
         [Required(ErrorMessage = "El tipo de cambio es requerido.")]
         [Range(0.001, int.MaxValue, ErrorMessage = "El tipo de cambio no puede ser igual a cero (0.00)")]
         public decimal TipoCambio { get; set; }
-        public string PersonalId { get; set; }
+        public string ProveedorId { get; set; }
+        public string ProveedorNombre { get; set; }
+        public string ProveedorNumeroDocumentoIdentidad { get; set; }
+        public string MotivoId {  get; set; }
+        public string MotivoNombre { get; set; }
+        public string Concepto { get; set; }
         public string LineaProduccion { get; set; }
         public string Envasado { get; set; }
         public string GuiaRemision { get; set; }

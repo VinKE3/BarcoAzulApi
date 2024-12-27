@@ -30,6 +30,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RdlCri.Core", "..\WebAPI-Ke
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RdlEngine.Core", "..\WebAPI-Kevin\RdlEngine.Core\RdlEngine.Core.csproj", "{920FE7F6-41B7-4782-8359-86CB2FD1D25E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcoAzul.Api.FacturacionElectronica", "BarcoAzul.Api.FacturacionElectronica\BarcoAzul.Api.FacturacionElectronica.csproj", "{937FBAB8-E00B-4B04-BEF7-BC7D7E372FE6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,6 +74,10 @@ Global
 		{920FE7F6-41B7-4782-8359-86CB2FD1D25E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{920FE7F6-41B7-4782-8359-86CB2FD1D25E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{920FE7F6-41B7-4782-8359-86CB2FD1D25E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{937FBAB8-E00B-4B04-BEF7-BC7D7E372FE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{937FBAB8-E00B-4B04-BEF7-BC7D7E372FE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{937FBAB8-E00B-4B04-BEF7-BC7D7E372FE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{937FBAB8-E00B-4B04-BEF7-BC7D7E372FE6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

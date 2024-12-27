@@ -5,6 +5,7 @@ using BarcoAzul.Api.Logica.Empresa;
 using BarcoAzul.Api.Logica.Finanzas;
 using BarcoAzul.Api.Logica.Informes.Articulos;
 using BarcoAzul.Api.Logica.Mantenimiento;
+using BarcoAzul.Api.Logica.Venta;
 using BarcoAzul.Api.Modelos.Interfaces;
 
 namespace BarcoAzulApi.Configuracion
@@ -21,9 +22,9 @@ namespace BarcoAzulApi.Configuracion
             services.AddScoped<bMenu>();
             services.AddScoped<bUsuario>();
             services.AddScoped<bUsuarioPermiso>();
-            //services.AddScoped<bBloquearVenta>();
-            //services.AddScoped<bBloquearCompra>();
-            //services.AddScoped<bBloquearMovimientoBancario>();
+            services.AddScoped<bBloquearVenta>();
+            services.AddScoped<bBloquearCompra>();
+            services.AddScoped<bBloquearMovimientoBancario>();
             //services.AddScoped<bBloquearReciboEgreso>();
             services.AddScoped<bArticulo>();
             services.AddScoped<bCliente>();
@@ -49,13 +50,13 @@ namespace BarcoAzulApi.Configuracion
             services.AddScoped<bEmpresaTransporte>();
             services.AddScoped<bVehiculo>();
             services.AddScoped<bConductor>();
-            //services.AddScoped<bCorrelativo>();
+            services.AddScoped<bCorrelativo>();
             services.AddScoped<bMovimientoArticulo>();
             services.AddScoped<bCuadreStock>();
             //services.AddScoped<bSalidaCilindros>();
             //services.AddScoped<bEntradaCilindros>();
             services.AddScoped<bMovimientoBancario>();
-            //services.AddScoped<bCuentaPorCobrar>();
+            services.AddScoped<bCuentaPorCobrar>();
             services.AddScoped<bOrdenCompra>();
             services.AddScoped<bDocumentoCompra>();
             //services.AddScoped<bFacturaNegociable>();
@@ -65,8 +66,8 @@ namespace BarcoAzulApi.Configuracion
             services.AddScoped<bGuiaCompra>();
             services.AddScoped<bCuentaPorPagar>();
             services.AddScoped<bAbonoCompra>();
-            //services.AddScoped<bCotizacion>();
-            //services.AddScoped<bDocumentoVenta>();
+            services.AddScoped<bNotaPedido>();
+            services.AddScoped<bDocumentoVenta>();
             //services.AddScoped<bRetencion>();
             //services.AddScoped<bGuiaRemision>();
             //services.AddScoped<bPlanillaCobro>();

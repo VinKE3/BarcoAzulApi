@@ -39,32 +39,32 @@ namespace BarcoAzul.Api.Logica.Configuracion
             CreateMap<EmpresaTransporteDTO, oEmpresaTransporte>();
             CreateMap<VehiculoDTO, oVehiculo>();
             CreateMap<ConductorDTO, oConductor>();
-            //CreateMap<UsuarioRegistrarDTO, oUsuario>();
-            //CreateMap<UsuarioModificarDTO, oUsuario>();
+            CreateMap<UsuarioRegistrarDTO, oUsuario>();
+            CreateMap<UsuarioModificarDTO, oUsuario>();
             CreateMap<ArticuloDTO, oArticulo>();
-            //CreateMap<CuadreStockDTO, oCuadreStock>();
+            CreateMap<CuadreStockDTO, oCuadreStock>();
             //CreateMap<SalidaCilindrosDTO, oSalidaCilindros>();
             //CreateMap<EntradaCilindrosDTO, oEntradaCilindros>();
-            //CreateMap<MovimientoBancarioDTO, oMovimientoBancario>();
-            //CreateMap<OrdenCompraDTO, oOrdenCompra>();
-            //CreateMap<DocumentoCompraDTO, oDocumentoCompra>();
+            CreateMap<MovimientoBancarioDTO, oMovimientoBancario>();
+            CreateMap<OrdenCompraDTO, oOrdenCompra>();
+            CreateMap<DocumentoCompraDTO, oDocumentoCompra>();
             //CreateMap<FacturaNegociableDTO, oFacturaNegociable>();
             //CreateMap<LetraCambioCompraDTO, oLetraCambioCompra>();
             //CreateMap<CEFDTO, oCEF>();
             //CreateMap<ChequeDTO, oCheque>();
-            //CreateMap<GuiaCompraDTO, oGuiaCompra>();
-            //CreateMap<oCuentaPorPagarAbono, oAbonoCompra>().ReverseMap();
+            CreateMap<GuiaCompraDTO, oGuiaCompra>();
+            CreateMap<oCuentaPorPagarAbono, oAbonoCompra>().ReverseMap();
             //CreateMap<CotizacionDTO, oCotizacion>();
-            //CreateMap<DocumentoVentaDTO, oDocumentoVenta>();
-            //CreateMap<oCorrelativo, oTipoDocumentoSerie>();
+            CreateMap<DocumentoVentaDTO, oDocumentoVenta>();
+            CreateMap<oCorrelativo, oTipoDocumentoSerie>();
             //CreateMap<RetencionDTO, oRetencion>();
             //CreateMap<GuiaRemisionDTO, oGuiaRemision>();
             MapConfiguracionGlobal();
             //CreateMap<PlanillaCobroDTO, oPlanillaCobro>();
             //CreateMap<LetraCambioVentaDTO, oLetraCambioVenta>();
-            //CreateMap<EntradaAlmacenDTO, oEntradaAlmacen>();
-            //CreateMap<oCuentaPorCobrarAbono, oAbonoVenta>().ReverseMap();
-            //CreateMap<SalidaAlmacenDTO, oSalidaAlmacen>();
+            CreateMap<EntradaAlmacenDTO, oEntradaAlmacen>();
+            CreateMap<oCuentaPorCobrarAbono, oAbonoVenta>().ReverseMap();
+            CreateMap<SalidaAlmacenDTO, oSalidaAlmacen>();
         }
 
         private void MapConfiguracionGlobal()

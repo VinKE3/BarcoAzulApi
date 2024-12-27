@@ -18,7 +18,7 @@
             set => _globalPath = value;
         }
         public static string RptCPEGREPath => $"{globalPath}/RptCPEGRE";
-        public static string RptCotizacionPath => $"{globalPath}/RptCT";
+        public static string RptNotaPedidoPath => $"{globalPath}/RptNP";
         public static string RptOrdenCompraPath => $"{globalPath}/RptOC";
         public static string RptSalidaArticulosPath => $"{globalPath}/RptSA";
         public static string RptSalidaCilindrosPath => $"{globalPath}/RptSC";
