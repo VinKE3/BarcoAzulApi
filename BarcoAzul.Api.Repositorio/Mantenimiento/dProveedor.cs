@@ -100,6 +100,7 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
 	                                P.Razon_Social AS Nombre,
 	                                P.Ruc AS NumeroDocumentoIdentidad,
 	                                P.Telefono,
+                                    P.Direccion AS Direccion,
 	                                P.TeleFax AS Celular,
 	                                B.Ban_Nombre AS EntidadBancariaNombre,
 	                                P.Numero AS NumeroCuentaBancaria,

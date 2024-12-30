@@ -4,6 +4,8 @@ using BarcoAzul.Api.Logica.Configuracion;
 using BarcoAzul.Api.Logica.Empresa;
 using BarcoAzul.Api.Logica.Finanzas;
 using BarcoAzul.Api.Logica.Informes.Articulos;
+using BarcoAzul.Api.Logica.Informes.Gerencia;
+using BarcoAzul.Api.Logica.Informes.Sistema;
 using BarcoAzul.Api.Logica.Mantenimiento;
 using BarcoAzul.Api.Logica.Venta;
 using BarcoAzul.Api.Modelos.Interfaces;
@@ -76,8 +78,8 @@ namespace BarcoAzulApi.Configuracion
             //services.AddScoped<bVentaLetra>();
             services.AddScoped<bEntradaAlmacen>();
             services.AddScoped<bSalidaAlmacen>();
-            //services.AddScoped<bReporteClientes>();
-            //services.AddScoped<bReporteProveedores>();
+            services.AddScoped<bReporteClientes>();
+            services.AddScoped<bReporteProveedores>();
             //services.AddScoped<bReportePersonal>();
             //services.AddScoped<bReportePersonalCliente>();
             //services.AddScoped<bTomaInventario>();
@@ -125,7 +127,7 @@ namespace BarcoAzulApi.Configuracion
             //services.AddScoped<bInformeTienda>();
             //services.AddScoped<bInformeUtilidad>();
             //services.AddScoped<bInformeCostoProducto>();
-            //services.AddScoped<bCompraPorArticulo>();
+            services.AddScoped<bCompraPorArticulo>();
             //services.AddScoped<bVentaPorArticulo>();
             //services.AddScoped<bVentaPorVendedorCliente>();
             //services.AddScoped<bVentaPorMarcaArticulo>();
