@@ -103,6 +103,16 @@ namespace BarcoAzul.Api.Modelos.Entidades
         public string EmpresaId { get; set; }
         public decimal Porcentaje { get; set; }
         public bool Default { get; set; }
+        public string TipoPercepcion { get; set; }
+    }
+
+    public class oConfiguracionEmpresaPorcentajePercepcion
+    {
+        [JsonIgnore]
+        public string EmpresaId { get; set; }
+        public decimal Porcentaje { get; set; }
+        public bool Default { get; set; }
+        public string TipoPercepcion { get; set; }
     }
 
     public class oConfiguracionEmpresaIGV : oConfiguracionEmpresaPorcentaje { }

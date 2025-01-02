@@ -46,6 +46,7 @@ namespace BarcoAzul.Api.Modelos.DTOs
         public decimal Total { get; set; }
         public bool IncluyeIGV { get; set; }
         public bool AfectarStock { get; set; }
+        public bool AfectarPrecio { get; set; }
         public List<oDocumentoCompraDetalle> Detalles { get; set; }
         public List<oDocumentoCompraOrdenCompraRelacionada> OrdenesCompraRelacionadas { get; set; }
         public string NumeroDocumento => Comun.CompraIdADocumento(Id);
