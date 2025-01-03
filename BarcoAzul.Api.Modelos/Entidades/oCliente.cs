@@ -8,7 +8,6 @@ namespace BarcoAzul.Api.Modelos.Entidades
     public class oCliente : IValidatableObject
     {
         public string Id { get; set; }
-        [Required(ErrorMessage = "El tipo de documento de identidad es requerido.")]
         public string TipoDocumentoIdentidadId { get; set; }
         [Required(ErrorMessage = "El número de documento de identidad es requerido.")]
         public string NumeroDocumentoIdentidad { get; set; }
@@ -23,13 +22,6 @@ namespace BarcoAzul.Api.Modelos.Entidades
         public string DepartamentoId { get; set; }
         public string ProvinciaId { get; set; }
         public string DistritoId { get; set; }
-        public string ZonaId { get; set; }
-        public string TipoVentaId { get; set; }
-        public string TipoCobroId { get; set; }
-        public decimal MaximoCreditoUSD { get; set; }
-        public decimal MaximoCreditoPEN { get; set; }
-        public decimal CreditoUSD { get; set; }
-        public decimal CreditoPEN { get; set; }
         public string Observacion { get; set; }
         public string CodigoEstablecimiento { get; set; }
         public bool IsAgenteRetencion { get; set; }

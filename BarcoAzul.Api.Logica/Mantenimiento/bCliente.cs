@@ -68,11 +68,6 @@ namespace BarcoAzul.Api.Logica.Mantenimiento
 
                 dCliente dCliente = new(GetConnectionString());
 
-                var (creditoPEN, creditoUSD) = await dCliente.GetCredito(model.Id);
-
-                model.CreditoPEN = creditoPEN;
-                model.CreditoUSD = creditoUSD;
-
                 using (TransactionScope scope = new(TransactionScopeAsyncFlowOption.Enabled))
                 {
                     await dCliente.Modificar(cliente);
@@ -159,11 +154,6 @@ namespace BarcoAzul.Api.Logica.Mantenimiento
                     if (!string.IsNullOrWhiteSpace(cliente.DistritoId))
                         cliente.Distrito = await new dDistrito(GetConnectionString()).GetPorId(cliente.DepartamentoId + cliente.ProvinciaId + cliente.DistritoId);
 
-                    if (!string.IsNullOrWhiteSpace(cliente.ZonaId))
-                        cliente.Zona = await new dZona(GetConnectionString()).GetPorId(cliente.ZonaId);
-
-                    cliente.TipoVenta = dTipoVentaCompra.GetPorId(cliente.TipoVentaId);
-                    cliente.TipoCobro = await new dTipoCobroPago(GetConnectionString()).GetPorId(cliente.TipoCobroId);
                     cliente.Direcciones = await dClienteDireccion.ListarPorCliente(cliente.Id);
                     cliente.Contactos = await new dClienteContacto(GetConnectionString()).ListarPorCliente(cliente.Id);
                     cliente.Personal = await new dClientePersonal(GetConnectionString()).ListarPorCliente(cliente.Id);

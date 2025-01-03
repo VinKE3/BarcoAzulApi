@@ -14,15 +14,32 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
         public async Task Registrar(oCliente cliente)
         {
             string query = @"   INSERT INTO Cliente (Cli_Codigo, Cli_Ruc, Cli_RazonSocial, Cli_Telefono, Cli_Correo, Cli_Direccion, Dep_Codigo, Pro_Codigo, Dis_Codigo, 
-                                Car_Codigo, Ban_Codigo, Cli_CreditoSol, Cli_CreditoDol, Cli_MaxCredSol, Cli_MaxCredDol, Cli_FechaReg, Usu_Codigo, Cli_DescPorc, 
-		                        Cli_DescGral, Cli_Moneda, Cli_direcc, Cli_TipoDoc, Zon_Codigo, Cli_Telefax, Cli_Observacion)
+                                Car_Codigo, Ban_Codigo, Cli_FechaReg, Usu_Codigo, Cli_DescPorc, cli_codigoEstablecimiento, cli_agenreten,
+		                        Cli_DescGral, Cli_Moneda, Cli_direcc, Cli_TipoDoc, Cli_Telefax, Cli_Observacion)
 		                        VALUES (@Id, @NumeroDocumentoIdentidad, @Nombre, @Telefono, @CorreoElectronico, @DireccionPrincipal, @DepartamentoId, @ProvinciaId, @DistritoId,
-		                        1, 1, @CreditoPEN, @CreditoUSD, @MaximoCreditoPEN, @MaximoCreditoUSD, GETDATE(), @UsuarioId, 0, 
-		                        0, 'S', null, @TipoDocumentoIdentidadId, @ZonaId, @Celular, @Observacion)";
+		                        1, 1, GETDATE(), @UsuarioId, 0, @CodigoEstablecimiento, @IsAgenteRetencion,
+		                        0, 'S', null, @TipoDocumentoIdentidadId, @Celular, @Observacion)";
 
             using (var db = GetConnection())
             {
-                await db.ExecuteAsync(query, cliente);
+                await db.ExecuteAsync(query, new
+                {
+                    cliente.Id,
+                    cliente.NumeroDocumentoIdentidad,
+                    cliente.Nombre,
+                    cliente.Telefono,
+                    cliente.CorreoElectronico,
+                    cliente.DireccionPrincipal,
+                    cliente.DepartamentoId,
+                    cliente.ProvinciaId,
+                    cliente.DistritoId,
+                    cliente.UsuarioId,
+                    cliente.CodigoEstablecimiento,
+                    IsAgenteRetencion = cliente.IsAgenteRetencion ? "S" : "N",
+                    cliente.TipoDocumentoIdentidadId,
+                    cliente.Celular,
+                    cliente.Observacion,
+                });
             }
         }
 
@@ -40,20 +57,34 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
 	                                Dep_Codigo = @DepartamentoId,
 	                                Pro_Codigo = @ProvinciaId,
 	                                Dis_Codigo = @DistritoId,
-	                                Zon_Codigo = @ZonaId,
 	                                Cli_Telefax = @Celular,
-	                                Cli_MaxCredDol = @MaximoCreditoUSD,
-	                                Cli_MaxCredSol = @MaximoCreditoPEN,
-	                                Cli_CreditoDol = @CreditoUSD,
-	                                Cli_CreditoSol = @CreditoPEN,
 	                                Cli_Observacion = @Observacion,
+                                    cli_codigoEstablecimiento = @CodigoEstablecimiento,
+                                    cli_agenreten = @IsAgenteRetencion,
 	                                Usu_Codigo = @UsuarioId
                                 WHERE 
                                     Cli_Codigo = @Id";
 
             using (var db = GetConnection())
             {
-                await db.ExecuteAsync(query, cliente);
+                await db.ExecuteAsync(query, new
+                {
+                    cliente.Id,
+                    cliente.NumeroDocumentoIdentidad,
+                    cliente.Nombre,
+                    cliente.Telefono,
+                    cliente.CorreoElectronico,
+                    cliente.DireccionPrincipal,
+                    cliente.DepartamentoId,
+                    cliente.ProvinciaId,
+                    cliente.DistritoId,
+                    cliente.UsuarioId,
+                    cliente.CodigoEstablecimiento,
+                    IsAgenteRetencion = cliente.IsAgenteRetencion ? "S" : "N",
+                    cliente.TipoDocumentoIdentidadId,
+                    cliente.Celular,
+                    cliente.Observacion,
+                });
             }
         }
 
@@ -84,10 +115,8 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
 	                                Dis_Codigo AS DistritoId,
 	                                Zon_Codigo AS ZonaId,
 	                                Cli_Telefax AS Celular,
-	                                Cli_MaxCredDol AS MaximoCreditoUSD,
-	                                Cli_MaxCredSol AS MaximoCreditoPEN,
-	                                Cli_CreditoDol AS CreditoUSD,
-	                                Cli_CreditoSol AS CreditoPEN,
+                                    cli_codigoEstablecimiento AS CodigoEstablecimiento,
+                                    CAST(CASE WHEN cli_agenreten = 'S' THEN 1 ELSE 0 END AS BIT) AS IsAgenteRetencion,
 	                                Cli_Observacion AS Observacion
                                 FROM 
                                     Cliente
