@@ -94,6 +94,5 @@ namespace BarcoAzul.Api.Modelos.Entidades
         public DateTime? FechaEmision { get; set; }
         [JsonIgnore]
         public string MonedaId { get; set; }
-        public decimal PrecioVenta { get; set; }
     }
 }

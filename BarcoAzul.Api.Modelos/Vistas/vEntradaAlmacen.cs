@@ -8,6 +8,8 @@
         public string NumeroDocumento { get; set; }
         public string Observacion { get; set; }
         public string MonedaId { get; set; }
+        public string Concepto {  get; set; }
+        public decimal Total { get; set; }
         public bool IsCancelado { get; set; }
         public bool IsBloqueado { get; set; }
         public bool IsAnulado { get; set; }

@@ -15,13 +15,13 @@ namespace BarcoAzul.Api.Repositorio.Almacen
                                 DCom_CtrlStock, DCom_Fecha, Lin_Codigo, SubL_Codigo, Art_Codigo, DCom_Descripcion, Uni_Codigo, DCom_Moneda, DCom_Cantidad, DCom_Precio,
                                 DCom_PorcDscto, DCom_Descuento, DCom_PrecioNeto, DCom_PorcIgv, DCom_MontoIgv, DCom_Inafecto, DCom_Importe, DCom_TotalPeso, DCom_CstoMinTra,
                                 DCom_Flat01, DCom_Falt02, Mar_Codigo, DCom_Turno, DCom_CodPtoCompra, DCom_CierreZ, DCom_CierreX, DArt_Codigo, Cli_Codigo, DCom_PercepCompra, 
-                                DCom_Presentacion, DCom_Cantidad2)
+                                DCom_Presentacion)
                                 VALUES
                                 (@EmpresaId, @ProveedorId, @TipoDocumentoId, @Serie, @Numero, @DetalleId, '01', 'S',
                                 '+', @FechaEmision, @LineaId, @SubLineaId, @ArticuloId, @Descripcion, @UnidadMedidaId, @MonedaId, @Cantidad, @PrecioUnitario,
                                 0, 0, 0, 0, 0, @Importe, @Importe, 0, 0,
                                 0, 0, @MarcaId, '', '', 'N', 'N', @CodigoBarras, @ClienteId, 'N',
-                                @Presentacion, @PrecioVenta)";
+                                @Presentacion)";
 
             using (var db = GetConnection())
             {
@@ -103,8 +103,7 @@ namespace BarcoAzul.Api.Repositorio.Almacen
                                     DC.DCom_MontoIgv AS MontoIGV,
                                     DC.DCom_Importe AS Importe,
                                     DC.DCom_Presentacion AS Presentacion,
-                                    U.Uni_Nombre AS UnidadMedidaDescripcion,
-                                    DC.DCom_Cantidad2 AS PrecioVenta
+                                    U.Uni_Nombre AS UnidadMedidaDescripcion
                                 FROM 
                                     Detalle_Compra DC
                                     INNER JOIN Unidad_Medida U ON DC.Uni_Codigo = U.Uni_Codigo

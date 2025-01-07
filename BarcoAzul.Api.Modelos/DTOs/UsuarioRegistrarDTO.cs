@@ -10,6 +10,9 @@ namespace BarcoAzul.Api.Modelos.DTOs
         public string Observacion { get; set; }
         public bool IsActivo { get; set; }
         public bool HabilitarAfectarStock { get; set; }
+        public bool HabilitarTipoCambio { get; set; }
+        public bool EditarFechaPedidoVenta { get; set; }
+        public bool ReaperturaCerrarCuadre { get; set; }
         public string PersonalId { get; set; }
         [Required(ErrorMessage = "La clave es requerida.")]
         [DataType(DataType.Password)]

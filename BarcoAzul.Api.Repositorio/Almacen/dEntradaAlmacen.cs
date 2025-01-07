@@ -221,6 +221,8 @@ namespace BarcoAzul.Api.Repositorio.Almacen
 									TDocAbr + '-' + Serie + '-' + RIGHT(Numero, 8) AS NumeroDocumento,
 									Com_Observ AS Observacion,
 									Moneda AS MonedaId,
+                                    Com_DireccionPart AS Concepto,
+                                    Total AS Total,
 									CAST(CASE WHEN Cancelado = 'S' THEN 1 ELSE 0 END AS BIT) AS IsCancelado,
 									CAST(CASE WHEN Bloqueado = 'S' THEN 1 ELSE 0 END AS BIT) AS IsBloqueado,
 									CAST(CASE WHEN Anulado = 'S' THEN 1 ELSE 0 END AS BIT) AS IsAnulado

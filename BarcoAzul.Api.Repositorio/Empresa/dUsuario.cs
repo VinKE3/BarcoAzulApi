@@ -13,8 +13,8 @@ namespace BarcoAzul.Api.Repositorio.Empresa
         #region CRUD
         public async Task Registrar(oUsuario usuario)
         {
-            string query = @"   INSERT INTO Usuario (Usu_Codigo, Usu_Nick, Usu_Clave, Usu_TUsuario, Usu_Observ, Usu_Activo, Usu_ValidaStock, Per_Codigo, Usu_FechaReg, Usu_Autoriza)
-                                VALUES (@Id, @Nick, @Clave, 'NO', @Observacion, @IsActivo, @HabilitarAfectarStock, @PersonalId, GETDATE(), @UsuarioAutorizadorId)";
+            string query = @"   INSERT INTO Usuario (Usu_Codigo, Usu_Nick, Usu_Clave, Usu_TUsuario, Usu_Observ, Usu_Activo, Usu_ValidaStock, Usu_TCambio, Usu_EditarFecha, Usu_EditarCuadre, Per_Codigo, Usu_FechaReg, Usu_Autoriza)
+                                VALUES (@Id, @Nick, @Clave, 'NO', @Observacion, @IsActivo, @HabilitarAfectarStock, @HabilitarTipoCambio, @EditarFechaPedidoVenta, @ReaperturaCerrarCuadre, @PersonalId, GETDATE(), @UsuarioAutorizadorId)";
 
             using (var db = GetConnection())
             {
@@ -25,6 +25,9 @@ namespace BarcoAzul.Api.Repositorio.Empresa
                     usuario.Clave,
                     usuario.Observacion,
                     HabilitarAfectarStock = usuario.HabilitarAfectarStock ? "S" : "N",
+                    HabilitarTipoCambio = usuario.HabilitarTipoCambio ? "S" : "N",
+                    EditarFechaPedidoVenta = usuario.EditarFechaPedidoVenta ? "S" : "N",
+                    ReaperturaCerrarCuadre = usuario.ReaperturaCerrarCuadre ? "S" : "N",
                     IsActivo = usuario.IsActivo ? "S" : "N",
                     usuario.PersonalId,
                     usuario.UsuarioAutorizadorId
@@ -44,6 +47,9 @@ namespace BarcoAzul.Api.Repositorio.Empresa
                     usuario.Observacion,
                     IsActivo = usuario.IsActivo ? "S" : "N",
                     HabilitarAfectarStock = usuario.HabilitarAfectarStock ? "S" : "N",
+                    HabilitarTipoCambio = usuario.HabilitarTipoCambio ? "S" : "N",
+                    EditarFechaPedidoVenta = usuario.EditarFechaPedidoVenta ? "S" : "N",
+                    ReaperturaCerrarCuadre = usuario.ReaperturaCerrarCuadre ? "S" : "N",
                     usuario.PersonalId,
                     usuario.UsuarioAutorizadorId,
                     Id = new DbString { Value = usuario.Id, IsAnsi = true, IsFixedLength = false, Length = 3 }
@@ -81,6 +87,9 @@ namespace BarcoAzul.Api.Repositorio.Empresa
                                     Usu_TUsuario AS TipoUsuarioId,
                                     Usu_Observ AS Observacion,
                                     CAST(CASE WHEN Usu_Activo = 'S' THEN 1 ELSE 0 END AS BIT) AS IsActivo,
+                                    CAST(CASE WHEN Usu_TCambio = 'S' THEN 1 ELSE 0 END AS BIT) AS HabilitarTipoCambio,
+                                    CAST(CASE WHEN Usu_EditarFecha = 'S' THEN 1 ELSE 0 END AS BIT) AS EditarFechaPedidoVenta,
+                                    CAST(CASE WHEN Usu_EditarCuadre = 'S' THEN 1 ELSE 0 END AS BIT) AS ReaperturaCerrarCuadre,
                                     CAST(CASE WHEN Usu_ValidaStock = 'S' THEN 1 ELSE 0 END AS BIT) AS HabilitarAfectarStock,
                                     Per_Codigo AS PersonalId
                                 FROM 
