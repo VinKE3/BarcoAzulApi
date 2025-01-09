@@ -24,6 +24,7 @@ namespace BarcoAzul.Api.Modelos.Entidades
         public decimal TipoCambio { get; set; }
         public string NumeroOP { get; set; }
         public string Observacion { get; set; }
+        public string MotivoId { get; set; }
         public List<oEntradaAlmacenDetalle> Detalles { get; set; }
 
         #region Adicionales

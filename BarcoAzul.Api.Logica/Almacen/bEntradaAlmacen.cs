@@ -200,12 +200,14 @@ namespace BarcoAzul.Api.Logica.Almacen
         {
             var personal = await new dPersonal(GetConnectionString()).ListarTodos();
             var monedas = dMoneda.ListarTodos();
+            var motivos = await new dMotivoTraslado(GetConnectionString()).ListarTodos();
             var serie = "0001";
 
             return new
             {
                 personal,
                 monedas,
+                motivos,
                 serie
             };
         }

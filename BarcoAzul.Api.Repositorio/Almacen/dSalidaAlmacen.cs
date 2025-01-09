@@ -283,6 +283,7 @@ namespace BarcoAzul.Api.Repositorio.Almacen
 									Documento AS NumeroDocumento,
 									Personal AS PersonalNombre,
 									Ven_NroComp AS NumeroLote,
+                                    Ven_DireccionLleg AS Concepto,
                                     Moneda AS MonedaId,
                                     Total AS Total,
 									Ven_DireccionPart AS LineaProduccion,

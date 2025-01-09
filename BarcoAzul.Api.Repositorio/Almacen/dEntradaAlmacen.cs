@@ -186,7 +186,8 @@ namespace BarcoAzul.Api.Repositorio.Almacen
 	                                C.Com_Fecha AS FechaEmision,
 	                                C.Com_Moneda AS MonedaId,
 	                                C.Com_TCambio AS TipoCambio,
-	                                C.Com_Observ AS Observacion
+	                                C.Com_Observ AS Observacion,
+                                    C.TipO_Codigo AS MotivoId
                                 FROM
 	                                Compra C
                                     INNER JOIN Proveedor P ON C.Prov_Codigo = P.Prov_Codigo
@@ -220,6 +221,7 @@ namespace BarcoAzul.Api.Repositorio.Almacen
 									Hora AS HoraEmision,
 									TDocAbr + '-' + Serie + '-' + RIGHT(Numero, 8) AS NumeroDocumento,
 									Com_Observ AS Observacion,
+                                    Personal AS Personal,
 									Moneda AS MonedaId,
                                     Com_DireccionPart AS Concepto,
                                     Total AS Total,
