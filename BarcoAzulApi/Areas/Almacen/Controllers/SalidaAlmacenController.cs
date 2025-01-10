@@ -97,7 +97,7 @@ namespace BarcoAzulApi.Areas.Almacen.Controllers
                     return StatusCode(StatusCodes.Status403Forbidden, GenerarRespuesta(false));
                 }
 
-                if (!_bSalidaAlmacen.IsFechaValida(TipoAccion.Modificar, model.FechaTerminacion))
+                if (!_bSalidaAlmacen.IsFechaValida(TipoAccion.Modificar, model.FechaInicio))
                 {
                     AgregarMensajes(_bSalidaAlmacen.Mensajes);
                     return StatusCode(StatusCodes.Status403Forbidden, GenerarRespuesta(false));

@@ -27,42 +27,46 @@ namespace BarcoAzul.Api.Repositorio.Almacen
                                 Ven_BloqSist, Ven_BloqProc, Ven_SubTotalSol, Ven_ValorVentaSol, Ven_TotalNetoSol, Ven_MontoIgvSol, Ven_OtrosSol, Ven_RetencionSol, Ven_PercepcionSol,
                                 Ven_InafectoSol, Ven_SubTotalDol, Ven_ValorVentaDol, Ven_TotalNetoDol, Ven_MontoIgvDol, Ven_OtrosDol, Ven_RetencionDol, Ven_PercepcionDol, Ven_InafectoDol,
                                 Ven_Bloqueado, TipO_Codigo)
-								VALUES (@EmpresaId, @TipoDocumentoId, @Serie, @Numero, @FechaInicio, @FechaInicio, @ClienteId, @ClienteNumeroDocumentoIdentidad, @MonedaId, @TipoCambio, 
-								@PersonalId, @LineaProduccion, @Envasado, @NumeroLote, @GuiaRemision, @Observacion, @IncluyeIGV, @PorcentajeIGV, @GastosIndirectos, @CantidadSolicitada, 
-								@CantidadProducida, @HoraEmision, @UsuarioId, 'N', 0, @Total, @NumeroDocumento, GETDATE(), '01', 'S', '-',
-                                'CO', 'EF', @subTotal, 0, @TotalGalones, @subTotal, @Total, @montoIGV, 0, 0,
-                                0, 0, 0, @Total, 'N', 'S', 'N', 'N', @totalPEN, @totalUSD, 'N',
+								VALUES (@EmpresaId, @TipoDocumentoId, @Serie, @Numero, @FechaInicio, @FechaInicio, '000000', @ClienteNumeroDocumentoIdentidad, @MonedaId, @TipoCambio, 
+								@PersonalId, NULL, @Concepto, NULL, NULL, @Observacion, 'S', 18, NULL, NULL, 
+								NULL, @HoraEmision, @UsuarioId, 'N', 0, @total, @NumeroDocumento, GETDATE(), '01', 'S', '-',
+                                'CO', 'EF', @subTotal, 0, 0, @subTotal, @total, @montoIGV, 0, 0,
+                                0, 0, 0, @total, 'N', 'S', 'N', 'N', @totalPEN, @totalUSD, 'N',
                                 'N', 'N', @subTotalPEN, @subTotalPEN, @totalPEN, @montoIGVPEN, 0, 0, 0,
                                 0, @subTotalUSD, @subTotalUSD, @totalUSD, @montoIGVUSD, 0, 0, 0, 0,
                                 'N', @MotivoId)";
 
-            decimal subTotal = 0, montoIGV = 0;
+
+            var total = salidaAlmacen.Detalles.Sum(x => x.Importe);
+            decimal subTotal = 0, montoIGV = 0, porcentajeIGV = 18;
             decimal subTotalPEN = 0, montoIGVPEN = 0, totalPEN = 0;
             decimal subTotalUSD = 0, montoIGVUSD = 0, totalUSD = 0;
 
-            montoIGV = decimal.Round(salidaAlmacen.Total - (salidaAlmacen.Total / ((100 + salidaAlmacen.PorcentajeIGV) / 100)), 2, MidpointRounding.AwayFromZero);
-            subTotal = salidaAlmacen.Total - montoIGV;
+            montoIGV = decimal.Round(total - (total / ((100 + porcentajeIGV) / 100)), 2, MidpointRounding.AwayFromZero);
+            subTotal = total - montoIGV;
 
             if (salidaAlmacen.MonedaId == "S")
             {
-                totalPEN = salidaAlmacen.Total;
-                montoIGVPEN = decimal.Round(totalPEN - (totalPEN / ((100 + salidaAlmacen.PorcentajeIGV) / 100)), 2, MidpointRounding.AwayFromZero);
+                totalPEN = total;
+                montoIGVPEN = decimal.Round(totalPEN - (totalPEN / ((100 + porcentajeIGV) / 100)), 2, MidpointRounding.AwayFromZero);
                 subTotalPEN = totalPEN - montoIGVPEN;
 
                 totalUSD = decimal.Round(totalPEN / salidaAlmacen.TipoCambio, 2, MidpointRounding.AwayFromZero);
-                montoIGVUSD = decimal.Round(totalUSD - (totalUSD / ((100 + salidaAlmacen.PorcentajeIGV) / 100)), 2, MidpointRounding.AwayFromZero);
+                montoIGVUSD = decimal.Round(totalUSD - (totalUSD / ((100 + porcentajeIGV) / 100)), 2, MidpointRounding.AwayFromZero);
                 subTotalUSD = totalUSD - montoIGVUSD;
             }
             else
             {
-                totalUSD = salidaAlmacen.Total;
-                montoIGVUSD = decimal.Round(totalUSD - (totalUSD / ((100 + salidaAlmacen.PorcentajeIGV) / 100)), 2, MidpointRounding.AwayFromZero);
+                totalUSD = total;
+                montoIGVUSD = decimal.Round(totalUSD - (totalUSD / ((100 + porcentajeIGV) / 100)), 2, MidpointRounding.AwayFromZero);
                 subTotalUSD = totalUSD - montoIGVUSD;
 
                 totalPEN = decimal.Round(totalUSD * salidaAlmacen.TipoCambio, 2, MidpointRounding.AwayFromZero);
-                montoIGVPEN = decimal.Round(totalPEN - (totalPEN / ((100 + salidaAlmacen.PorcentajeIGV) / 100)), 2, MidpointRounding.AwayFromZero);
+                montoIGVPEN = decimal.Round(totalPEN - (totalPEN / ((100 + porcentajeIGV) / 100)), 2, MidpointRounding.AwayFromZero);
                 subTotalPEN = totalPEN - montoIGVPEN;
             }
+            Console.WriteLine($"SubTotal: {subTotal}, MontoIGV: {montoIGV}, TotalPEN: {totalPEN}, TotalUSD: {totalUSD}");
+
 
             using (var db = GetConnection())
             {
@@ -73,31 +77,22 @@ namespace BarcoAzul.Api.Repositorio.Almacen
                     salidaAlmacen.Serie,
                     salidaAlmacen.Numero,
                     salidaAlmacen.FechaInicio,
-                    salidaAlmacen.ClienteId,
                     salidaAlmacen.ClienteNumeroDocumentoIdentidad,
                     salidaAlmacen.MonedaId,
                     salidaAlmacen.TipoCambio,
                     salidaAlmacen.PersonalId,
-                    salidaAlmacen.LineaProduccion,
-                    salidaAlmacen.Envasado,
-                    salidaAlmacen.NumeroLote,
-                    salidaAlmacen.GuiaRemision,
                     salidaAlmacen.Observacion,
-                    IncluyeIGV = salidaAlmacen.IncluyeIGV ? "S" : "N",
-                    salidaAlmacen.PorcentajeIGV,
-                    salidaAlmacen.GastosIndirectos,
-                    salidaAlmacen.CantidadSolicitada,
-                    salidaAlmacen.CantidadProducida,
                     salidaAlmacen.HoraEmision,
                     salidaAlmacen.UsuarioId,
-                    salidaAlmacen.Total,
+                    salidaAlmacen.Concepto,
                     salidaAlmacen.NumeroDocumento,
-                    salidaAlmacen.TotalGalones,
                     salidaAlmacen.MotivoId,
+                    total,
                     subTotal,
                     montoIGV,
                     totalPEN,
                     totalUSD,
+                    porcentajeIGV,
                     subTotalPEN,
                     subTotalUSD,
                     montoIGVPEN,
@@ -108,43 +103,45 @@ namespace BarcoAzul.Api.Repositorio.Almacen
 
         public async Task Modificar(oSalidaAlmacen salidaAlmacen)
         {
-            string query = @"   UPDATE Venta SET Ven_Venci = @FechaInicio, Ven_Fecha = @FechaTerminacion, Cli_Codigo = @ClienteId, Ven_RucDni = @ClienteNumeroDocumentoIdentidad, 
-                                Ven_Moneda = @MonedaId, Ven_TCambio = @TipoCambio, Per_Codigo = @PersonalId, Ven_DireccionPart = @LineaProduccion, Ven_DireccionLleg = @Envasado, 
-                                Ven_NroComp = @NumeroLote, Ven_GuiaRemision = @GuiaRemision, Ven_Observ = @Observacion, Ven_IncluyeIgv = @IncluyeIGV, Ven_PorcIgv = @PorcentajeIGV, 
-                                Ven_Otros = @GastosIndirectos, Ven_Flat01 = @CantidadSolicitada, Ven_Flat02 = @CantidadProducida, Ven_Total = @Total, Ven_Descuento = @TotalGalones,
+            string query = @"   UPDATE Venta SET Ven_Venci = @FechaInicio, Ven_Fecha = @FechaInicio, Cli_Codigo = @ClienteId, Ven_RucDni = @ClienteNumeroDocumentoIdentidad, 
+                                Ven_Moneda = @MonedaId, Ven_TCambio = @TipoCambio, Per_Codigo = @PersonalId, Ven_DireccionPart = @Concepto, 
+                                Ven_Observ = @Observacion, Ven_PorcIgv = @PorcentajeIGV, 
+                                Ven_Total = @Total,
                                 Ven_Hora = @HoraEmision, Usu_Codigo = @UsuarioId, Ven_Cancelado = 'N', Ven_Abonado = 0, Ven_Saldo = @Total, Ven_FechaMod = GETDATE(),
                                 Ven_SubTotal = @subTotal, Ven_ValorVenta = @subTotal, Ven_TotalNeto = @Total, Ven_MontoIgv = @montoIGV, Ven_TotalSol = @totalPEN, Ven_TotalDol = @totalUSD,
                                 Ven_SubTotalSol = @subTotalPEN, Ven_ValorVentaSol = @subTotalPEN, Ven_TotalNetoSol = @totalPEN, Ven_MontoIgvSol = @montoIGVPEN,
                                 Ven_SubTotalDol = @subTotalUSD, Ven_ValorVentaDol = @subTotalUSD, Ven_TotalNetoDol = @totalUSD, Ven_MontoIgvDol = @montoIGVUSD
                                 WHERE Conf_Codigo = @EmpresaId AND TDoc_Codigo = @TipoDocumentoId AND Ven_Serie = @Serie AND Ven_Numero = @Numero AND TipO_Codigo = @MotivoId";
 
-            decimal subTotal = 0, montoIGV = 0;
+            var total = salidaAlmacen.Detalles.Sum(x => x.Importe);
+            decimal subTotal = 0, montoIGV = 0, porcentajeIGV = 18;
             decimal subTotalPEN = 0, montoIGVPEN = 0, totalPEN = 0;
             decimal subTotalUSD = 0, montoIGVUSD = 0, totalUSD = 0;
 
-            montoIGV = decimal.Round(salidaAlmacen.Total - (salidaAlmacen.Total / ((100 + salidaAlmacen.PorcentajeIGV) / 100)), 2, MidpointRounding.AwayFromZero);
-            subTotal = salidaAlmacen.Total - montoIGV;
+            montoIGV = decimal.Round(total - (total / ((100 + porcentajeIGV) / 100)), 2, MidpointRounding.AwayFromZero);
+            subTotal = total - montoIGV;
 
             if (salidaAlmacen.MonedaId == "S")
             {
-                totalPEN = salidaAlmacen.Total;
-                montoIGVPEN = decimal.Round(totalPEN - (totalPEN / ((100 + salidaAlmacen.PorcentajeIGV) / 100)), 2, MidpointRounding.AwayFromZero);
+                totalPEN = total;
+                montoIGVPEN = decimal.Round(totalPEN - (totalPEN / ((100 + porcentajeIGV) / 100)), 2, MidpointRounding.AwayFromZero);
                 subTotalPEN = totalPEN - montoIGVPEN;
 
                 totalUSD = decimal.Round(totalPEN / salidaAlmacen.TipoCambio, 2, MidpointRounding.AwayFromZero);
-                montoIGVUSD = decimal.Round(totalUSD - (totalUSD / ((100 + salidaAlmacen.PorcentajeIGV) / 100)), 2, MidpointRounding.AwayFromZero);
+                montoIGVUSD = decimal.Round(totalUSD - (totalUSD / ((100 + porcentajeIGV) / 100)), 2, MidpointRounding.AwayFromZero);
                 subTotalUSD = totalUSD - montoIGVUSD;
             }
             else
             {
-                totalUSD = salidaAlmacen.Total;
-                montoIGVUSD = decimal.Round(totalUSD - (totalUSD / ((100 + salidaAlmacen.PorcentajeIGV) / 100)), 2, MidpointRounding.AwayFromZero);
+                totalUSD = total;
+                montoIGVUSD = decimal.Round(totalUSD - (totalUSD / ((100 + porcentajeIGV) / 100)), 2, MidpointRounding.AwayFromZero);
                 subTotalUSD = totalUSD - montoIGVUSD;
 
                 totalPEN = decimal.Round(totalUSD * salidaAlmacen.TipoCambio, 2, MidpointRounding.AwayFromZero);
-                montoIGVPEN = decimal.Round(totalPEN - (totalPEN / ((100 + salidaAlmacen.PorcentajeIGV) / 100)), 2, MidpointRounding.AwayFromZero);
+                montoIGVPEN = decimal.Round(totalPEN - (totalPEN / ((100 + porcentajeIGV) / 100)), 2, MidpointRounding.AwayFromZero);
                 subTotalPEN = totalPEN - montoIGVPEN;
             }
+            Console.WriteLine($"SubTotal: {subTotal}, MontoIGV: {montoIGV}, TotalPEN: {totalPEN}, TotalUSD: {totalUSD}");
 
             using (var db = GetConnection())
             {
@@ -156,32 +153,25 @@ namespace BarcoAzul.Api.Repositorio.Almacen
                     salidaAlmacen.MonedaId,
                     salidaAlmacen.TipoCambio,
                     salidaAlmacen.PersonalId,
-                    salidaAlmacen.LineaProduccion,
-                    salidaAlmacen.Envasado,
-                    salidaAlmacen.NumeroLote,
-                    salidaAlmacen.GuiaRemision,
                     salidaAlmacen.Observacion,
-                    IncluyeIGV = salidaAlmacen.IncluyeIGV ? "S" : "N",
-                    salidaAlmacen.PorcentajeIGV,
-                    salidaAlmacen.GastosIndirectos,
-                    salidaAlmacen.CantidadSolicitada,
-                    salidaAlmacen.CantidadProducida,
-                    salidaAlmacen.Total,
-                    salidaAlmacen.TotalGalones,
                     salidaAlmacen.HoraEmision,
                     salidaAlmacen.UsuarioId,
+                    salidaAlmacen.EmpresaId,
+                    salidaAlmacen.TipoDocumentoId,
+                    salidaAlmacen.Serie,
+                    salidaAlmacen.Numero,
+                    salidaAlmacen.Concepto,
+                    salidaAlmacen.MotivoId,
+                    total,
                     subTotal,
                     montoIGV,
                     totalPEN,
                     totalUSD,
+                    porcentajeIGV,
                     subTotalPEN,
                     subTotalUSD,
                     montoIGVPEN,
-                    montoIGVUSD,
-                    salidaAlmacen.EmpresaId,
-                    salidaAlmacen.TipoDocumentoId,
-                    salidaAlmacen.Serie,
-                    salidaAlmacen.Numero
+                    montoIGVUSD
                 });
             }
         }
@@ -231,30 +221,19 @@ namespace BarcoAzul.Api.Repositorio.Almacen
 									V.Conf_Codigo AS EmpresaId,
                                     V.Prov_Codigo AS ProveedorId,
                                     RTRIM(P.Pro_RazonSocial) AS ProveedorNombre,
-									V.Ven_DireccionLleg AS ProveedorDireccion,
+									V.Ven_DireccionLleg AS Concepto,
 									V.TDoc_Codigo AS TipoDocumentoId,
 									V.Ven_Serie AS Serie,
 									V.Ven_Numero AS Numero,
-									V.Ven_Venci AS FechaInicio,
-									V.Ven_Fecha AS FechaTerminacion,
+									V.Ven_Fecha AS FechaInicio,
 									V.Cli_Codigo AS ClienteId,
 									V.Ven_RucDni AS ClienteNumeroDocumentoIdentidad,
 									V.Ven_Moneda AS MonedaId,
 									V.Ven_TCambio AS TipoCambio,
 									V.Per_Codigo AS PersonalId,
-                                    Ven_FechaEmision AS FechaEmision,
-									V.Ven_DireccionPart AS LineaProduccion,
-									V.Ven_NroComp AS NumeroLote,
-									V.Ven_GuiaRemision AS GuiaRemision,
 									V.Ven_Observ AS Observacion,
-									CAST(CASE WHEN V.Ven_IncluyeIgv = 'S' THEN 1 ELSE 0 END AS BIT) AS IncluyeIGV,
-									V.Ven_PorcIgv AS PorcentajeIGV,
-									V.Ven_Otros AS GastosIndirectos,
-									V.Ven_Flat01 AS CantidadSolicitada,
-									V.Ven_Flat02 AS CantidadProducida,
 									V.Ven_Total AS Total,
-                                    V.TipO_Codigo AS MotivoId,
-									V.Ven_Descuento AS TotalGalones
+                                    V.TipO_Codigo AS MotivoId
 								FROM
 									Venta V
 									LEFT JOIN Proveedor P ON V.Prov_Codigo = P.Prov_Codigo

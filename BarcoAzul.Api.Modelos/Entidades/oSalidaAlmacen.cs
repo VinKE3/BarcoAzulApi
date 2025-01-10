@@ -16,8 +16,8 @@ namespace BarcoAzul.Api.Modelos.Entidades
         public string Numero { get; set; }
         public DateTime FechaInicio { get; set; }
         public string ClienteId { get; set; }
-        public string ClienteNombre { get; set; }
         public string ClienteNumeroDocumentoIdentidad { get; set; }
+        [Required(ErrorMessage = "Personal es requerido.")]
         public string PersonalId { get; set; }
         public string MonedaId { get; set; }
         [Required(ErrorMessage = "El tipo de cambio es requerido.")]
@@ -28,21 +28,11 @@ namespace BarcoAzul.Api.Modelos.Entidades
         public string ProveedorNumeroDocumentoIdentidad { get; set; }
         public string ProveedorDireccion { get; set; }
         public string MotivoId { get; set; }
-        public string MotivoNombre { get; set; }
         public string Concepto { get; set; }
-        public string LineaProduccion { get; set; }
-        public string Envasado { get; set; }
-        public string NumeroLote { get; set; }
-        public string GuiaRemision { get; set; }
         public string Observacion { get; set; }
-        public bool IncluyeIGV { get; set; }
-        public decimal PorcentajeIGV { get; set; }
-        public decimal GastosIndirectos { get; set; }
-        public string CantidadSolicitada { get; set; }
-        public string CantidadProducida { get; set; }
+
         [Required(ErrorMessage = "El total es requerido.")]
         public decimal Total { get; set; }
-        public decimal TotalGalones { get; set; }
         public List<oSalidaAlmacenDetalle> Detalles { get; set; }
 
         #region Adicionales
@@ -64,10 +54,7 @@ namespace BarcoAzul.Api.Modelos.Entidades
 
         public void ProcesarDatos()
         {
-            LineaProduccion = LineaProduccion?.Trim();
-            Envasado = Envasado?.Trim();
-            NumeroLote = NumeroLote?.Trim();
-            GuiaRemision = GuiaRemision?.Trim();
+            Concepto = Concepto?.Trim();
             Observacion = Observacion?.Trim();
         }
 
@@ -83,7 +70,6 @@ namespace BarcoAzul.Api.Modelos.Entidades
                     detalle.Numero = Numero;
                     detalle.FechaEmision = FechaInicio;
                     detalle.MonedaId = MonedaId;
-                    detalle.PorcentajeIGV = PorcentajeIGV;
                 }
             }
         }

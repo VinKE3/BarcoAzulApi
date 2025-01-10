@@ -81,8 +81,8 @@ namespace BarcoAzul.Api.Repositorio.Almacen
                                 Com_ValorVenta = @total, Com_TotalNeto = @total, Com_Total = @total, Com_Saldo = @total, Com_FechaMod = GETDATE(), Usu_Codigo = @UsuarioId, 
                                 Com_SubTotalSol = @totalPEN, Com_ValorVentaSol = @totalPEN, Com_TotalNetoSol = @totalPEN, Com_TotalSol = @totalPEN, Com_SubTotalDol = @totalUSD, 
                                 Com_ValorVentaDol = @totalUSD, Com_TotalNetoDol = @totalUSD, Com_TotalDol = @totalUSD, Com_FechaContable = @FechaEmision, Com_Hora = @HoraEmision,
-                                Com_Abonado = 0 WHERE Conf_Codigo = @EmpresaId AND Prov_Codigo = @ProveedorId AND TDoc_Codigo = @TipoDocumentoId AND Com_Serie = @Serie 
-                                AND Com_Numero = @Numero AND Cli_Codigo = @ClienteId AND TipO_Codigo = @MotivoId";
+                                Com_Abonado = 0, TipO_Codigo = @MotivoId WHERE Conf_Codigo = @EmpresaId AND Prov_Codigo = @ProveedorId AND TDoc_Codigo = @TipoDocumentoId AND Com_Serie = @Serie 
+                                AND Com_Numero = @Numero AND Cli_Codigo = @ClienteId";
 
             var total = entradaAlmacen.Detalles.Sum(x => x.Importe);
             decimal totalPEN = 0, totalUSD = 0;
@@ -189,6 +189,7 @@ namespace BarcoAzul.Api.Repositorio.Almacen
 	                                C.Com_Moneda AS MonedaId,
 	                                C.Com_TCambio AS TipoCambio,
 	                                C.Com_Observ AS Observacion,
+                                    C.Com_Total AS Total,
                                     C.TipO_Codigo AS MotivoId
                                 FROM
 	                                Compra C

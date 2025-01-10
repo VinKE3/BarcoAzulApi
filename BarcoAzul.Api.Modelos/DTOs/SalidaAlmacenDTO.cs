@@ -19,6 +19,7 @@ namespace BarcoAzul.Api.Modelos.DTOs
         public string ClienteId { get; set; }
         public string ClienteNombre { get; set; }
         public string ClienteNumeroDocumentoIdentidad { get; set; }
+        [Required(ErrorMessage = "El Personal es requerido.")]
         public string PersonalId { get; set; }
         public string MonedaId { get; set; }
         [Required(ErrorMessage = "El tipo de cambio es requerido.")]

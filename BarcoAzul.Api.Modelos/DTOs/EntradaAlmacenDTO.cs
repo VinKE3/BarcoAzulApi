@@ -17,11 +17,14 @@ namespace BarcoAzul.Api.Modelos.DTOs
         public string ProveedorNumeroDocumentoIdentidad { get; set; }
         public string ProveedorNombre { get; set; }
         public string ProveedorDireccion { get; set; }
+        [Required(ErrorMessage = "El Personal es requerido.")]
         public string PersonalId { get; set; }
         public DateTime FechaEmision { get; set; }
         public string MonedaId { get; set; }
         public decimal TipoCambio { get; set; }
+        public string MotivoId { get; set; }
         public string NumeroOP { get; set; }
+        public decimal Total {  get; set; }
         public string Observacion { get; set; }
         public List<oEntradaAlmacenDetalle> Detalles { get; set; }
         public string NumeroDocumento => Comun.CompraIdADocumento(Id);

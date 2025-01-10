@@ -92,9 +92,6 @@ namespace BarcoAzul.Api.Logica.Almacen
                     dAbonoVenta dAbonoVenta = new(GetConnectionString());
                     await dAbonoVenta.Eliminar(id);
 
-                    dDetalleOperacion dDetalleOperacion = new(GetConnectionString());
-                    await dDetalleOperacion.EliminarDeVenta(id);
-
                     dSalidaAlmacenDetalle dSalidaAlmacenDetalle = new(GetConnectionString());
                     await dSalidaAlmacenDetalle.EliminarDeSalidaAlmacen(id);
 
