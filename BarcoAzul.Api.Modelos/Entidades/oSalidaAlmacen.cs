@@ -14,11 +14,9 @@ namespace BarcoAzul.Api.Modelos.Entidades
         [StringLength(4, MinimumLength = 4, ErrorMessage = "La serie debe tener 4 caracteres.")]
         public string Serie { get; set; }
         public string Numero { get; set; }
-        [Required(ErrorMessage = "La fecha de inicio es requerida.")]
+        public DateTime FechaEmision { get; set; }
         public DateTime FechaInicio { get; set; }
-        [Required(ErrorMessage = "La fecha de terminación es requerida.")]
         public DateTime FechaTerminacion { get; set; }
-        [Required(ErrorMessage = "El cliente es requerido.")]
         public string ClienteId { get; set; }
         public string ClienteNombre { get; set; }
         public string ClienteNumeroDocumentoIdentidad { get; set; }
@@ -30,6 +28,7 @@ namespace BarcoAzul.Api.Modelos.Entidades
         public string ProveedorId { get; set; }
         public string ProveedorNombre { get; set; }
         public string ProveedorNumeroDocumentoIdentidad { get; set; }
+        public string ProveedorDireccion { get; set; }
         public string MotivoId { get; set; }
         public string MotivoNombre { get; set; }
         public string Concepto { get; set; }

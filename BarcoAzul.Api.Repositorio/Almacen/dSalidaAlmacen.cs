@@ -26,7 +26,7 @@ namespace BarcoAzul.Api.Repositorio.Almacen
                                 Ven_PorcPercep, Ven_Percepcion, Ven_Inafecto, Ven_Total, Ven_Anulado, Ven_ConIgv, Ven_Retenc, Ven_Percep, Ven_TotalSol, Ven_TotalDol, Ven_BloqUsu, 
                                 Ven_BloqSist, Ven_BloqProc, Ven_SubTotalSol, Ven_ValorVentaSol, Ven_TotalNetoSol, Ven_MontoIgvSol, Ven_OtrosSol, Ven_RetencionSol, Ven_PercepcionSol,
                                 Ven_InafectoSol, Ven_SubTotalDol, Ven_ValorVentaDol, Ven_TotalNetoDol, Ven_MontoIgvDol, Ven_OtrosDol, Ven_RetencionDol, Ven_PercepcionDol, Ven_InafectoDol,
-                                Ven_Bloqueado)
+                                Ven_Bloqueado, TipO_Codigo)
 								VALUES (@EmpresaId, @TipoDocumentoId, @Serie, @Numero, @FechaInicio, @FechaTerminacion, @ClienteId, @ClienteNumeroDocumentoIdentidad, @MonedaId, @TipoCambio, 
 								@PersonalId, @LineaProduccion, @Envasado, @NumeroLote, @GuiaRemision, @Observacion, @IncluyeIGV, @PorcentajeIGV, @GastosIndirectos, @CantidadSolicitada, 
 								@CantidadProducida, @HoraEmision, @UsuarioId, 'N', 0, @Total, @NumeroDocumento, GETDATE(), '01', 'S', '-',
@@ -34,7 +34,7 @@ namespace BarcoAzul.Api.Repositorio.Almacen
                                 0, 0, 0, @Total, 'N', 'S', 'N', 'N', @totalPEN, @totalUSD, 'N',
                                 'N', 'N', @subTotalPEN, @subTotalPEN, @totalPEN, @montoIGVPEN, 0, 0, 0,
                                 0, @subTotalUSD, @subTotalUSD, @totalUSD, @montoIGVUSD, 0, 0, 0, 0,
-                                'N')";
+                                'N', @MotivoId)";
 
             decimal subTotal = 0, montoIGV = 0;
             decimal subTotalPEN = 0, montoIGVPEN = 0, totalPEN = 0;
@@ -94,6 +94,7 @@ namespace BarcoAzul.Api.Repositorio.Almacen
                     salidaAlmacen.Total,
                     salidaAlmacen.NumeroDocumento,
                     salidaAlmacen.TotalGalones,
+                    salidaAlmacen.MotivoId,
                     subTotal,
                     montoIGV,
                     totalPEN,
@@ -116,7 +117,7 @@ namespace BarcoAzul.Api.Repositorio.Almacen
                                 Ven_SubTotal = @subTotal, Ven_ValorVenta = @subTotal, Ven_TotalNeto = @Total, Ven_MontoIgv = @montoIGV, Ven_TotalSol = @totalPEN, Ven_TotalDol = @totalUSD,
                                 Ven_SubTotalSol = @subTotalPEN, Ven_ValorVentaSol = @subTotalPEN, Ven_TotalNetoSol = @totalPEN, Ven_MontoIgvSol = @montoIGVPEN,
                                 Ven_SubTotalDol = @subTotalUSD, Ven_ValorVentaDol = @subTotalUSD, Ven_TotalNetoDol = @totalUSD, Ven_MontoIgvDol = @montoIGVUSD
-                                WHERE Conf_Codigo = @EmpresaId AND TDoc_Codigo = @TipoDocumentoId AND Ven_Serie = @Serie AND Ven_Numero = @Numero";
+                                WHERE Conf_Codigo = @EmpresaId AND TDoc_Codigo = @TipoDocumentoId AND Ven_Serie = @Serie AND Ven_Numero = @Numero AND TipO_Codigo = @MotivoId";
 
             decimal subTotal = 0, montoIGV = 0;
             decimal subTotalPEN = 0, montoIGVPEN = 0, totalPEN = 0;
@@ -230,19 +231,21 @@ namespace BarcoAzul.Api.Repositorio.Almacen
 
             string query = @"	SELECT
 									V.Conf_Codigo AS EmpresaId,
+                                    V.Prov_Codigo AS ProveedorId,
+                                    RTRIM(P.Pro_RazonSocial) AS ProveedorNombre,
+									V.Ven_DireccionLleg AS ProveedorDireccion,
 									V.TDoc_Codigo AS TipoDocumentoId,
 									V.Ven_Serie AS Serie,
 									V.Ven_Numero AS Numero,
 									V.Ven_Venci AS FechaInicio,
 									V.Ven_Fecha AS FechaTerminacion,
 									V.Cli_Codigo AS ClienteId,
-									C.Cli_RazonSocial AS ClienteNombre,
 									V.Ven_RucDni AS ClienteNumeroDocumentoIdentidad,
 									V.Ven_Moneda AS MonedaId,
 									V.Ven_TCambio AS TipoCambio,
 									V.Per_Codigo AS PersonalId,
+                                    Ven_FechaEmision AS FechaEmision,
 									V.Ven_DireccionPart AS LineaProduccion,
-									V.Ven_DireccionLleg AS Envasado,
 									V.Ven_NroComp AS NumeroLote,
 									V.Ven_GuiaRemision AS GuiaRemision,
 									V.Ven_Observ AS Observacion,
@@ -252,10 +255,11 @@ namespace BarcoAzul.Api.Repositorio.Almacen
 									V.Ven_Flat01 AS CantidadSolicitada,
 									V.Ven_Flat02 AS CantidadProducida,
 									V.Ven_Total AS Total,
+                                    V.TipO_Codigo AS MotivoId,
 									V.Ven_Descuento AS TotalGalones
 								FROM
 									Venta V
-									INNER JOIN Cliente C ON V.Cli_Codigo = C.Cli_Codigo
+									INNER JOIN Proveedor P ON V.Prov_Codigo = P.Prov_Codigo
 								WHERE
 									V.Conf_Codigo = @empresaId
 									AND V.TDoc_Codigo = @tipoDocumentoId

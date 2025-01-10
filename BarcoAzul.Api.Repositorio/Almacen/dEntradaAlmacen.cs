@@ -21,7 +21,7 @@ namespace BarcoAzul.Api.Repositorio.Almacen
                                 Com_Anulado, Com_Cancelado, Com_Bloqueado, Com_FechaReg, Usu_Codigo, Com_SubTotalSol, Com_DescuentoSol, Com_ValorVentaSol, Com_TotalNetoSol,
                                 Com_MontoIgvSol, Com_OtrosSol, Com_RetencionSol, Com_PercepcionSol, Com_InafectoSol, Com_TotalSol, Com_SubTotalDol, Com_DescuentoDol, Com_ValorVentaDol,
                                 Com_TotalNetoDol, Com_MontoIgvDol, Com_OtrosDol, Com_RetencionDol, Com_PercepcionDol, Com_InafectoDol, Com_TotalDol, Com_BloqUsu, Com_BloqSist, Com_BloqProc,
-                                Com_Documento, Com_FechaContable)
+                                Com_Documento, Com_FechaContable, TipO_Codigo)
                                 VALUES (@EmpresaId, @ProveedorId, @TipoDocumentoId, @Serie, @Numero, @ClienteId, @ProveedorNumeroDocumentoIdentidad, @ProveedorDireccion, @PersonalId, 
                                 @FechaEmision, @MonedaId, @TipoCambio, @Observacion, '01', 'S', '+', 'CO', 'EF', @HoraEmision,
                                 @FechaEmision, 0, @total, 0, 0, @total, @total, 0, 0, 0,
@@ -29,7 +29,7 @@ namespace BarcoAzul.Api.Repositorio.Almacen
                                 'N', 'N', 'N', GETDATE(), @UsuarioId, @totalPEN, 0, @totalPEN, @totalPEN,
                                 0, 0, 0, 0, 0, @totalPEN, @totalUSD, 0, @totalUSD,
                                 @totalUSD, 0, 0, 0, 0, 0, @totalUSD, 'N', 'N', 'N',
-                                @NumeroDocumento, @FechaEmision)";
+                                @NumeroDocumento, @FechaEmision, @MotivoId)";
 
             var total = entradaAlmacen.Detalles.Sum(x => x.Importe);
             decimal totalPEN = 0, totalUSD = 0;
@@ -64,6 +64,7 @@ namespace BarcoAzul.Api.Repositorio.Almacen
                     entradaAlmacen.NumeroOP,
                     entradaAlmacen.Observacion,
                     entradaAlmacen.HoraEmision,
+                    entradaAlmacen.MotivoId,
                     total,
                     entradaAlmacen.UsuarioId,
                     totalPEN,
@@ -81,7 +82,7 @@ namespace BarcoAzul.Api.Repositorio.Almacen
                                 Com_SubTotalSol = @totalPEN, Com_ValorVentaSol = @totalPEN, Com_TotalNetoSol = @totalPEN, Com_TotalSol = @totalPEN, Com_SubTotalDol = @totalUSD, 
                                 Com_ValorVentaDol = @totalUSD, Com_TotalNetoDol = @totalUSD, Com_TotalDol = @totalUSD, Com_FechaContable = @FechaEmision, Com_Hora = @HoraEmision,
                                 Com_Abonado = 0 WHERE Conf_Codigo = @EmpresaId AND Prov_Codigo = @ProveedorId AND TDoc_Codigo = @TipoDocumentoId AND Com_Serie = @Serie 
-                                AND Com_Numero = @Numero AND Cli_Codigo = @ClienteId";
+                                AND Com_Numero = @Numero AND Cli_Codigo = @ClienteId AND TipO_Codigo = @MotivoId";
 
             var total = entradaAlmacen.Detalles.Sum(x => x.Importe);
             decimal totalPEN = 0, totalUSD = 0;
@@ -119,6 +120,7 @@ namespace BarcoAzul.Api.Repositorio.Almacen
                     entradaAlmacen.TipoDocumentoId,
                     entradaAlmacen.Serie,
                     entradaAlmacen.Numero,
+                    entradaAlmacen.MotivoId,
                     entradaAlmacen.ClienteId
                 });
             }
