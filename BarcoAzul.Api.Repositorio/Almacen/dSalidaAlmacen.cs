@@ -286,6 +286,7 @@ namespace BarcoAzul.Api.Repositorio.Almacen
 									Hora AS HoraEmision,
 									Documento AS NumeroDocumento,
 									Personal AS PersonalNombre,
+                                    Ven_Observ AS Observacion,
 									Ven_NroComp AS NumeroLote,
                                     Ven_DireccionLleg AS Concepto,
                                     Moneda AS MonedaId,
