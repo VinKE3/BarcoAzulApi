@@ -34,17 +34,12 @@ namespace BarcoAzul.Api.Logica.Almacen
                 salidaAlmacen.ProcesarDatos();
                 salidaAlmacen.CompletarDatosDetalles();
 
-                var detallesOperacion = GenerarDetallesOperacion(salidaAlmacen);
-
                 using (TransactionScope scope = new(TransactionScopeAsyncFlowOption.Enabled))
                 {
                     await dSalidaAlmacen.Registrar(salidaAlmacen);
 
                     dSalidaAlmacenDetalle dSalidaAlmacenDetalle = new(GetConnectionString());
                     await dSalidaAlmacenDetalle.Registrar(salidaAlmacen.Detalles);
-
-                    dDetalleOperacion dDetalleOperacion = new(GetConnectionString());
-                    await dDetalleOperacion.Registrar(detallesOperacion);
 
                     scope.Complete();
                 }
@@ -68,8 +63,6 @@ namespace BarcoAzul.Api.Logica.Almacen
                 salidaAlmacen.ProcesarDatos();
                 salidaAlmacen.CompletarDatosDetalles();
 
-                var detallesOperacion = GenerarDetallesOperacion(salidaAlmacen);
-
                 using (TransactionScope scope = new(TransactionScopeAsyncFlowOption.Enabled))
                 {
                     dSalidaAlmacen dSalidaAlmacen = new(GetConnectionString());
@@ -77,9 +70,6 @@ namespace BarcoAzul.Api.Logica.Almacen
 
                     dSalidaAlmacenDetalle dSalidaAlmacenDetalle = new(GetConnectionString());
                     await dSalidaAlmacenDetalle.Modificar(salidaAlmacen.Detalles);
-
-                    dDetalleOperacion dDetalleOperacion = new(GetConnectionString());
-                    await dDetalleOperacion.Modificar(detallesOperacion);
 
                     scope.Complete();
                 }
@@ -191,13 +181,6 @@ namespace BarcoAzul.Api.Logica.Almacen
                 dSalidaAlmacenDetalle dSalidaAlmacenDetalle = new(GetConnectionString());
                 salidaAlmacen.Detalles = (await dSalidaAlmacenDetalle.ListarPorSalidaAlmacen(salidaAlmacen.Id)).ToList();
 
-                //dDetalleOperacion dDetalleOperacion = new(GetConnectionString());
-                //var detallesOperacion = await dDetalleOperacion.ListarPorVenta(salidaAlmacen.Id);
-
-                //salidaAlmacen.CostoGalon = detallesOperacion.First(x => x.DetalleId == 1).Cantidad;
-                //salidaAlmacen.CostoGalonMasGastoIndirectos = detallesOperacion.First(x => x.DetalleId == 2).Cantidad;
-                //salidaAlmacen.CostoGalonMasIGV = detallesOperacion.First(x => x.DetalleId == 3).Cantidad;
-
                 if (incluirReferencias)
                 {
                     salidaAlmacen.Cliente = await new dCliente(GetConnectionString()).GetPorId(salidaAlmacen.ClienteId);
@@ -261,54 +244,6 @@ namespace BarcoAzul.Api.Logica.Almacen
                 personal,
                 motivos,
                 serie
-            };
-        }
-
-        private IEnumerable<oDetalleOperacion> GenerarDetallesOperacion(oSalidaAlmacen salidaAlmacen)
-        {
-            yield return new oDetalleOperacion
-            {
-                EmpresaId = salidaAlmacen.EmpresaId,
-                TipoDocumentoId = salidaAlmacen.TipoDocumentoId,
-                Serie = salidaAlmacen.Serie,
-                Numero = salidaAlmacen.Numero,
-                DetalleId = 1,
-                LineaId = _configuracionGlobal.DefaultLineaId,
-                SubLineaId = _configuracionGlobal.DefaultSubLineaId,
-                ArticuloId = _configuracionGlobal.DefaultArticuloId,
-                Descripcion = "COSTO DE GALON X 1 EN SOLES",
-                UnidadMedidaId = "1",
-                Cantidad = salidaAlmacen.CostoGalon
-            };
-
-            yield return new oDetalleOperacion
-            {
-                EmpresaId = salidaAlmacen.EmpresaId,
-                TipoDocumentoId = salidaAlmacen.TipoDocumentoId,
-                Serie = salidaAlmacen.Serie,
-                Numero = salidaAlmacen.Numero,
-                DetalleId = 2,
-                LineaId = _configuracionGlobal.DefaultLineaId,
-                SubLineaId = _configuracionGlobal.DefaultSubLineaId,
-                ArticuloId = _configuracionGlobal.DefaultArticuloId,
-                Descripcion = $"COSTO DE GALON X 1 EN SOLES + GASTOS INDIRECTOS ({salidaAlmacen.GastosIndirectos:#,###,##0.00}%)",
-                UnidadMedidaId = "1",
-                Cantidad = salidaAlmacen.CostoGalonMasGastoIndirectos
-            };
-
-            yield return new oDetalleOperacion
-            {
-                EmpresaId = salidaAlmacen.EmpresaId,
-                TipoDocumentoId = salidaAlmacen.TipoDocumentoId,
-                Serie = salidaAlmacen.Serie,
-                Numero = salidaAlmacen.Numero,
-                DetalleId = 3,
-                LineaId = _configuracionGlobal.DefaultLineaId,
-                SubLineaId = _configuracionGlobal.DefaultSubLineaId,
-                ArticuloId = _configuracionGlobal.DefaultArticuloId,
-                Descripcion = $"COSTO DE GALON X 1 EN SOLES + IGV ({salidaAlmacen.PorcentajeIGV:##0.00}%)",
-                UnidadMedidaId = "1",
-                Cantidad = salidaAlmacen.CostoGalonMasIGV
             };
         }
     }

@@ -27,7 +27,7 @@ namespace BarcoAzul.Api.Repositorio.Almacen
                                 Ven_BloqSist, Ven_BloqProc, Ven_SubTotalSol, Ven_ValorVentaSol, Ven_TotalNetoSol, Ven_MontoIgvSol, Ven_OtrosSol, Ven_RetencionSol, Ven_PercepcionSol,
                                 Ven_InafectoSol, Ven_SubTotalDol, Ven_ValorVentaDol, Ven_TotalNetoDol, Ven_MontoIgvDol, Ven_OtrosDol, Ven_RetencionDol, Ven_PercepcionDol, Ven_InafectoDol,
                                 Ven_Bloqueado, TipO_Codigo)
-								VALUES (@EmpresaId, @TipoDocumentoId, @Serie, @Numero, @FechaInicio, @FechaTerminacion, @ClienteId, @ClienteNumeroDocumentoIdentidad, @MonedaId, @TipoCambio, 
+								VALUES (@EmpresaId, @TipoDocumentoId, @Serie, @Numero, @FechaInicio, @FechaInicio, @ClienteId, @ClienteNumeroDocumentoIdentidad, @MonedaId, @TipoCambio, 
 								@PersonalId, @LineaProduccion, @Envasado, @NumeroLote, @GuiaRemision, @Observacion, @IncluyeIGV, @PorcentajeIGV, @GastosIndirectos, @CantidadSolicitada, 
 								@CantidadProducida, @HoraEmision, @UsuarioId, 'N', 0, @Total, @NumeroDocumento, GETDATE(), '01', 'S', '-',
                                 'CO', 'EF', @subTotal, 0, @TotalGalones, @subTotal, @Total, @montoIGV, 0, 0,
@@ -73,7 +73,6 @@ namespace BarcoAzul.Api.Repositorio.Almacen
                     salidaAlmacen.Serie,
                     salidaAlmacen.Numero,
                     salidaAlmacen.FechaInicio,
-                    salidaAlmacen.FechaTerminacion,
                     salidaAlmacen.ClienteId,
                     salidaAlmacen.ClienteNumeroDocumentoIdentidad,
                     salidaAlmacen.MonedaId,
@@ -152,7 +151,6 @@ namespace BarcoAzul.Api.Repositorio.Almacen
                 await db.ExecuteAsync(query, new
                 {
                     salidaAlmacen.FechaInicio,
-                    salidaAlmacen.FechaTerminacion,
                     salidaAlmacen.ClienteId,
                     salidaAlmacen.ClienteNumeroDocumentoIdentidad,
                     salidaAlmacen.MonedaId,
@@ -259,7 +257,7 @@ namespace BarcoAzul.Api.Repositorio.Almacen
 									V.Ven_Descuento AS TotalGalones
 								FROM
 									Venta V
-									INNER JOIN Proveedor P ON V.Prov_Codigo = P.Prov_Codigo
+									LEFT JOIN Proveedor P ON V.Prov_Codigo = P.Prov_Codigo
 								WHERE
 									V.Conf_Codigo = @empresaId
 									AND V.TDoc_Codigo = @tipoDocumentoId

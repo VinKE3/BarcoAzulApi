@@ -14,9 +14,7 @@ namespace BarcoAzul.Api.Modelos.Entidades
         [StringLength(4, MinimumLength = 4, ErrorMessage = "La serie debe tener 4 caracteres.")]
         public string Serie { get; set; }
         public string Numero { get; set; }
-        public DateTime FechaEmision { get; set; }
         public DateTime FechaInicio { get; set; }
-        public DateTime FechaTerminacion { get; set; }
         public string ClienteId { get; set; }
         public string ClienteNombre { get; set; }
         public string ClienteNumeroDocumentoIdentidad { get; set; }
@@ -45,9 +43,6 @@ namespace BarcoAzul.Api.Modelos.Entidades
         [Required(ErrorMessage = "El total es requerido.")]
         public decimal Total { get; set; }
         public decimal TotalGalones { get; set; }
-        public decimal CostoGalon { get; set; }
-        public decimal CostoGalonMasGastoIndirectos { get; set; }
-        public decimal CostoGalonMasIGV { get; set; }
         public List<oSalidaAlmacenDetalle> Detalles { get; set; }
 
         #region Adicionales
@@ -86,7 +81,7 @@ namespace BarcoAzul.Api.Modelos.Entidades
                     detalle.TipoDocumentoId = TipoDocumentoId;
                     detalle.Serie = Serie;
                     detalle.Numero = Numero;
-                    detalle.FechaEmision = FechaTerminacion;
+                    detalle.FechaEmision = FechaInicio;
                     detalle.MonedaId = MonedaId;
                     detalle.PorcentajeIGV = PorcentajeIGV;
                 }

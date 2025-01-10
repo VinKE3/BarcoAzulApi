@@ -14,12 +14,12 @@ namespace BarcoAzul.Api.Repositorio.Almacen
                                 SubL_Codigo, Art_Codigo, DVen_Descripcion, Uni_Codigo, DVen_Moneda, DVen_Cantidad, DVen_Precio, DVen_PorcDscto,
                                 DVen_Descuento, DVen_PrecioNeto, DVen_PorcIgv, DVen_MontoIgv, DVen_Inafecto, DVen_Importe, DVen_Flat01, DVen_Flat02,
                                 Mar_Codigo, Dven_CtrlStock, DVen_TotalPeso, DVen_CstoMinTra, DVen_Turno, DVen_CodPtoVenta, DVen_CierreZ, DVen_CierreX,
-                                DArt_Codigo, DVen_CantEnt, DVen_Detraccion, DVen_Costo, DVen_PrecioCosto, DVen_MontoICBPER, DVen_Utilidad)
+                                DArt_Codigo, DVen_CantEnt, DVen_Detraccion, DVen_MontoICBPER)
                                 VALUES (@EmpresaId, @TipoDocumentoId, @Serie, @Numero, @DetalleId, @FechaEmision, '01', 'S', @LineaId,
                                 @SubLineaId, @ArticuloId, @Descripcion, @UnidadMedidaId, @MonedaId, @Cantidad, @PrecioUnitario, 0,
-                                0, @SubTotal, @PorcentajeIGV, @MontoIGV, 0, @Importe, 0, 0,
+                                0, @SubTotal, @PorcentajeIGV, @MontoIGV, 0, 0,
                                 @MarcaId, '-', 0, 0, NULL, NULL, 'N', 'N',
-                                @CodigoBarras, NULL, 0, NULL, NULL, 0, 0)";
+                                @CodigoBarras, NULL, 0, NULL, NULL, 0)";
 
             using (var db = GetConnection())
             {

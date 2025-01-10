@@ -33,7 +33,7 @@ namespace BarcoAzulApi.Areas.Almacen.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (!await _bSalidaAlmacen.AnioMesHabilitado(model.FechaTerminacion))
+                if (!await _bSalidaAlmacen.AnioMesHabilitado(model.FechaInicio))
                 {
                     AgregarMensajes(_bSalidaAlmacen.Mensajes);
                     return StatusCode(StatusCodes.Status403Forbidden, GenerarRespuesta(false));
@@ -45,7 +45,7 @@ namespace BarcoAzulApi.Areas.Almacen.Controllers
                     return StatusCode(StatusCodes.Status403Forbidden, GenerarRespuesta(false));
                 }
 
-                if (!_bSalidaAlmacen.IsFechaValida(TipoAccion.Registrar, model.FechaTerminacion))
+                if (!_bSalidaAlmacen.IsFechaValida(TipoAccion.Registrar, model.FechaInicio))
                 {
                     AgregarMensajes(_bSalidaAlmacen.Mensajes);
                     return StatusCode(StatusCodes.Status403Forbidden, GenerarRespuesta(false));
@@ -85,7 +85,7 @@ namespace BarcoAzulApi.Areas.Almacen.Controllers
                     return StatusCode(StatusCodes.Status403Forbidden, GenerarRespuesta(false));
                 }
 
-                if (!await _bSalidaAlmacen.AnioMesHabilitado(model.FechaTerminacion))
+                if (!await _bSalidaAlmacen.AnioMesHabilitado(model.FechaInicio))
                 {
                     AgregarMensajes(_bSalidaAlmacen.Mensajes);
                     return StatusCode(StatusCodes.Status403Forbidden, GenerarRespuesta(false));
@@ -303,7 +303,7 @@ namespace BarcoAzulApi.Areas.Almacen.Controllers
 
                 var salidaAlmacen = await _bSalidaAlmacen.GetPorId(id);
 
-                if (!_bSalidaAlmacen.IsFechaValida(accion, salidaAlmacen.FechaTerminacion))
+                if (!_bSalidaAlmacen.IsFechaValida(accion, salidaAlmacen.FechaInicio))
                 {
                     AgregarMensajes(_bSalidaAlmacen.Mensajes);
                     return Ok(GenerarRespuesta(true, false));

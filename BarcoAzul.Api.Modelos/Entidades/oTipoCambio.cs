@@ -12,9 +12,6 @@ namespace BarcoAzul.Api.Modelos.Entidades
         [Required(ErrorMessage = "El precio de venta es requerido.")]
         [Range(0.0001, 1000, ErrorMessage = "El precio de venta debe ser mayor que cero (0.00).")]
         public decimal PrecioVenta { get; set; }
-        [Required(ErrorMessage = "El precio de producción es requerido.")]
-        [Range(0.0001, 1000, ErrorMessage = "El precio de producción debe ser mayor que cero (0.00).")]
-
 
         #region Adicionales
         [JsonIgnore]
