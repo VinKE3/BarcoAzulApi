@@ -333,8 +333,9 @@ namespace BarcoAzul.Api.Repositorio.Venta
 									CAST(CASE WHEN AfectarStock = 'S' THEN 1 ELSE 0 END AS BIT) AS AfectarStock,
 									CAST(CASE WHEN Anulado = 'S' THEN 1 ELSE 0 END AS BIT) AS IsAnulado,
 									CAST(CASE WHEN Bloqueado = 'S' THEN 1 ELSE 0 END AS BIT) AS IsBloqueado,
-									Ven_NroComp AS Cotizacion,
+									pedido AS NotaPedido,
 									Ven_GuiaRemision AS GuiaRemision,
+                                    Personal AS Personal,
 									CAST(Sunat AS BIT) AS IsEnviado
 								FROM 
 									v_lst_Venta

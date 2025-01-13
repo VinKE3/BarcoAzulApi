@@ -15,8 +15,8 @@
         public bool IsBloqueado { get; set; }
         public string Cotizacion { get; set; }
         public string OrdenPedido { get; set; }
-        public string GuiaRemision { get; set; }
-        public string TiendaVendedor { get; set; }
+        public string NotaPedido { get; set; }
+        public string Personal { get; set; }
         public bool IsEnviado { get; set; }
         public bool Enviar { get; set; }
     }
