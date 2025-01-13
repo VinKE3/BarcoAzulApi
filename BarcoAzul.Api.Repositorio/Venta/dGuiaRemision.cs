@@ -231,7 +231,7 @@ namespace BarcoAzul.Api.Repositorio.Venta
             }
         }
 
-        public async Task<oPagina<vGuiaRemision>> Listar(DateTime fechaInicio, DateTime fechaFin, string clienteNombre, string personalId, string serie, oPaginacion paginacion)
+        public async Task<oPagina<vGuiaRemision>> Listar(string[] tiposSeries, DateTime fechaInicio, DateTime fechaFin, string clienteNombre, string personalId, oPaginacion paginacion)
         {
             string query = $@"	SELECT 
 									Codigo AS Id,
@@ -248,6 +248,7 @@ namespace BarcoAzul.Api.Repositorio.Venta
 									v_lst_Venta
 								WHERE 
 									TipoDoc = '{TipoDocumentoId}'
+                                    AND Serie IN ({JoinToQuery(tiposSeries)})
 									AND (Fecha BETWEEN @fechaInicio AND @fechaFin)
 									AND Razon_Social LIKE '%' + @clienteNombre + '%'
 									{(string.IsNullOrWhiteSpace(personalId) ? string.Empty : "AND Per_Codigo = @personalId")}
@@ -267,7 +268,6 @@ namespace BarcoAzul.Api.Repositorio.Venta
                     fechaInicio,
                     fechaFin,
                     clienteNombre = new DbString { Value = clienteNombre, IsAnsi = true, IsFixedLength = false, Length = 250 },
-                    serie = new DbString { Value = serie, IsAnsi = true, IsFixedLength = false, Length = 250 },
                     personalId = new DbString { Value = personalId, IsAnsi = true, IsFixedLength = true, Length = 8 }
                 }))
                 {

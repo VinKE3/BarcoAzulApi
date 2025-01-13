@@ -19,14 +19,14 @@ namespace BarcoAzul.Api.Repositorio.Compra
                                 Com_AfectarStock, Com_AfectarPrecio, Usu_Codigo, Com_FechaReg, Com_Hora, Suc_Codigo, Com_IngEgrStock, Per_Codigo, Com_PorcDscto, Com_Descuento, Com_Otros, Com_Inafecto,
                                 Com_PorcReten, Com_Retencion, Com_PorcPercep, Com_Percepcion, Com_Abonado, Com_Saldo, Com_ConIgv, Com_Retenc, Com_Percep, Com_Anulado, Com_Cancelado,
                                 Com_Bloqueado, Com_BloqUsu, Com_BloqSist, Com_BloqProc, Com_Documento, Com_CierreZ, Com_CierreX, Com_LlegViaNom, TipO_Codigo, Com_AboItem,
-                                Com_Facturado, Com_FechaPago, Com_OrdCompra)
+                                Com_Facturado)
                                 VALUES (@EmpresaId, @ProveedorId, @TipoDocumentoId, @Serie, @Numero, @ClienteId, @FechaEmision, @FechaContable, @FechaVencimiento,
                                 @ProveedorNumeroDocumentoIdentidad, @ProveedorDireccion, @TipoCompraId, @MonedaId, @TipoCambio, @TipoPagoId, @NumeroOperacion, @CuentaCorrienteId, @DocumentoReferenciaId, 
                                 @Abonar, @MotivoNotaId, @MotivoSustento, @GuiaRemision, @Observacion, @SubTotal, @PorcentajeIGV, @MontoIGV, @SubTotal, @TotalNeto, @Total, @IncluyeIGV,
                                 @AfectarStock, @AfectarPrecio, @UsuarioId, GETDATE(), @HoraEmision, '01', @IngresoEgresoStock, @PersonalId, 0, 0, 0, 0,
                                 0, 0, 0, 0, 0, @Total, @ConIGV, 'S', 'N', 'N', 'N', 
                                 'S', 'N', 'N', 'N', @NumeroDocumento, 'N', 'N', @NumeroDocumento, @TipoOperacionId, 0, 
-                                'N', @FechaVencimiento, @NumeroOrdenesCompraRelacionadas)";
+                                'N')";
 
             using (var db = GetConnection())
             {
@@ -96,13 +96,13 @@ namespace BarcoAzul.Api.Repositorio.Compra
 
                 var saldo = documentoCompra.Total - montoAbonado;
 
-                query = @"  UPDATE Compra SET Com_Fecha = @FechaEmision, Com_FechaContable = @FechaContable, Com_Venci = @FechaVencimiento, Com_FechaPago = @FechaVencimiento,
+                query = @"  UPDATE Compra SET Com_Fecha = @FechaEmision, Com_FechaContable = @FechaContable, Com_Venci = @FechaVencimiento,
                             Com_DireccionPart = @ProveedorDireccion, Com_TCompra = @TipoCompraId, Com_TCambio = @TipoCambio, Com_TPago = @TipoPagoId, Com_NroComp = @NumeroOperacion,
                             Com_Telefono = @CuentaCorrienteId, Com_TipoDocMod = @DocumentoReferenciaId, Com_Abonar = @Abonar, Mot_Codigo = @MotivoNotaId, Com_OtroMotivo = @MotivoSustento,
                             Com_GuiaRemision = @GuiaRemision, Com_Observ = @Observacion, Com_SubTotal = @SubTotal, Com_PorcIgv = @PorcentajeIGV, Com_MontoIgv = @MontoIGV,
                             Com_ValorVenta = @SubTotal, Com_TotalNeto = @TotalNeto, Com_Total = @Total, Com_IncluyeIgv = @IncluyeIGV, Com_AfectarStock = @AfectarStock, Com_AfectarPrecio = @AfectarPrecio,
-                            Usu_Codigo = @UsuarioId, Com_FechaMod = GETDATE(), Com_Abonado = @Abonado, Com_Saldo = @Saldo, Com_Cancelado = @IsCancelado, Com_Bloqueado = 'S',
-                            Com_OrdCompra = @NumeroOrdenesCompraRelacionadas WHERE Conf_Codigo = @EmpresaId AND Prov_Codigo = @ProveedorId AND TDoc_Codigo = @TipoDocumentoId
+                            Usu_Codigo = @UsuarioId, Com_FechaMod = GETDATE(), Com_Abonado = @Abonado, Com_Saldo = @Saldo, Com_Cancelado = @IsCancelado, Com_Bloqueado = 'S'
+                            WHERE Conf_Codigo = @EmpresaId AND Prov_Codigo = @ProveedorId AND TDoc_Codigo = @TipoDocumentoId
                             AND Com_Serie = @Serie AND Com_Numero = @Numero AND Cli_Codigo = @ClienteId";
 
                 await db.ExecuteAsync(query, new
@@ -194,7 +194,7 @@ namespace BarcoAzul.Api.Repositorio.Compra
 									C.Com_TPago AS TipoPagoId,
 									C.Com_NroComp AS NumeroOperacion,
 									C.Com_Telefono AS CuentaCorrienteId,
-									C.Com_TipoDocMod AS DocumentoReferenciaId,
+									C.Com_TipoDocMod + C.Cli_Codigo AS DocumentoReferenciaId,
 									CAST(CASE WHEN C.Com_Abonar = 'S' THEN 1 ELSE 0 END AS BIT) AS Abonar,
 									C.Mot_Codigo AS MotivoNotaId,
 									C.Com_OtroMotivo AS MotivoSustento,
@@ -205,6 +205,8 @@ namespace BarcoAzul.Api.Repositorio.Compra
 									C.Com_MontoIgv AS MontoIGV,
 									C.Com_TotalNeto AS TotalNeto,
 									C.Com_Total AS Total,
+                                    C.Com_Abonado AS Abonado,
+                                    C.Com_Saldo AS Saldo,
 									CAST(CASE WHEN C.Com_IncluyeIgv = 'S' THEN 1 ELSE 0 END AS BIT) AS IncluyeIGV,
 									CAST(CASE WHEN C.Com_AfectarStock = 'S' THEN 1 ELSE 0 END AS BIT) AS AfectarStock,
                                     CAST(CASE WHEN C.Com_AfectarPrecio = 'S' THEN 1 ELSE 0 END AS BIT) AS AfectarPrecio
@@ -290,6 +292,7 @@ namespace BarcoAzul.Api.Repositorio.Compra
 	                                Fecha AS FechaContable,
 	                                Documento AS NumeroDocumento,
 	                                Proveedor AS ProveedorNombre,
+                                    CodigoPendiente AS CodigoPendiente,
 	                                Moneda AS MonedaId,
 	                                Total AS Total
                                 FROM 

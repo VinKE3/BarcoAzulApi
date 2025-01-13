@@ -231,15 +231,16 @@ namespace BarcoAzul.Api.Logica.Venta
             }
         }
 
-        public async Task<oPagina<vGuiaRemision>> Listar(DateTime? fechaInicio, DateTime? fechaFin, string clienteNombre, string serie, oPaginacion paginacion)
+        public async Task<oPagina<vGuiaRemision>> Listar(DateTime? fechaInicio, DateTime? fechaFin, string clienteNombre, string tipoSerieId, oPaginacion paginacion)
         {
             try
             {
                 fechaInicio ??= _configuracionGlobal.FiltroFechaInicio;
                 fechaFin ??= _configuracionGlobal.FiltroFechaFin;
+                var tiposSeriesId = string.IsNullOrWhiteSpace(tipoSerieId) ? GetTiposDocumentoPermitidos() : new string[] { tipoSerieId };
 
                 dGuiaRemision dGuiaRemision = new(GetConnectionString());
-                return await dGuiaRemision.Listar(fechaInicio.Value, fechaFin.Value, clienteNombre ?? string.Empty, serie ?? string.Empty, _datosUsuario.PersonalId, paginacion);
+                return await dGuiaRemision.Listar(tiposSeriesId, fechaInicio.Value, fechaFin.Value, clienteNombre ?? string.Empty, _datosUsuario.PersonalId, paginacion);
             }
             catch (Exception ex)
             {
@@ -295,5 +296,7 @@ namespace BarcoAzul.Api.Logica.Venta
                 tipos
             };
         }
+
+        private static string[] GetTiposDocumentoPermitidos() => new[] { "T001", "F001" };
     }
 }

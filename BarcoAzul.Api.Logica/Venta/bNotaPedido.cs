@@ -199,6 +199,7 @@ namespace BarcoAzul.Api.Logica.Venta
 
         public async Task<object> FormularioTablas()
         {
+            var tiposDocumento = await new dTipoDocumento(GetConnectionString()).Listar(new string[] { "01", "02", "NP" });
             var vendedores = await new dPersonal(GetConnectionString()).ListarTodos();
             var monedas = dMoneda.ListarTodos();
             var tiposVenta = dTipoVentaCompra.ListarTodos();
@@ -211,6 +212,7 @@ namespace BarcoAzul.Api.Logica.Venta
 
             return new
             {
+                tiposDocumento,
                 vendedores,
                 monedas,
                 tiposVenta,
