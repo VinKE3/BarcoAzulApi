@@ -152,6 +152,7 @@ namespace BarcoAzul.Api.Modelos.Entidades
         public string IngresoEgresoStock { get; set; }
         [JsonIgnore]
         public decimal Costo => decimal.Round(Cantidad * PrecioCompra, 2, MidpointRounding.AwayFromZero);
+
         public decimal? CantidadPendiente { get; set; }
     }
 

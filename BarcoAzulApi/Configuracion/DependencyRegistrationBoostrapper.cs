@@ -71,7 +71,7 @@ namespace BarcoAzulApi.Configuracion
             services.AddScoped<bNotaPedido>();
             services.AddScoped<bDocumentoVenta>();
             //services.AddScoped<bRetencion>();
-            //services.AddScoped<bGuiaRemision>();
+            services.AddScoped<bGuiaRemision>();
             //services.AddScoped<bPlanillaCobro>();
             //services.AddScoped<bLetraCambioVenta>();
             //services.AddScoped<bProcesoLetra>();

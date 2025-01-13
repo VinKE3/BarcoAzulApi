@@ -36,7 +36,6 @@ namespace BarcoAzul.Api.Logica.Venta
                 documentoVenta.ProcesarDatos();
                 documentoVenta.CompletarDatosDetalles();
                 documentoVenta.CompletarDatosCuotas();
-                documentoVenta.CompletarDatosAnticipos();
 
                 using (TransactionScope scope = new(TransactionScopeAsyncFlowOption.Enabled))
                 {
@@ -49,12 +48,6 @@ namespace BarcoAzul.Api.Logica.Venta
                     {
                         dDocumentoVentaCuota dDocumentoVentaCuota = new(GetConnectionString());
                         await dDocumentoVentaCuota.Registrar(documentoVenta.Cuotas);
-                    }
-
-                    if (documentoVenta.Anticipos is not null)
-                    {
-                        dDocumentoVentaAnticipo dDocumentoVentaAnticipo = new(GetConnectionString());
-                        await dDocumentoVentaAnticipo.Registrar(documentoVenta.Anticipos);
                     }
 
                     //:TODO CONSULTAR A JOSEPH
@@ -100,7 +93,6 @@ namespace BarcoAzul.Api.Logica.Venta
                 documentoVenta.ProcesarDatos();
                 documentoVenta.CompletarDatosDetalles();
                 documentoVenta.CompletarDatosCuotas();
-                documentoVenta.CompletarDatosAnticipos();
 
                 using (TransactionScope scope = new(TransactionScopeAsyncFlowOption.Enabled))
                 {
@@ -111,9 +103,6 @@ namespace BarcoAzul.Api.Logica.Venta
 
                     dDocumentoVentaCuota dDocumentoVentaCuota = new(GetConnectionString());
                     await dDocumentoVentaCuota.Modificar(documentoVenta.Id, documentoVenta.Cuotas);
-
-                    dDocumentoVentaAnticipo dDocumentoVentaAnticipo = new(GetConnectionString());
-                    await dDocumentoVentaAnticipo.Modificar(documentoVenta.Id, documentoVenta.Anticipos);
 
                     decimal montoAbonado = documentoVenta.TipoVentaId == "CO" && documentoVenta.TipoCobroId != "CP" ? documentoVenta.Total - documentoVenta.MontoRetencion : 0;
                     await AbonarVenta(documentoVenta, montoAbonado);
@@ -240,9 +229,6 @@ namespace BarcoAzul.Api.Logica.Venta
 
                 dDocumentoVentaCuota dDocumentoVentaCuota = new(GetConnectionString());
                 documentoVenta.Cuotas = (await dDocumentoVentaCuota.ListarPorDocumentoVenta(documentoVenta.Id)).ToList();
-
-                dDocumentoVentaAnticipo dDocumentoVentaAnticipo = new(GetConnectionString());
-                documentoVenta.Anticipos = (await dDocumentoVentaAnticipo.ListarPorDocumentoVenta(documentoVenta.Id)).ToList();
 
                 if (incluirReferencias)
                 {

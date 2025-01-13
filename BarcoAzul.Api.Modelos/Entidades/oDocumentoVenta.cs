@@ -67,7 +67,6 @@ namespace BarcoAzul.Api.Modelos.Entidades
         public decimal FactorImpuestoBolsa { get; set; }
         public List<oDocumentoVentaDetalle> Detalles { get; set; }
         public List<oDocumentoVentaCuota> Cuotas { get; set; }
-        public List<oDocumentoVentaAnticipo> Anticipos { get; set; }
 
         #region Adicionales
         [JsonIgnore]
@@ -170,20 +169,6 @@ namespace BarcoAzul.Api.Modelos.Entidades
             }
         }
 
-        public void CompletarDatosAnticipos()
-        {
-            if (Anticipos is not null)
-            {
-                foreach (var anticipo in Anticipos)
-                {
-                    anticipo.EmpresaId = EmpresaId;
-                    anticipo.TipoDocumentoId = TipoDocumentoId;
-                    anticipo.Serie = Serie;
-                    anticipo.Numero = Numero;
-                    anticipo.UsuarioId = UsuarioId;
-                }
-            }
-        }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
@@ -192,10 +177,6 @@ namespace BarcoAzul.Api.Modelos.Entidades
             if (Detalles is null || !Detalles.Any())
                 yield return new ValidationResult("No existen detalles.");
 
-            if (Total == 0 && (!IsOperacionGratuita || (Anticipos is not null && Anticipos.Count != 0)))
-            {
-                yield return new ValidationResult("El total no puede ser igual a cero (0.00)");
-            }
 
             if (!string.IsNullOrWhiteSpace(GuiaRemision) && GuiaRemision.Mid(4, 1) != "-")
             {
@@ -373,25 +354,4 @@ namespace BarcoAzul.Api.Modelos.Entidades
         public decimal Monto { get; set; }
     }
 
-    public class oDocumentoVentaAnticipo
-    {
-        [JsonIgnore]
-        public string DocumentoVentaId => $"{EmpresaId}{TipoDocumentoId}{Serie}{Numero}";
-        [JsonIgnore]
-        public string EmpresaId { get; set; }
-        [JsonIgnore]
-        public string TipoDocumentoId { get; set; }
-        [JsonIgnore]
-        public string Serie { get; set; }
-        [JsonIgnore]
-        public string Numero { get; set; }
-        public int AnticipoId { get; set; }
-        public string DocumentoRelacionadoId { get; set; }
-        public DateTime FechaEmision { get; set; }
-        public string MonedaId { get; set; }
-        public decimal TipoCambio { get; set; }
-        public decimal SubTotal { get; set; }
-        [JsonIgnore]
-        public string UsuarioId { get; set; }
-    }
 }

@@ -1,32 +1,25 @@
 ﻿using BarcoAzul.Api.Modelos.Entidades;
 using Dapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BarcoAzul.Api.Repositorio.Venta
 {
-    public class dDocumentoVentaDetalle : dComun
+    public class dGuiaRemisionDetalle : dComun
     {
-        public dDocumentoVentaDetalle(string connectionString) : base(connectionString) { }
+        public dGuiaRemisionDetalle(string connectionString) : base(connectionString) { }
 
         #region CRUD
-        public async Task Registrar(IEnumerable<oDocumentoVentaDetalle> detalles)
+        public async Task Registrar(IEnumerable<oGuiaRemisionDetalle> detalles)
         {
-            string query = @"   INSERT INTO Detalle_Venta(Conf_Codigo, TDoc_Codigo, Ven_Serie, Ven_Numero, DVen_Item, DVen_Fecha, Suc_Codigo, DVen_AfectarStock, Lin_Codigo,
+            string query = @"   INSERT INTO Detalle_Venta (Conf_Codigo, TDoc_Codigo, Ven_Serie, Ven_Numero, DVen_Item, DVen_Fecha, Suc_Codigo, DVen_AfectarStock, Lin_Codigo,
                                 SubL_Codigo, Art_Codigo, DVen_Descripcion, Uni_Codigo, DVen_Moneda, DVen_Cantidad, DVen_Precio, DVen_PorcDscto,
                                 DVen_Descuento, DVen_PrecioNeto, DVen_PorcIgv, DVen_MontoIgv, DVen_Inafecto, DVen_Importe, DVen_Flat01, DVen_Flat02,
                                 Mar_Codigo, Dven_CtrlStock, DVen_TotalPeso, DVen_CstoMinTra, DVen_Turno, DVen_CodPtoVenta, DVen_CierreZ, DVen_CierreX,
-                                DArt_Codigo, DVen_CantEnt, DVen_Detraccion, DVen_PorcComision, Dven_MontoComision, DVen_Costo, DVen_PrecioCosto, 
-                                DVen_MontoICBPER, DVen_Utilidad)
+                                DArt_Codigo, DVen_Costo, DVen_PrecioCosto, DVen_MontoICBPER, DVen_Utilidad, DVen_CantEnt)
                                 VALUES (@EmpresaId, @TipoDocumentoId, @Serie, @Numero, @DetalleId, @FechaEmision, '01', @AfectarStock, @LineaId,
                                 @SubLineaId, @ArticuloId, @Descripcion, @UnidadMedidaId, @MonedaId, @Cantidad, @PrecioUnitario, 0,
-                                0, 0, @PorcentajeIgv, @MontoIGV, @SubTotal, @Importe, 0, 0,
-                                @MarcaId, @IngresoEgresoStock, 0, 0, NULL, NULL, 'N', 'N',
-                                @CodigoBarras, @CantidadPendiente, 0, 0, 0, @Costo, @PrecioCompra, 
-                                @MontoICBPER, @Utilidad)";
+                                0, @SubTotal, @PorcentajeIGV, @MontoIGV, 0, @Importe, 0, 0,
+                                @MarcaId, '-', 0, 0, NULL, NULL, 'N', 'N',
+                                @CodigoBarras, @Costo, @PrecioCompra, 0, 0, @CantidadPendiente)";
 
             using (var db = GetConnection())
             {
@@ -54,30 +47,46 @@ namespace BarcoAzul.Api.Repositorio.Venta
                         detalle.SubTotal,
                         detalle.Importe,
                         detalle.MarcaId,
-                        detalle.IngresoEgresoStock,
                         detalle.CodigoBarras,
-                        detalle.CantidadPendiente,
                         detalle.Costo,
                         detalle.PrecioCompra,
-                        detalle.MontoICBPER,
-                        detalle.Utilidad
+                        detalle.CantidadPendiente
                     });
                 }
             }
         }
 
-        public async Task Modificar(IEnumerable<oDocumentoVentaDetalle> detalles)
+        public async Task Modificar(IEnumerable<oGuiaRemisionDetalle> detalles)
         {
-            string documentoVentaId = detalles.First().DocumentoVentaId;
+            string guiaRemisionId = detalles.First().GuiaRemisionId;
 
-            await EliminarDeDocumentoVenta(documentoVentaId);
+            await EliminarDeGuiaRemision(guiaRemisionId);
             await Registrar(detalles);
         }
 
-        public async Task EliminarDeDocumentoVenta(string documentoVentaId)
+        public async Task EliminarDeGuiaRemision(string guiaRemisionId)
         {
-            var splitId = dDocumentoVenta.SplitId(documentoVentaId);
+            var splitId = dGuiaRemision.SplitId(guiaRemisionId);
             string query = @"DELETE Detalle_Venta WHERE Conf_Codigo = @empresaId AND TDoc_Codigo = @tipoDocumentoId AND Ven_Serie = @serie AND Ven_Numero = @numero";
+
+            using (var db = GetConnection())
+            {
+                await db.ExecuteAsync(query, new
+                {
+                    empresaId = new DbString { Value = splitId.EmpresaId, IsAnsi = true, IsFixedLength = true, Length = 2 },
+                    tipoDocumentoId = new DbString { Value = splitId.TipoDocumentoId, IsAnsi = true, IsFixedLength = true, Length = 2 },
+                    serie = new DbString { Value = splitId.Serie, IsAnsi = true, IsFixedLength = true, Length = 4 },
+                    numero = new DbString { Value = splitId.Numero, IsAnsi = true, IsFixedLength = true, Length = 10 }
+                });
+            }
+        }
+
+        public async Task AnularDeGuiaRemision(string guiaRemisionId)
+        {
+            var splitId = dGuiaRemision.SplitId(guiaRemisionId);
+
+            string query = @"   UPDATE Detalle_Venta SET DVen_AfectarStock = 'N', DVen_Costo = 0
+                                WHERE Conf_Codigo = @empresaId AND TDoc_Codigo = @tipoDocumentoId AND Ven_Serie = @serie AND Ven_Numero = @numero";
 
             using (var db = GetConnection())
             {
@@ -93,9 +102,9 @@ namespace BarcoAzul.Api.Repositorio.Venta
         #endregion
 
         #region Otros Métodos
-        public async Task<IEnumerable<oDocumentoVentaDetalle>> ListarPorDocumentoVenta(string documentoVentaId)
+        public async Task<IEnumerable<oGuiaRemisionDetalle>> ListarPorGuiaRemision(string guiaRemisionId)
         {
-            var splitId = dDocumentoVenta.SplitId(documentoVentaId);
+            var splitId = dGuiaRemision.SplitId(guiaRemisionId);
 
             string query = @"   SELECT
 	                                DV.DVen_Item AS DetalleId,
@@ -108,9 +117,10 @@ namespace BarcoAzul.Api.Repositorio.Venta
 	                                DV.DArt_Codigo AS CodigoBarras,
 	                                DV.DVen_Cantidad AS Cantidad,
 	                                DV.DVen_Precio AS PrecioUnitario,
-	                                DV.DVen_Inafecto AS SubTotal,
-	                                DV.DVen_MontoIgv AS MontoIGV,
+	                                DV.Dven_PrecioNeto AS SubTotal,
+	                                DV.DVen_MontoIgv AS MontoIgv,
 	                                DV.DVen_Importe AS Importe,
+                                    DV.DVen_TotalPeso AS TotalPeso,
 	                                U.Uni_Nombre AS UnidadMedidaDescripcion,
 	                                DV.DVen_CantEnt AS CantidadPendiente
                                 FROM
@@ -126,7 +136,7 @@ namespace BarcoAzul.Api.Repositorio.Venta
 
             using (var db = GetConnection())
             {
-                return await db.QueryAsync<oDocumentoVentaDetalle>(query, new
+                return await db.QueryAsync<oGuiaRemisionDetalle>(query, new
                 {
                     empresaId = new DbString { Value = splitId.EmpresaId, IsAnsi = true, IsFixedLength = true, Length = 2 },
                     tipoDocumentoId = new DbString { Value = splitId.TipoDocumentoId, IsAnsi = true, IsFixedLength = true, Length = 2 },

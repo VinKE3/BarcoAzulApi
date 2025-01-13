@@ -262,7 +262,7 @@ namespace BarcoAzul.Api.Repositorio.Venta
 									CAST(CASE WHEN Anulado = 'S' THEN 1 ELSE 0 END AS BIT) AS IsAnulado,
 									CAST(CASE WHEN Bloqueado = 'S' THEN 1 ELSE 0 END AS BIT) AS IsBloqueado,
 									CAST(CASE WHEN Ven_Facturado = 'S' THEN 1 ELSE 0 END AS BIT) AS IsFacturado,
-									Ven_NroComp AS DocumentoReferencia,
+									Ven_DocFactur AS DocumentoReferencia,
 									Personal AS PersonalNombre
 								FROM
 									v_lst_Venta

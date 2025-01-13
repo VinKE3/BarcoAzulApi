@@ -3,6 +3,7 @@
     public class vGuiaRemision
     {
         public string Id { get; set; }
+        public string Serie { get; set; }
         public DateTime FechaEmision { get; set; }
         public string NumeroDocumento { get; set; }
         public string ClienteNombre { get; set; }

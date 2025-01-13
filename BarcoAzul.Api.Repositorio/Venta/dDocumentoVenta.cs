@@ -261,7 +261,6 @@ namespace BarcoAzul.Api.Repositorio.Venta
 									V.Ven_DocFactur AS CotizacionId,
 									V.Cli_Codigo AS ClienteId,
 									RTRIM(C.Cli_RazonSocial) AS ClienteNombre,
-                                    V.Cli_TipoDoc AS ClienteTipoDocumentoIdentidadId,
 									V.Ven_RucDni AS ClienteNumeroDocumentoIdentidad,
 									V.Id_DireccionLlegada AS ClienteDireccionId,
 									V.Ven_DireccionLleg AS ClienteDireccion,
@@ -283,14 +282,12 @@ namespace BarcoAzul.Api.Repositorio.Venta
 									V.Ven_GuiaRemision AS GuiaRemision,
 									V.Ven_OrdenCompra AS NumeroPedido,
 									V.Ven_Observ AS Observacion,
-									CAST(CASE WHEN V.Ven_Anticipo = 'S' THEN 1 ELSE 0 END AS BIT) AS IsAnticipo,
 									CAST(CASE WHEN V.Ven_OpeGratuitas = 'S' THEN 1 ELSE 0 END AS BIT) AS IsOperacionGratuita,
 									CAST(CASE WHEN V.Ven_IncluyeIgv = 'S' THEN 1 ELSE 0 END AS BIT) AS IncluyeIGV,
 									CAST(CASE WHEN V.Ven_AfectarStock = 'S' THEN 1 ELSE 0 END AS BIT) AS AfectarStock,
 									V.Ven_Inafecto AS TotalOperacionesInafectas,
 									V.Ven_TotalOpeGratuitas AS TotalOperacionesGratuitas,
 									V.Ven_SubTotal AS Subtotal,
-									V.Ven_TotalAnticipo AS TotalAnticipos,
 									V.Ven_TotalNeto AS TotalNeto,
 									V.Ven_MontoIgv AS MontoIGV,
 									V.Ven_Retencion AS MontoRetencion,
@@ -300,7 +297,6 @@ namespace BarcoAzul.Api.Repositorio.Venta
 									V.Ven_PorcIgv AS PorcentajeIGV,
 									V.Ven_PorcReten AS PorcentajeRetencion,
 									V.Ven_PorcDetrac AS PorcentajeDetraccion,
-									V.Ven_ImpBolsa AS FactorImpuestoBolsa,
 									CAST(CASE WHEN V.Ven_Anulado = 'S' THEN 1 ELSE 0 END AS BIT) AS IsAnulado
 								FROM
 									Venta V

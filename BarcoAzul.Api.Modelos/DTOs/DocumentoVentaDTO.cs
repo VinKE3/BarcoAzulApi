@@ -67,7 +67,6 @@ namespace BarcoAzul.Api.Modelos.DTOs
         public decimal FactorImpuestoBolsa { get; set; }
         public List<oDocumentoVentaDetalle> Detalles { get; set; }
         public List<oDocumentoVentaCuota> Cuotas { get; set; }
-        public List<oDocumentoVentaAnticipo> Anticipos { get; set; }
         public string NumeroDocumento => Comun.VentaIdADocumento(Id);
 
         #region Adicionales
@@ -83,11 +82,6 @@ namespace BarcoAzul.Api.Modelos.DTOs
 
             if (Detalles is null || !Detalles.Any())
                 yield return new ValidationResult("No existen detalles.");
-
-            if (Total == 0 && (!IsOperacionGratuita || (Anticipos is not null && Anticipos.Count != 0)))
-            {
-                yield return new ValidationResult("El total no puede ser igual a cero (0.00)");
-            }
 
             if (!string.IsNullOrWhiteSpace(GuiaRemision) && GuiaRemision.Mid(4, 1) != "-")
             {
