@@ -51,6 +51,8 @@ namespace BarcoAzul.Api.Modelos.Entidades
         [Required(ErrorMessage = "El total es requerido.")]
         [Range(0.01, int.MaxValue, ErrorMessage = "El total no puede ser igual a cero (0.00)")]
         public decimal Total { get; set; }
+        public decimal Abonado { get; set; }
+        public decimal Saldo { get; set; }
         public decimal PorcentajeIGV { get; set; }
         public decimal PorcentajeRetencion { get; set; }
         public decimal PorcentajePercepcion { get; set; }

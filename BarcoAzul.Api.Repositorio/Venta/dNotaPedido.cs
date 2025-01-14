@@ -22,8 +22,7 @@ namespace BarcoAzul.Api.Repositorio.Venta
 								Ven_PorcIgv, Ven_PorcReten, Ven_PorcPercep, Ven_IncluyeIgv, Suc_Codigo, Ven_AfectarStock, Ven_IngEgrStock, Ven_Hora, Ven_PorcDscto, Ven_Descuento,
 								Ven_ValorVenta, Ven_Otros, Ven_Inafecto, Ven_Abonado, Ven_Saldo, Ven_Anulado, Ven_Cancelado, Ven_ConIgv, Ven_Retenc, Ven_Percep, Ven_FechaReg,
 								Usu_Codigo, Ven_BloqUsu, Ven_BloqSist, Ven_BloqProc, Ven_Bloqueado, Ven_Documento, Ven_CierreZ, Ven_CierreX, Ven_Facturado, Ven_Guia,
-								Ven_FechaRecepcion, TipO_Codigo, Ven_AboItem, Ven_Abonar, Ven_Detraccion, Ven_PorcDetrac, Ven_EditCliente, Ven_Registrado, Ven_EditCargo, Ven_Transaccion,
-								Ven_Costo, Ven_Utilidad, Ven_Anticipo)
+								Ven_FechaRecepcion, TipO_Codigo, Ven_AboItem, Ven_Abonar, Ven_Detraccion, Ven_PorcDetrac, Ven_EditCliente, Ven_Registrado, Ven_EditCargo, Ven_Transaccion)
 								VALUES (@EmpresaId, @TipoDocumentoId, @Serie, @Numero, @FechaEmision, @FechaVencimiento, @ClienteId, @ClienteNombre, @ClienteNumeroDocumentoIdentidad, 
 								@ClienteDireccionId, @ClienteDireccion, @ClienteTelefono, @DepartamentoId, @ProvinciaId, @DistritoId, @ContactoId, @ContactoNombre, @ContactoTelefono, 
 								@ContactoCorreoElectronico, @ContactoCargoId, @ContactoCargoDescripcion, @ContactoCelular, @PersonalId, @MonedaId, @TipoCambio, @TipoVentaId, @TipoCobroId, 
@@ -31,8 +30,7 @@ namespace BarcoAzul.Api.Repositorio.Venta
 								@PorcentajeIGV, @PorcentajeRetencion, @PorcentajePercepcion, @IncluyeIGV, '01', 'N', '-', @HoraEmision, 0, 0,
 								@SubTotal, 0, 0, 0, @Total, 'N', 'N', 'S', 'N', 'N', GETDATE(),
 								@UsuarioId, 'N', 'N', 'N', 'N', @NumeroDocumento, 'N', 'N', 'N', 'N',
-								@FechaEmision, '01', 0, 'S', 0, 0, 'N', 'S', 'N', 'N',
-								@CostoTotal, @UtilidadTotal, 'N')";
+								@FechaEmision, '01', 0, 'S', 0, 0, 'N', 'S', 'N', 'N')";
 
             using (var db = GetConnection())
             {
@@ -81,9 +79,7 @@ namespace BarcoAzul.Api.Repositorio.Venta
                     IncluyeIGV = notaPedido.IncluyeIGV ? "S" : "N",
                     notaPedido.HoraEmision,
                     notaPedido.UsuarioId,
-                    notaPedido.NumeroDocumento,
-                    notaPedido.CostoTotal,
-                    notaPedido.UtilidadTotal
+                    notaPedido.NumeroDocumento
                 });
             }
         }
@@ -98,8 +94,8 @@ namespace BarcoAzul.Api.Repositorio.Venta
                                 Ven_TPago = @TipoCobroId, Ven_TipoComp = @NumeroOperacion, Ven_CotAbonoBan01 = @CuentaCorrienteDescripcion, Ven_CotValidez = @Validez, Ven_Observ = @Observacion, 
                                 Ven_SubTotal = @Subtotal, Ven_MontoIgv = @MontoIGV, Ven_TotalNeto = @TotalNeto, Ven_Retencion = @MontoRetencion, Ven_Percepcion = @MontoPercepcion, 
                                 Ven_Total = @Total, Ven_PorcIgv = @PorcentajeIGV, Ven_PorcReten = @PorcentajeRetencion, Ven_PorcPercep = @PorcentajePercepcion, Ven_IncluyeIgv = @IncluyeIGV,
-                                Ven_Hora = @HoraEmision, Ven_ValorVenta = @SubTotal, Ven_Saldo = @Total, Usu_Codigo = @UsuarioId, Ven_FechaRecepcion = @FechaEmision, Ven_Costo = @CostoTotal, 
-                                Ven_Utilidad = @UtilidadTotal, Ven_FechaMod = GETDATE() WHERE Conf_Codigo = @EmpresaId AND TDoc_Codigo = @TipoDocumentoId AND Ven_Serie = @Serie 
+                                Ven_Hora = @HoraEmision, Ven_ValorVenta = @SubTotal, Ven_Saldo = @Total, Usu_Codigo = @UsuarioId, Ven_FechaRecepcion = @FechaEmision, 
+                                Ven_FechaMod = GETDATE() WHERE Conf_Codigo = @EmpresaId AND TDoc_Codigo = @TipoDocumentoId AND Ven_Serie = @Serie 
                                 AND Ven_Numero = @Numero";
 
             using (var db = GetConnection())
@@ -144,8 +140,6 @@ namespace BarcoAzul.Api.Repositorio.Venta
                     IncluyeIGV = notaPedido.IncluyeIGV ? "S" : "N",
                     notaPedido.HoraEmision,
                     notaPedido.UsuarioId,
-                    notaPedido.CostoTotal,
-                    notaPedido.UtilidadTotal,
                     notaPedido.EmpresaId,
                     notaPedido.TipoDocumentoId,
                     notaPedido.Serie,
@@ -224,6 +218,8 @@ namespace BarcoAzul.Api.Repositorio.Venta
 									V.Ven_Retencion AS MontoRetencion,
 									V.Ven_Percepcion AS MontoPercepcion,
 									V.Ven_Total AS Total,
+                                    V.Ven_Abonado AS Abonado,
+                                    V.Ven_Saldo AS Saldo,
 									V.Ven_PorcIgv AS PorcentajeIGV,
 									V.Ven_PorcReten AS PorcentajeRetencion,
 									V.Ven_PorcPercep AS PorcentajePercepcion,

@@ -55,6 +55,7 @@ namespace BarcoAzul.Api.Logica.Configuracion
             CreateMap<GuiaCompraDTO, oGuiaCompra>();
             CreateMap<oCuentaPorPagarAbono, oAbonoCompra>().ReverseMap();
             //CreateMap<CotizacionDTO, oCotizacion>();
+            CreateMap<NotaPedidoDTO, oNotaPedido>();
             CreateMap<DocumentoVentaDTO, oDocumentoVenta>();
             CreateMap<oCorrelativo, oTipoDocumentoSerie>();
             //CreateMap<RetencionDTO, oRetencion>();

@@ -15,12 +15,12 @@ namespace BarcoAzul.Api.Repositorio.Venta
                                 SubL_Codigo, Art_Codigo, DVen_Descripcion, Uni_Codigo, DVen_Moneda, DVen_Cantidad, DVen_Precio, DVen_PorcDscto,
                                 DVen_Descuento, DVen_PrecioNeto, DVen_PorcIgv, DVen_MontoIgv, DVen_Inafecto, DVen_Importe, DVen_Flat01, DVen_Flat02,
                                 Mar_Codigo, Dven_CtrlStock, DVen_TotalPeso, DVen_CstoMinTra, DVen_Turno, DVen_CodPtoVenta, DVen_CierreZ, DVen_CierreX,
-                                DArt_Codigo, DVen_CantEnt, DVen_Detraccion, DVen_Costo, DVen_MontoICBPER, DVen_Utilidad)
+                                DArt_Codigo, DVen_CantEnt, DVen_Detraccion, DVen_MontoICBPER)
                                 VALUES (@EmpresaId, @TipoDocumentoId, @Serie, @Numero, @DetalleId, @FechaEmision, '01', 'N', @LineaId,
                                 @SubLineaId, @ArticuloId, @Descripcion, @UnidadMedidaId, @MonedaId, @Cantidad, @PrecioUnitario, 0,
                                 0, 0, @PorcentajeIgv, @MontoIGV, @SubTotal, @Importe, 0, 0,
                                 @MarcaId, '-', 0, 0, NULL, NULL, 'N', 'N',
-                                @CodigoBarras, @Cantidad, 0, @Costo, 0, @Utilidad)";
+                                @CodigoBarras, @Cantidad, 0, 0)";
 
             using (var db = GetConnection())
             {
@@ -48,9 +48,7 @@ namespace BarcoAzul.Api.Repositorio.Venta
                         detalle.Importe,
                         detalle.MarcaId,
                         detalle.CodigoBarras,
-                        detalle.Costo,
-                        detalle.PrecioCompra,
-                        detalle.Utilidad
+                        detalle.PrecioCompra
                     });
                 }
             }
