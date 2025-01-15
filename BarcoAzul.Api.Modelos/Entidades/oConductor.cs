@@ -30,7 +30,7 @@ namespace BarcoAzul.Api.Modelos.Entidades
         public string DepartamentoId { get; set; }
         public string ProvinciaId { get; set; }
         public string DistritoId { get; set; }
-        public string NroRegistro { get; set; }
+        public string NumeroRegistroMTC { get; set; }
 
         //Esto NO inicio
         //public string Observacion { get; set; }
@@ -63,7 +63,7 @@ namespace BarcoAzul.Api.Modelos.Entidades
             Celular = Celular?.Trim();
             CorreoElectronico = CorreoElectronico?.Trim();
             Direccion = Direccion?.Trim();
-            NroRegistro = NroRegistro?.Trim();
+            NumeroRegistroMTC = NumeroRegistroMTC?.Trim();
         }
     }
 }

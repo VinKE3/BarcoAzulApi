@@ -15,7 +15,7 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
             string query = @"   INSERT INTO Transportista (Tra_Codigo, Conf_Codigo, Tran_Codigo, Tra_Tipo, Tra_RazonSocial, Tra_Apellidos, Tra_TipoDocIde, Tra_RucDni, Tra_Licencia, Tra_Telefono,
                                 Tra_TeleFax, Tra_Correo, Tra_Direccion, Dep_Codigo, Pro_Codigo, Dis_codigo, Tra_nroregistrotransp, Tra_FechaReg)
                                 VALUES (@Id, @EmpresaId, @EmpresaTransporteId, @TipoConductor, @Nombre, @Apellidos, @TipoDocumentoIdentidadId, @NumeroDocumentoIdentidad, @LicenciaConducir, @Telefono,
-                                @Celular, @CorreoElectronico, @Direccion, @DepartamentoId, @ProvinciaId, @DistritoId, @NroRegistro, GETDATE())";
+                                @Celular, @CorreoElectronico, @Direccion, @DepartamentoId, @ProvinciaId, @DistritoId, @NumeroRegistroMTC, GETDATE())";
 
             using (var db = GetConnection())
             {
@@ -37,7 +37,7 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
                     conductor.DepartamentoId,
                     conductor.ProvinciaId,
                     conductor.DistritoId,
-                    conductor.NroRegistro // nuevo
+                    conductor.NumeroRegistroMTC // nuevo
                 });
             }
         }
@@ -60,7 +60,7 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
                         Dep_Codigo = @DepartamentoId, 
                         Pro_Codigo = @ProvinciaId, 
                         Dis_codigo = @DistritoId, 
-                        Tra_nroregistrotransp = @NroRegistro, 
+                        Tra_nroregistrotransp = @NumeroRegistroMTC, 
                         Tra_FechaMod = GETDATE()
                     WHERE Tra_Codigo = @Id";
 
@@ -83,7 +83,7 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
                     conductor.DepartamentoId,
                     conductor.ProvinciaId,
                     conductor.DistritoId,
-                    conductor.NroRegistro, // Número de registro del transportista
+                    conductor.NumeroRegistroMTC, // Número de registro del transportista
                     conductor.Id           // Identificador del conductor
                 });
             }
@@ -120,7 +120,7 @@ namespace BarcoAzul.Api.Repositorio.Mantenimiento
                         Dep_Codigo AS DepartamentoId, 
                         Pro_Codigo AS ProvinciaId, 
                         Dis_codigo AS DistritoId, 
-                        Tra_nroregistrotransp AS NroRegistro 
+                        Tra_nroregistrotransp AS NumeroRegistroMTC 
                     FROM Transportista
                     WHERE Tra_Codigo = @Id";
 

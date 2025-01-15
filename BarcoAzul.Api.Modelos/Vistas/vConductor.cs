@@ -13,6 +13,6 @@ namespace BarcoAzul.Api.Modelos.Vistas
         public string Nombre { get; set; }
         public string NumeroDocumentoIdentidad { get; set; }
         public string LicenciaConducir { get; set; }
-        public string NroRegistro { get; set; }
+        public string EmpresaTransporteId { get; set; }
     }
 }

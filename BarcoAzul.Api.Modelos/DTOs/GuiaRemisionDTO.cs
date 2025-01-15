@@ -41,6 +41,8 @@ namespace BarcoAzul.Api.Modelos.DTOs
         public bool AfectarStock { get; set; }
         public string DocumentoRelacionadoId { get; set; }
         public List<oGuiaRemisionDetalle> Detalles { get; set; }
+        public List<oGuiaRemisionVehiculo> Vehiculos { get; set; }
+        public List<oGuiaRemisionTransportista> Transportistas { get; set; }
         public List<oGuiaRemisionDocumentoRelacionado> DocumentosRelacionados { get; set; }
         public string NumeroDocumento => Comun.VentaIdADocumento(Id);
 

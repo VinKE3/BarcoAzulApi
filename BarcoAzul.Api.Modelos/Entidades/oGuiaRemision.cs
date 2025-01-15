@@ -1,4 +1,5 @@
 ﻿using BarcoAzul.Api.Modelos.Otros;
+using BarcoAzul.Api.Modelos.Vistas;
 using BarcoAzul.Api.Utilidades;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
@@ -42,6 +43,8 @@ namespace BarcoAzul.Api.Modelos.Entidades
         public bool AfectarStock { get; set; }
         public string DocumentoRelacionadoId { get; set; }
         public List<oGuiaRemisionDetalle> Detalles { get; set; }
+        public List<oGuiaRemisionVehiculo> Vehiculos {  get; set; }
+        public List<oGuiaRemisionTransportista> Transportistas { get; set; }
         public List<oGuiaRemisionDocumentoRelacionado> DocumentosRelacionados { get; set; }
 
         #region Adicionales
@@ -120,6 +123,34 @@ namespace BarcoAzul.Api.Modelos.Entidades
             }
         }
 
+        public void CompletarDatosVechiculo()
+        {
+            if (Vehiculos is not null) {
+
+                foreach (var vehiculo in Vehiculos)
+                {
+                    vehiculo.EmpresaId = EmpresaId;
+                    vehiculo.TipoDocumentoId = TipoDocumentoId;
+                    vehiculo.Serie = Serie;
+                    vehiculo.Numero = Numero;
+                }
+            }
+        }
+
+        public void CompletarTransportistas()
+        {
+            if (Transportistas is not null) {
+                foreach (var transportista in Transportistas)
+                {
+                    transportista.EmpresaId = EmpresaId;
+                    transportista.TipoDocumentoId = TipoDocumentoId;
+                    transportista.Serie = Serie;
+                    transportista.Numero = Numero;
+                }
+
+            }
+        }
+
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (Detalles is null || !Detalles.Any())
@@ -172,5 +203,47 @@ namespace BarcoAzul.Api.Modelos.Entidades
         public string NumeroDocumento { get; set; }
         [JsonIgnore]
         public DateTime FechaEmision { get; set; }
+    }
+
+    public class oGuiaRemisionVehiculo
+    {
+        [JsonIgnore]
+        public string GuiaRemisionId => $"{EmpresaId}{TipoDocumentoId}{Serie}{Numero}";
+        [JsonIgnore]
+        public string EmpresaId { get; set; }
+        [JsonIgnore]
+        public string TipoDocumentoId { get; set; }
+        [JsonIgnore]
+        public string Serie { get; set; }
+        [JsonIgnore]
+        public string Numero { get; set; }
+        public int Item { get; set; }
+        public string VehiculoId { get; set; }
+        public string Placa {  get; set; }
+    }
+
+    public class oGuiaRemisionTransportista
+    {
+        [JsonIgnore]
+        public string GuiaRemisionId => $"{EmpresaId}{TipoDocumentoId}{Serie}{Numero}";
+        [JsonIgnore]
+        public string EmpresaId { get; set; }
+        [JsonIgnore]
+        public string TipoDocumentoId { get; set; }
+        [JsonIgnore]
+        public string Serie { get; set; }
+        [JsonIgnore]
+        public string Numero { get; set; }
+        public int Item { get; set; }
+        public string TipoConductor {  get; set; }
+        public string TransportistaId { get; set; }
+        public string TipoDocumentoIdentidadId {  get; set; }
+        public string NumeroDocumentoIdentidad { get; set; }
+        public string Nombre { get; set; }
+        public string Apellidos {  get; set; }
+        public string CorreoElectronico {  get; set; }
+        public string Direccion {  get; set; }
+        public string LicenciaConducir { get; set; }
+        public string NumeroRegistroMTC { get; set; }
     }
 }

@@ -38,7 +38,10 @@ namespace BarcoAzul.Api.Logica.Venta
 
                 guiaRemision.ProcesarDatos();
                 guiaRemision.CompletarDatosDetalles();
+                guiaRemision.CompletarDatosVechiculo();
+                guiaRemision.CompletarTransportistas();
                 guiaRemision.CompletarDatosDocumentosRelacionados();
+                
 
                 using (TransactionScope scope = new(TransactionScopeAsyncFlowOption.Enabled))
                 {
@@ -53,7 +56,20 @@ namespace BarcoAzul.Api.Logica.Venta
                         await dGuiaRemisionDocumentoRelacionado.Registrar(guiaRemision.DocumentosRelacionados);
                     }
 
-                    await dGuiaRemision.ActualizarCantidadPendiente(guiaRemision.Id, Operacion.Aumentar);
+                    if (guiaRemision.Transportistas is not null && guiaRemision.Transportistas.Any())
+                    {
+                        dGuiaRemisionTransportista dGuiaRemisionTransportista = new(GetConnectionString());
+                        await dGuiaRemisionTransportista.Registrar(guiaRemision.Transportistas);
+                    }
+
+                    if (guiaRemision.Vehiculos is not null && guiaRemision.Vehiculos.Any()) {
+                    
+                       dGuiaRemisionVehiculo dGuiaRemisionVehiculo = new(GetConnectionString());
+                        await dGuiaRemisionVehiculo.Registrar(guiaRemision.Vehiculos);
+                    }
+
+                    //TODO: CONSULTAR SI AL REGISTRAR SE REALIZA UN SP
+                    //await dGuiaRemision.ActualizarCantidadPendiente(guiaRemision.Id, Operacion.Aumentar);
 
                     scope.Complete();
                 }
@@ -81,6 +97,8 @@ namespace BarcoAzul.Api.Logica.Venta
 
                 guiaRemision.ProcesarDatos();
                 guiaRemision.CompletarDatosDetalles();
+                guiaRemision.CompletarDatosVechiculo();
+                guiaRemision.CompletarTransportistas();
                 guiaRemision.CompletarDatosDocumentosRelacionados();
 
                 using (TransactionScope scope = new(TransactionScopeAsyncFlowOption.Enabled))
@@ -90,11 +108,18 @@ namespace BarcoAzul.Api.Logica.Venta
                     dGuiaRemisionDetalle dGuiaRemisionDetalle = new(GetConnectionString());
                     await dGuiaRemisionDetalle.Modificar(guiaRemision.Detalles);
 
+                    dGuiaRemisionVehiculo dGuiaRemisionVehiculo = new(GetConnectionString());
+                    await dGuiaRemisionVehiculo.Modificar(guiaRemision.Id, guiaRemision.Vehiculos);
+
+                    dGuiaRemisionTransportista dGuiaRemisionTransportista = new(GetConnectionString());
+                    await dGuiaRemisionTransportista.Modificar(guiaRemision.Id, guiaRemision.Transportistas);
+
                     dGuiaRemisionDocumentoRelacionado dGuiaRemisionDocumentoRelacionado = new(GetConnectionString());
                     await dGuiaRemisionDocumentoRelacionado.Modificar(guiaRemision.Id, guiaRemision.DocumentosRelacionados);
 
-                    await dGuiaRemision.ActualizarCantidadPendiente(guiaRemision.Id, Operacion.Disminuir);
-                    await dGuiaRemision.ActualizarCantidadPendiente(guiaRemision.Id, Operacion.Aumentar);
+                    //TODO: Preguntar si realiza algun SP al registrar/modificar
+                    //await dGuiaRemision.ActualizarCantidadPendiente(guiaRemision.Id, Operacion.Disminuir);
+                    //await dGuiaRemision.ActualizarCantidadPendiente(guiaRemision.Id, Operacion.Aumentar);
 
                     scope.Complete();
                 }
@@ -127,6 +152,12 @@ namespace BarcoAzul.Api.Logica.Venta
 
                     dGuiaRemisionDetalle dGuiaRemisionDetalle = new(GetConnectionString());
                     await dGuiaRemisionDetalle.EliminarDeGuiaRemision(id);
+
+                    dGuiaRemisionVehiculo dGuiaRemisionVehiculo = new(GetConnectionString());
+                    await dGuiaRemisionVehiculo.EliminarDeGuiaRemision(id);
+
+                    dGuiaRemisionTransportista dGuiaRemisionTransportista = new(GetConnectionString());
+                    await dGuiaRemisionTransportista.EliminarDeGuiaRemision(id);
 
                     await dGuiaRemision.Eliminar(id);
 
@@ -200,6 +231,12 @@ namespace BarcoAzul.Api.Logica.Venta
 
                 dGuiaRemisionDetalle dGuiaRemisionDetalle = new(GetConnectionString());
                 guiaRemision.Detalles = (await dGuiaRemisionDetalle.ListarPorGuiaRemision(guiaRemision.Id)).ToList();
+
+                dGuiaRemisionVehiculo dGuiaRemisionVehiculo = new(GetConnectionString());
+                guiaRemision.Vehiculos = (await dGuiaRemisionVehiculo.ListarPorGuiaRemision(guiaRemision.Id)).ToList();
+
+                dGuiaRemisionTransportista dGuiaRemisionTransportista = new(GetConnectionString());
+                guiaRemision.Transportistas = (await dGuiaRemisionTransportista.ListarPorGuiaRemision(guiaRemision.Id)).ToList();
 
                 dGuiaRemisionDocumentoRelacionado dGuiaRemisionDocumentoRelacionado = new(GetConnectionString());
                 guiaRemision.DocumentosRelacionados = (await dGuiaRemisionDocumentoRelacionado.ListarPorGuiaRemision(guiaRemision.Id)).ToList();
