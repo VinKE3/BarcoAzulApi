@@ -20,7 +20,7 @@
         public decimal MontoIGV { get; set; }
         public decimal Importe { get; set; }
         public string Presentacion { get; set; }
-        public string PesoTotal { get; set; }
+        public decimal TotalPeso { get; set; }
         public string UnidadMedidaDescripcion { get; set; }
     }
 }
