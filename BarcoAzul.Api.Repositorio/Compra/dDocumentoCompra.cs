@@ -194,7 +194,7 @@ namespace BarcoAzul.Api.Repositorio.Compra
 									C.Com_TPago AS TipoPagoId,
 									C.Com_NroComp AS NumeroOperacion,
 									C.Com_Telefono AS CuentaCorrienteId,
-									C.Com_TipoDocMod + C.Cli_Codigo AS DocumentoReferenciaId,
+									C.Com_TipoDocMod AS DocumentoReferenciaId,
 									CAST(CASE WHEN C.Com_Abonar = 'S' THEN 1 ELSE 0 END AS BIT) AS Abonar,
 									C.Mot_Codigo AS MotivoNotaId,
 									C.Com_OtroMotivo AS MotivoSustento,

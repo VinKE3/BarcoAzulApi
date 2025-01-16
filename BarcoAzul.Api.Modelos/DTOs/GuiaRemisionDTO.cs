@@ -39,6 +39,7 @@ namespace BarcoAzul.Api.Modelos.DTOs
         public string Observacion { get; set; }
         public string MonedaId { get; set; }
         public bool AfectarStock { get; set; }
+        public bool TrasladoVehiculoM1L { get; set; }
         public string DocumentoRelacionadoId { get; set; }
         public List<oGuiaRemisionDetalle> Detalles { get; set; }
         public List<oGuiaRemisionVehiculo> Vehiculos { get; set; }

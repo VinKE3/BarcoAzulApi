@@ -281,6 +281,7 @@ namespace BarcoAzul.Api.Repositorio.Venta
 									V.Ven_Sustento AS MotivoSustento,
 									V.Ven_GuiaRemision AS GuiaRemision,
 									V.Ven_OrdenCompra AS NumeroPedido,
+                                    V.Ven_CotTiemEntrega AS Orden,
 									V.Ven_Observ AS Observacion,
 									CAST(CASE WHEN V.Ven_OpeGratuitas = 'S' THEN 1 ELSE 0 END AS BIT) AS IsOperacionGratuita,
 									CAST(CASE WHEN V.Ven_IncluyeIgv = 'S' THEN 1 ELSE 0 END AS BIT) AS IncluyeIGV,

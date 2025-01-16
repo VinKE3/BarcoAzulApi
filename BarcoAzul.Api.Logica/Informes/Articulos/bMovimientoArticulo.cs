@@ -92,6 +92,7 @@ namespace BarcoAzul.Api.Logica.Informes.Articulos
                 new { Id = "AL04", Descripcion = "SIN STOCK" },
             };
 
+
             return new
             {
                 formatos,

@@ -3,6 +3,7 @@ using BarcoAzul.Api.Utilidades.Extensiones;
 using BarcoAzul.Api.Utilidades;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using System.Security;
 
 namespace BarcoAzul.Api.Modelos.Entidades
 {
@@ -45,6 +46,7 @@ namespace BarcoAzul.Api.Modelos.Entidades
         public string MotivoSustento { get; set; }
         public string GuiaRemision { get; set; }
         public string NumeroPedido { get; set; }
+        public string Orden { get; set; }
         public string Observacion { get; set; }
         public bool IsAnticipo { get; set; }
         public bool IsOperacionGratuita { get; set; }

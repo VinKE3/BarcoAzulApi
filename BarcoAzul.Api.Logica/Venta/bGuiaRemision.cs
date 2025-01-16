@@ -320,6 +320,11 @@ namespace BarcoAzul.Api.Logica.Venta
                 new { Texto = "+", Valor = "+" },
                 new { Texto = "-", Valor = "-" },
             };
+            var modalidadesTransporte = new[]
+            {
+                new{Id = "01", Descripcion = "01 TRANSPORTE PUBLICO"},
+                new{Id = "02", Descripcion = "02 TRANSPORTE PRIVADO"}
+            };
 
             return new
             {
@@ -330,7 +335,8 @@ namespace BarcoAzul.Api.Logica.Venta
                 vehiculos,
                 motivosTraslado,
                 monedas,
-                tipos
+                tipos,
+                modalidadesTransporte
             };
         }
 

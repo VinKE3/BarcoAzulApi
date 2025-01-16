@@ -210,6 +210,7 @@ namespace BarcoAzul.Api.Repositorio.Venta
 									Ven_Observ AS Observacion,
 									Ven_Moneda AS MonedaId,
 									CAST(CASE WHEN Ven_AfectarStock = 'S' THEN 1 ELSE 0 END AS BIT) AS AfectarStock,
+                                    CAST(CASE WHEN Ven_TrasladoVehiculoM1L = 'S' THEN 1 ELSE 0 END AS BIT) AS AfectarStock,
 									Ven_TipoComp AS DocumentoRelacionadoId
 								FROM
 									Venta

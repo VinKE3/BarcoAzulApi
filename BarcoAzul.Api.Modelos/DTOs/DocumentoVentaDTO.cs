@@ -45,6 +45,7 @@ namespace BarcoAzul.Api.Modelos.DTOs
         public string MotivoSustento { get; set; }
         public string GuiaRemision { get; set; }
         public string NumeroPedido { get; set; }
+        public string Orden { get; set; }
         public string Observacion { get; set; }
         public bool IsAnticipo { get; set; }
         public bool IsOperacionGratuita { get; set; }
