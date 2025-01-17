@@ -18,6 +18,7 @@ namespace BarcoAzul.Api.Modelos.Entidades
         public DateTime FechaEmision { get; set; }
         [Required(ErrorMessage = "La fecha de vencimiento es requerida.")]
         public DateTime FechaVencimiento { get; set; }
+        public DateTime FechaReferencia { get; set; }
         public string Cotizacion { get; set; }
         public string CotizacionId { get; set; }
         [Required(ErrorMessage = "El cliente es requerido.")]

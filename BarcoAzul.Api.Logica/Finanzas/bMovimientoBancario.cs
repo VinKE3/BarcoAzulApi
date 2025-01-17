@@ -175,11 +175,18 @@ namespace BarcoAzul.Api.Logica.Finanzas
             var cuentasCorrientes = await new dCuentaCorriente(GetConnectionString()).ListarTodos();
             var tiposMovimiento = dTipoMovimientoBancario.ListarTodos();
             var tiposOperacion = dTipoOperacionBancaria.ListarTodos();
+            var tiposRazonSocial = new[]
+           {
+                new { Id = "C", Descripcion = "CLIENTE" },
+                new { Id = "P", Descripcion = "PROVEEDOR" },
+                new { Id = "O", Descripcion = "OTRO" },
+            };
             return new
             {
                 cuentasCorrientes,
                 tiposMovimiento,
-                tiposOperacion
+                tiposOperacion,
+                tiposRazonSocial
             };
         }
     }

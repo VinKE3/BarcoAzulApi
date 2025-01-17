@@ -15,6 +15,7 @@ namespace BarcoAzul.Api.Modelos.Vistas
         public string TipoOperacionId { get; set; }
         public string NumeroOperacion { get; set; }
         public string ClienteProveedorNombre { get; set; }
+        public string TipoBeneficiarioId { get; set; }
         public string Concepto { get; set; }
         public decimal Monto { get; set; }
         public decimal ITF { get; set; }

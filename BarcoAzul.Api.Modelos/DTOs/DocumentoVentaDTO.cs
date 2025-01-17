@@ -18,6 +18,7 @@ namespace BarcoAzul.Api.Modelos.DTOs
         public DateTime FechaEmision { get; set; }
         [Required(ErrorMessage = "La fecha de vencimiento es requerida.")]
         public DateTime FechaVencimiento { get; set; }
+        public DateTime FechaReferencia { get; set; }
         public string Cotizacion { get; set; }
         public string CotizacionId { get; set; }
         [Required(ErrorMessage = "El cliente es requerido.")]
@@ -120,10 +121,10 @@ namespace BarcoAzul.Api.Modelos.DTOs
                     yield return new ValidationResult($"La serie {Serie} no corresponde a una serie electrónica. Formato: FXXX");
                 }
 
-                if (ClienteTipoDocumentoIdentidadId != "6")
-                {
-                    yield return new ValidationResult("El tipo de documento de identidad del cliente debe ser RUC.");
-                }
+                //if (ClienteTipoDocumentoIdentidadId != "6")
+                //{
+                //    yield return new ValidationResult("El tipo de documento de identidad del cliente debe ser RUC.");
+                //}
                 else if (ClienteNumeroDocumentoIdentidad.Length != 11)
                 {
                     yield return new ValidationResult("El número de documento de identidad debe contener 11 dígitos.");
@@ -148,14 +149,14 @@ namespace BarcoAzul.Api.Modelos.DTOs
                         yield return new ValidationResult("Las boletas con un total mayor o igual a S/700.00 deben llevar un DNI o documento de identidad válido.");
                     }
                 }
-                else if (ClienteTipoDocumentoIdentidadId == "1" && (ClienteNumeroDocumentoIdentidad.Length != 8 || !Validacion.IsInteger(ClienteNumeroDocumentoIdentidad)))
+                else if ((ClienteNumeroDocumentoIdentidad.Length != 8 || !Validacion.IsInteger(ClienteNumeroDocumentoIdentidad)))
                 {
                     yield return new ValidationResult("El DNI no es válido.");
                 }
-                else if ((ClienteTipoDocumentoIdentidadId == "4" || ClienteTipoDocumentoIdentidadId == "7") && ClienteNumeroDocumentoIdentidad.Length > 12)
-                {
-                    yield return new ValidationResult("El número de documento de identidad del cliente no debe ser mayor a 12 dígitos si es carnet de extranjería o número de pasaporte.");
-                }
+                //else if (ClienteNumeroDocumentoIdentidad.Length > 12)
+                //{
+                //    yield return new ValidationResult("El número de documento de identidad del cliente no debe ser mayor a 12 dígitos si es carnet de extranjería o número de pasaporte.");
+                //}
             }
             else if (TipoDocumentoId == "07" || TipoDocumentoId == "08")
             {

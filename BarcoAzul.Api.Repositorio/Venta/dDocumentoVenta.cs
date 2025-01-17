@@ -22,24 +22,24 @@ namespace BarcoAzul.Api.Repositorio.Venta
         {
             string query = @"	INSERT INTO Venta (Conf_Codigo, TDoc_Codigo, Ven_Serie, Ven_Numero, Ven_Fecha, Ven_Venci, Ven_NroComp, Cli_Codigo, Ven_RucDni, 
 								Id_DireccionLlegada, Ven_DireccionLleg, Per_Codigo, Ven_Condicion, Ven_Moneda, Ven_TCambio, Ven_TVenta, Ven_TPago, Ven_TipoComp, Ven_Telefono, 
-								Ven_CertifInscrip, Ven_Abonar, Ven_PlacaRodaje, Mot_Codigo, Ven_Sustento, Ven_GuiaRemision, Ven_OrdenCompra, Ven_Observ, Ven_Anticipo, Ven_OpeGratuitas, 
-								Ven_IncluyeIgv, Ven_AfectarStock, Ven_Inafecto, Ven_TotalOpeGratuitas, Ven_SubTotal, Ven_ValorVenta, Ven_TotalAnticipo, Ven_TotalNeto, Ven_MontoIgv, 
-                                Ven_Retencion, Ven_Detraccion, Ven_MontoImpBolsa, Ven_Total, Ven_PorcIgv, Ven_PorcReten, Ven_PorcDetrac, Ven_ImpBolsa, Suc_Codigo, 
+								Ven_CertifInscrip, Ven_Abonar, Ven_PlacaRodaje, Mot_Codigo, Ven_Sustento, Ven_GuiaRemision, Ven_OrdenCompra, Ven_Observ, Ven_OpeGratuitas, 
+								Ven_IncluyeIgv, Ven_AfectarStock, Ven_Inafecto, Ven_TotalOpeGratuitas, Ven_SubTotal, Ven_ValorVenta, Ven_TotalNeto, Ven_MontoIgv, 
+                                Ven_Retencion, Ven_Detraccion, Ven_MontoImpBolsa, Ven_Total, Ven_PorcIgv, Ven_PorcReten, Ven_PorcDetrac, Suc_Codigo, 
                                 Ven_IngEgrStock, Ven_Hora, Ven_PorcDscto, Ven_Descuento, Ven_Otros, Ven_PorcPercep, Ven_Percepcion, Ven_Abonado, Ven_Saldo, Ven_Anulado, Ven_Cancelado,
                                 Ven_ConIgv, Ven_Retenc, Ven_Percep, Ven_LicenciaCond, Ven_FechaReg, Usu_Codigo, Ven_BloqUsu, Ven_BloqSist, Ven_BloqProc, Ven_Bloqueado, Ven_Documento,
                                 Ven_CierreZ, Ven_CierreX, Ven_Facturado, Ven_DocFactur, Ven_Guia, Ven_FechaRecepcion, TipO_Codigo, Ven_AboItem, Ven_EditCliente, Ven_Registrado,
-                                Ven_PorcComision, Ven_MontoComision, Cod_Vendedor, Ctrl_Cilindros, Ven_CantCilindros, Ven_Referencia, Cli_TipoDoc, Ven_NetoMercaderia, Ven_NetoBolsa,
-                                Ven_Costo, Ven_Utilidad, Ven_NroCuotas, Ven_FechaEmision)
+                                Ven_PorcComision, Ven_MontoComision, Ven_Referencia,
+                                Ven_NroCuotas, Ven_FechaEmision)
 								VALUES (@EmpresaId, @TipoDocumentoId, @Serie, @Numero, @FechaEmision, @FechaVencimiento, @Cotizacion, @ClienteId, @ClienteNumeroDocumentoIdentidad, 
 								@ClienteDireccionId, @ClienteDireccion, @PersonalId, @Letra, @MonedaId, @TipoCambio, @TipoVentaId, @TipoCobroId, @NumeroOperacion, @CuentaCorrienteId, 
-								@DocumentoReferenciaId, @Abonar, @MotivoNotaDescripcion, @MotivoNotaId, @MotivoSustento, @GuiaRemision, @NumeroPedido, @Observacion, @IsAnticipo, @IsOperacionGratuita, 
-								@IncluyeIGV, @AfectarStock, @TotalOperacionesInafectas, @TotalOperacionesGratuitas, @SubTotal, @SubTotal, @TotalAnticipos, @TotalNeto, @MontoIGV, 
-                                @MontoRetencion, @MontoDetraccion, @MontoImpuestoBolsa, @Total, @PorcentajeIGV, @PorcentajeRetencion, @PorcentajeDetraccion, @FactorImpuestoBolsa, '01', 
+								@DocumentoReferenciaId, @Abonar, @MotivoNotaDescripcion, @MotivoNotaId, @MotivoSustento, @GuiaRemision, @NumeroPedido, @Observacion, @IsOperacionGratuita, 
+								@IncluyeIGV, @AfectarStock, @TotalOperacionesInafectas, @TotalOperacionesGratuitas, @SubTotal, @SubTotal, @TotalNeto, @MontoIGV, 
+                                @MontoRetencion, @MontoDetraccion, @MontoImpuestoBolsa, @Total, @PorcentajeIGV, @PorcentajeRetencion, @PorcentajeDetraccion, '01', 
                                 @IngresoEgresoStock, @HoraEmision, 0, 0, 0, 0, 0, 0, @Total, 'N', 'N',
                                 'S', 'N', 'N', @DocumentoReferenciaTipo, GETDATE(), @UsuarioId, 'N', 'N', 'N', 'N', @NumeroDocumento,
                                 'N', 'N', 'N', @CotizacionId, 'N', @FechaEmision, '01', 0, 'N', 'S',
-                                0, 0, '00', @ControlarCilindros, 0, @LetraId, @ClienteTipoDocumentoIdentidadId, @NetoMercaderia, @NetoBolsa,
-                                @CostoTotal, @UtilidadTotal, @NumeroCuotas, @FechaDocumentoReferencia)";
+                                0, 0, @LetraId,
+                                @NumeroCuotas, @FechaDocumentoReferencia)";
 
             var splitDocumentoReferenciaId = string.IsNullOrWhiteSpace(documentoVenta.DocumentoReferenciaId) ? null : SplitId(documentoVenta.DocumentoReferenciaId);
 
@@ -257,6 +257,7 @@ namespace BarcoAzul.Api.Repositorio.Venta
 									V.Ven_Numero AS Numero,
 									V.Ven_Fecha AS FechaEmision,
 									V.Ven_Venci AS FechaVencimiento,
+                                    V.Ven_FechaEmision AS FechaReferencia,
 									V.Ven_NroComp AS Cotizacion,
 									V.Ven_DocFactur AS CotizacionId,
 									V.Cli_Codigo AS ClienteId,

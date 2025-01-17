@@ -55,12 +55,6 @@ namespace BarcoAzul.Api.Logica.Compra
                         await dDocumentoCompraOrdenCompraRelacionada.Registrar(documentoCompra.OrdenesCompraRelacionadas);
                     }
 
-                    //if (documentoCompra.TipoDocumentoId == "01")
-                    //{
-                    //    dOrdenCompra dOrdenCompra = new(GetConnectionString());
-                    //    await dOrdenCompra.ActualizarCantidadPendiente(documentoCompra.Id, Operacion.Aumentar);
-                    //}
-
                     decimal montoAbonado = documentoCompra.TipoCompraId == "CO" ? documentoCompra.Total : 0;
                     await AbonarCompra(documentoCompra, montoAbonado);
 
