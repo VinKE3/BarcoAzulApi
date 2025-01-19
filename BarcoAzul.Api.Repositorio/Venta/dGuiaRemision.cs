@@ -204,13 +204,14 @@ namespace BarcoAzul.Api.Repositorio.Venta
 									Ven_CertifInscrip AS ConstanciaInscripcion,
 									TipO_Codigo AS MotivoTrasladoId,
 									Ven_GuiaRemision AS MotivoSustento,
+                                    Ven_PesoBrutoTotal AS PesoBrutoTotal,
 									Ven_IngEgrStock AS IngresoEgresoStock,
 									ven_ordencompra AS NumeroFactura,
 									Ven_NroComp AS OrdenPedido,
 									Ven_Observ AS Observacion,
 									Ven_Moneda AS MonedaId,
 									CAST(CASE WHEN Ven_AfectarStock = 'S' THEN 1 ELSE 0 END AS BIT) AS AfectarStock,
-                                    CAST(CASE WHEN Ven_TrasladoVehiculoM1L = 'S' THEN 1 ELSE 0 END AS BIT) AS AfectarStock,
+                                    CAST(CASE WHEN Ven_TrasladoVehiculoM1L = '1' THEN 1 ELSE 0 END AS BIT) AS TrasladoVehiculoM1L,
 									Ven_TipoComp AS DocumentoRelacionadoId
 								FROM
 									Venta

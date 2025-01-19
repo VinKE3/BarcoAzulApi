@@ -41,6 +41,7 @@ namespace BarcoAzul.Api.Modelos.Entidades
         public string Observacion { get; set; }
         public string MonedaId { get; set; }
         public bool AfectarStock { get; set; }
+        public decimal PesoBrutoTotal { get; set; }
         public bool TrasladoVehiculoM1L {  get; set; }
         public string DocumentoRelacionadoId { get; set; }
         public List<oGuiaRemisionDetalle> Detalles { get; set; }
