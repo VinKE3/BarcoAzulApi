@@ -21,6 +21,7 @@
         public decimal Importe { get; set; }
         public string Presentacion { get; set; }
         public decimal TotalPeso { get; set; }
+        public decimal PesoUnitario { get; set; }
         public string UnidadMedidaDescripcion { get; set; }
     }
 }

@@ -13,13 +13,13 @@ namespace BarcoAzul.Api.Repositorio.Venta
             string query = @"   INSERT INTO Detalle_Venta (Conf_Codigo, TDoc_Codigo, Ven_Serie, Ven_Numero, DVen_Item, DVen_Fecha, Suc_Codigo, DVen_AfectarStock, Lin_Codigo,
                                 SubL_Codigo, Art_Codigo, DVen_Descripcion, Uni_Codigo, DVen_Moneda, DVen_Cantidad, DVen_Precio, DVen_PorcDscto,
                                 DVen_Descuento, DVen_PrecioNeto, DVen_PorcIgv, DVen_MontoIgv, DVen_Inafecto, DVen_Importe, DVen_Flat01, DVen_Flat02,
-                                Mar_Codigo, Dven_CtrlStock, DVen_TotalPeso, DVen_CstoMinTra, DVen_Turno, DVen_CodPtoVenta, DVen_CierreZ, DVen_CierreX,
-                                DArt_Codigo, DVen_Costo, DVen_PrecioCosto, DVen_MontoICBPER, DVen_Utilidad, DVen_CantEnt)
+                                Mar_Codigo, Dven_CtrlStock, DVen_Turno, DVen_CodPtoVenta, DVen_CierreZ, DVen_CierreX,
+                                DArt_Codigo, DVen_MontoICBPER, DVen_CantEnt, DVen_CstoMinTra, DVen_TotalPeso)
                                 VALUES (@EmpresaId, @TipoDocumentoId, @Serie, @Numero, @DetalleId, @FechaEmision, '01', @AfectarStock, @LineaId,
                                 @SubLineaId, @ArticuloId, @Descripcion, @UnidadMedidaId, @MonedaId, @Cantidad, @PrecioUnitario, 0,
                                 0, @SubTotal, @PorcentajeIGV, @MontoIGV, 0, @Importe, 0, 0,
-                                @MarcaId, '-', 0, 0, NULL, NULL, 'N', 'N',
-                                @CodigoBarras, @Costo, @PrecioCompra, 0, 0, @CantidadPendiente)";
+                                @MarcaId, '-', NULL, NULL, 'N', 'N',
+                                @CodigoBarras, 0, @CantidadPendiente, @PesoUnitario, @TotalPeso)";
 
             using (var db = GetConnection())
             {
@@ -50,6 +50,8 @@ namespace BarcoAzul.Api.Repositorio.Venta
                         detalle.CodigoBarras,
                         detalle.Costo,
                         detalle.PrecioCompra,
+                        detalle.PesoUnitario,
+                        detalle.TotalPeso,
                         detalle.CantidadPendiente
                     });
                 }
@@ -85,7 +87,7 @@ namespace BarcoAzul.Api.Repositorio.Venta
         {
             var splitId = dGuiaRemision.SplitId(guiaRemisionId);
 
-            string query = @"   UPDATE Detalle_Venta SET DVen_AfectarStock = 'N', DVen_Costo = 0
+            string query = @"   UPDATE Detalle_Venta SET DVen_AfectarStock = 'N'
                                 WHERE Conf_Codigo = @empresaId AND TDoc_Codigo = @tipoDocumentoId AND Ven_Serie = @serie AND Ven_Numero = @numero";
 
             using (var db = GetConnection())
@@ -120,6 +122,7 @@ namespace BarcoAzul.Api.Repositorio.Venta
 	                                DV.Dven_PrecioNeto AS SubTotal,
 	                                DV.DVen_MontoIgv AS MontoIgv,
 	                                DV.DVen_Importe AS Importe,
+                                    DV.DVen_CstoMinTra AS PesoUnitario,
                                     DV.DVen_TotalPeso AS TotalPeso,
 	                                U.Uni_Nombre AS UnidadMedidaDescripcion,
 	                                DV.DVen_CantEnt AS CantidadPendiente

@@ -24,7 +24,6 @@ namespace BarcoAzul.Api.Modelos.DTOs
         public int ClienteDireccionId { get; set; }
         public string ClienteDireccion { get; set; }
         public string EmpresaTransporteId { get; set; }
-        public decimal CostoMinimo { get; set; }
         public string ConductorId { get; set; }
         public string LicenciaConducir { get; set; }
         public string VehiculoId { get; set; }
@@ -33,10 +32,16 @@ namespace BarcoAzul.Api.Modelos.DTOs
         public string MotivoTrasladoId { get; set; }
         [Required(ErrorMessage = "El sustento de traslado es requerido.")]
         public string MotivoSustento { get; set; }
+        public string ModalidadTransporteId { get; set; }
         public string IngresoEgresoStock { get; set; }
+        public string DocumentoVenta { get; set; }
+        public string Oficina { get; set; }
+        public string Almacen { get; set; }
+        public string AlmacenOrigen { get; set; }
         public string NumeroFactura { get; set; }
-        public string OrdenPedido { get; set; }
+        public string OrdenCompra { get; set; }
         public string Observacion { get; set; }
+        public decimal CostoMinimo { get; set; }
         public string MonedaId { get; set; }
         public bool AfectarStock { get; set; }
         public decimal PesoBrutoTotal { get; set; }

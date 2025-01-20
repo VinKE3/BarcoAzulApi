@@ -22,14 +22,16 @@ namespace BarcoAzul.Api.Repositorio.Venta
 								Suc_Codigo, Ven_TVenta, Ven_TPago, Ven_Hora, Ven_TCambio, Ven_PorcIgv, Ven_SubTotal, Ven_PorcDscto, Ven_Descuento, Ven_ValorVenta, Ven_TotalNeto,
 								Ven_MontoIgv, Ven_Otros, Ven_PorcReten, Ven_Retencion, Ven_PorcPercep, Ven_Percepcion, Ven_Inafecto, Ven_Total, Ven_Abonado, Ven_Saldo, Ven_Anulado,
 								Ven_Cancelado, Ven_ConIgv, Ven_IncluyeIgv, Ven_Retenc, Ven_Percep, Ven_TipoComp, Ven_TTraslado, Ven_FechaReg, Usu_Codigo, Ven_BloqUsu, Ven_BloqSist,
-								Ven_BloqProc, Ven_Bloqueado, Ven_Facturado, Ven_DocFactur, Ctrl_Cilindros, Ven_Transaccion, Ven_Costo, Ven_Anticipo)
+								Ven_BloqProc, Ven_Bloqueado, Ven_Facturado, Ven_DocFactur, Ven_Transaccion, Ven_Documento, ven_partnro,
+                                ven_partinterior, ven_partzona, Ven_TrasladoVehiculoM1L, ven_registrado, Ven_PesoBrutoTotal, Ven_Modalidad)
 								VALUES (@EmpresaId, @TipoDocumentoId, @Serie, @Numero, @FechaEmision, @FechaTraslado, @ClienteId, @ClienteNumeroDocumentoIdentidad, @ClienteNombre, 
-								@PersonalId, @DireccionPartida, @ClienteDireccionId, @ClienteDireccion, @EmpresaTransporteId, @CostoMinimo, @ConductorId, @LicenciaConducir, @VehiculoId, 
-								@ConstanciaInscripcion, @MotivoTrasladoId, @MotivoSustento, @IngresoEgresoStock, @NumeroFactura, @OrdenPedido, @Observacion, @MonedaId, @AfectarStock,
+								'ADADAD01', @DireccionPartida, @ClienteDireccionId, @ClienteDireccion, @EmpresaTransporteId, @CostoMinimo, @ConductorId, @LicenciaConducir, @VehiculoId, 
+								@ConstanciaInscripcion, @MotivoTrasladoId, @MotivoSustento, @IngresoEgresoStock, @OrdenCompra, @NumeroFactura, @Observacion, @MonedaId, @AfectarStock,
 								'01', 'CO', 'EF', @HoraEmision, @TipoCambio, @PorcentajeIGV, @subTotal, 0, 0, @subTotal, @subTotal,
 								@montoIGV, 0, 0, 0, 0, 0, 0, @total, 0, @total, 'N',
 								'N', 'S', 'S', 'N', 'N', @DocumentoRelacionadoId, '01', GETDATE(), @UsuarioId, 'N', 'N',
-								'N', 'S', 'N', @DocumentoRelacionadoId, 'N', 'N', @CostoTotal, 'N')";
+								'N', 'S', 'N', @DocumentoRelacionadoId, 'N', @DocumentoVenta, @Oficina,
+                                 @Almacen, @AlmacenOrigen, @TrasladoVehiculoM1L, @EnviarSucursal, @PesoBrutoTotal, @ModalidadTransporteId)";
 
             decimal total = guiaRemision.Detalles.Sum(x => x.Importe);
             decimal subTotal = decimal.Round(total / ((guiaRemision.PorcentajeIGV / 100) + 1), 2, MidpointRounding.AwayFromZero);
@@ -60,12 +62,20 @@ namespace BarcoAzul.Api.Repositorio.Venta
                     guiaRemision.ConstanciaInscripcion,
                     guiaRemision.MotivoTrasladoId,
                     guiaRemision.MotivoSustento,
+                    guiaRemision.ModalidadTransporteId,
                     guiaRemision.IngresoEgresoStock,
+                    guiaRemision.DocumentoVenta,
+                    guiaRemision.Oficina,
+                    guiaRemision.Almacen,
+                    guiaRemision.AlmacenOrigen,
                     guiaRemision.NumeroFactura,
-                    guiaRemision.OrdenPedido,
+                    guiaRemision.OrdenCompra,
                     guiaRemision.Observacion,
                     guiaRemision.MonedaId,
                     AfectarStock = guiaRemision.AfectarStock ? "S" : "N",
+                    guiaRemision.TrasladoVehiculoM1L,
+                    EnviarSucursal = guiaRemision.EnviarSucursal ? "S" : "N",
+                    guiaRemision.PesoBrutoTotal,
                     guiaRemision.HoraEmision,
                     guiaRemision.TipoCambio,
                     guiaRemision.PorcentajeIGV,
@@ -74,7 +84,6 @@ namespace BarcoAzul.Api.Repositorio.Venta
                     total,
                     guiaRemision.DocumentoRelacionadoId,
                     guiaRemision.UsuarioId,
-                    guiaRemision.CostoTotal
                 });
             }
         }
@@ -82,14 +91,16 @@ namespace BarcoAzul.Api.Repositorio.Venta
         public async Task Modificar(oGuiaRemision guiaRemision)
         {
             string query = @"   UPDATE Venta SET Ven_Fecha = @FechaEmision, Ven_Venci = @FechaTraslado, Cli_Codigo = @ClienteId, Ven_RucDni = @ClienteNumeroDocumentoIdentidad, 
-                                Ven_RazonSocial = @ClienteNombre, Per_Codigo = @PersonalId, Ven_partViaNom = @DireccionPartida, Id_DireccionLlegada = @ClienteDireccionId, 
+                                Ven_RazonSocial = @ClienteNombre, Ven_partViaNom = @DireccionPartida, Id_DireccionLlegada = @ClienteDireccionId, 
                                 Ven_llegViaNom = @ClienteDireccion, Tran_Codigo = @EmpresaTransporteId, Ven_OtrosSol = @CostoMinimo, Tra_Codigo = @ConductorId, 
                                 Ven_LicenciaCond = @LicenciaConducir, Ven_PlacaRodaje = @VehiculoId, Ven_CertifInscrip = @ConstanciaInscripcion, TipO_Codigo = @MotivoTrasladoId, 
-                                Ven_GuiaRemision = @MotivoSustento, Ven_IngEgrStock = @IngresoEgresoStock, ven_ordencompra = @NumeroFactura, Ven_NroComp = @OrdenPedido, 
+                                Ven_GuiaRemision = @MotivoSustento, Ven_IngEgrStock = @IngresoEgresoStock, ven_ordencompra = @OrdenCompra, Ven_NroComp = @NumeroFactura, 
                                 Ven_Observ = @Observacion, Ven_Moneda = @MonedaId, Ven_AfectarStock = @AfectarStock, Ven_TipoComp = @DocumentoRelacionadoId, Ven_Hora = @HoraEmision,
                                 Ven_TCambio = @TipoCambio, Ven_PorcIgv = @PorcentajeIGV, Ven_SubTotal = @subTotal, Ven_ValorVenta = @subTotal, Ven_TotalNeto = @subTotal,
                                 Ven_MontoIgv = @montoIGV, Ven_Total = @total, Ven_Saldo = @total, Ven_FechaMod = GETDATE(), Usu_Codigo = @UsuarioId, Ven_DocFactur = @DocumentoRelacionadoId,
-                                Ven_Costo = @CostoTotal, Ven_Cancelado = 'N', Ven_Abonado = 0, Ven_Facturado = 'N', Ven_Bloqueado = 'S'
+                                Ven_Cancelado = 'N', Ven_Abonado = 0, Ven_Facturado = 'N', Ven_Bloqueado = 'S', Ven_Documento = @DocumentoVenta, ven_partnro = @Oficina,
+                                ven_partinterior = @Almacen, ven_partzona = @AlmacenOrigen, Ven_TrasladoVehiculoM1L = @TrasladoVehiculoM1L, ven_registrado = @EnviarSucursal,
+                                Ven_PesoBrutoTotal = @PesoBrutoTotal, Ven_Modalidad = @ModalidadTransporteId
                                 WHERE Conf_Codigo = @EmpresaId AND TDoc_Codigo = @TipoDocumentoId AND Ven_Serie = @Serie AND Ven_Numero = @Numero";
 
             decimal total = guiaRemision.Detalles.Sum(x => x.Importe);
@@ -105,7 +116,6 @@ namespace BarcoAzul.Api.Repositorio.Venta
                     guiaRemision.ClienteId,
                     guiaRemision.ClienteNumeroDocumentoIdentidad,
                     guiaRemision.ClienteNombre,
-                    guiaRemision.PersonalId,
                     guiaRemision.DireccionPartida,
                     guiaRemision.ClienteDireccionId,
                     guiaRemision.ClienteDireccion,
@@ -117,12 +127,16 @@ namespace BarcoAzul.Api.Repositorio.Venta
                     guiaRemision.ConstanciaInscripcion,
                     guiaRemision.MotivoTrasladoId,
                     guiaRemision.MotivoSustento,
+                    guiaRemision.ModalidadTransporteId,
                     guiaRemision.IngresoEgresoStock,
                     guiaRemision.NumeroFactura,
-                    guiaRemision.OrdenPedido,
+                    guiaRemision.OrdenCompra,
                     guiaRemision.Observacion,
                     guiaRemision.MonedaId,
                     AfectarStock = guiaRemision.AfectarStock ? "S" : "N",
+                    guiaRemision.TrasladoVehiculoM1L,
+                    EnviarSucursal = guiaRemision.EnviarSucursal ? "S" : "N",
+                    guiaRemision.PesoBrutoTotal,
                     guiaRemision.HoraEmision,
                     guiaRemision.TipoCambio,
                     guiaRemision.PorcentajeIGV,
@@ -131,7 +145,6 @@ namespace BarcoAzul.Api.Repositorio.Venta
                     total,
                     guiaRemision.DocumentoRelacionadoId,
                     guiaRemision.UsuarioId,
-                    guiaRemision.CostoTotal,
                     guiaRemision.EmpresaId,
                     guiaRemision.TipoDocumentoId,
                     guiaRemision.Serie,
@@ -189,6 +202,7 @@ namespace BarcoAzul.Api.Repositorio.Venta
 									Ven_Numero AS Numero,
 									Ven_Fecha AS FechaEmision,
 									Ven_Venci AS FechaTraslado,
+                                    Ven_Documento AS DocumentoVenta,
 									Cli_Codigo AS ClienteId,
 									Ven_RucDni AS ClienteNumeroDocumentoIdentidad,
 									Ven_RazonSocial AS ClienteNombre,
@@ -197,21 +211,26 @@ namespace BarcoAzul.Api.Repositorio.Venta
 									Id_DireccionLlegada AS ClienteDireccionId,
 									Ven_llegViaNom AS ClienteDireccion,
 									Tran_Codigo AS EmpresaTransporteId,
-									Ven_OtrosSol AS CostoMinimo,
 									Tra_Codigo AS ConductorId,
 									Ven_LicenciaCond AS LicenciaConducir,
 									Ven_PlacaRodaje AS VehiculoId,
 									Ven_CertifInscrip AS ConstanciaInscripcion,
 									TipO_Codigo AS MotivoTrasladoId,
 									Ven_GuiaRemision AS MotivoSustento,
+                                    Ven_Modalidad AS ModalidadTransporteId,
                                     Ven_PesoBrutoTotal AS PesoBrutoTotal,
 									Ven_IngEgrStock AS IngresoEgresoStock,
-									ven_ordencompra AS NumeroFactura,
-									Ven_NroComp AS OrdenPedido,
+                                    ven_partnro AS Oficina,
+                                    ven_partinterior AS Almacen,
+                                    ven_partzona AS AlmacenOrigen,
+									Ven_NroComp AS NumeroFactura,
+									ven_ordencompra AS OrdenCompra,
 									Ven_Observ AS Observacion,
+	                                Ven_OtrosSol AS CostoMinimo,
 									Ven_Moneda AS MonedaId,
 									CAST(CASE WHEN Ven_AfectarStock = 'S' THEN 1 ELSE 0 END AS BIT) AS AfectarStock,
                                     CAST(CASE WHEN Ven_TrasladoVehiculoM1L = '1' THEN 1 ELSE 0 END AS BIT) AS TrasladoVehiculoM1L,
+                                    CAST(CASE WHEN ven_registrado = 'S' THEN 1 ELSE 0 END AS BIT) AS EnviarSucursal, 
 									Ven_TipoComp AS DocumentoRelacionadoId
 								FROM
 									Venta
@@ -252,7 +271,7 @@ namespace BarcoAzul.Api.Repositorio.Venta
 									TipoDoc = '{TipoDocumentoId}'
                                     AND Serie IN ({JoinToQuery(tiposSeries)})
 									AND (Fecha BETWEEN @fechaInicio AND @fechaFin)
-									AND Razon_Social LIKE '%' + @clienteNombre + '%'
+									AND (@clienteNombre IS NULL OR Razon_Social LIKE '%' + @clienteNombre + '%')
 									{(string.IsNullOrWhiteSpace(personalId) ? string.Empty : "AND Per_Codigo = @personalId")}
 								ORDER BY
 									Fecha DESC,

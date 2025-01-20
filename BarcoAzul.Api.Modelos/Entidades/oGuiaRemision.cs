@@ -26,7 +26,6 @@ namespace BarcoAzul.Api.Modelos.Entidades
         public int ClienteDireccionId { get; set; }
         public string ClienteDireccion { get; set; }
         public string EmpresaTransporteId { get; set; }
-        public decimal CostoMinimo { get; set; }
         public string ConductorId { get; set; }
         public string LicenciaConducir { get; set; }
         public string VehiculoId { get; set; }
@@ -36,13 +35,20 @@ namespace BarcoAzul.Api.Modelos.Entidades
         [Required(ErrorMessage = "El sustento de traslado es requerido.")]
         public string MotivoSustento { get; set; }
         public string IngresoEgresoStock { get; set; }
+        public string ModalidadTransporteId { get; set; }
+        public string DocumentoVenta { get; set; }
+        public string Oficina { get; set; }
+        public string Almacen {  get; set; }
+        public string AlmacenOrigen { get; set; }
         public string NumeroFactura { get; set; }
-        public string OrdenPedido { get; set; }
+        public string OrdenCompra { get; set; }
         public string Observacion { get; set; }
+        public decimal CostoMinimo { get; set; }
         public string MonedaId { get; set; }
         public bool AfectarStock { get; set; }
         public decimal PesoBrutoTotal { get; set; }
         public bool TrasladoVehiculoM1L {  get; set; }
+        public bool EnviarSucursal { get; set; }
         public string DocumentoRelacionadoId { get; set; }
         public List<oGuiaRemisionDetalle> Detalles { get; set; }
         public List<oGuiaRemisionVehiculo> Vehiculos {  get; set; }
@@ -87,7 +93,6 @@ namespace BarcoAzul.Api.Modelos.Entidades
             ConstanciaInscripcion = ConstanciaInscripcion?.Trim();
             MotivoSustento = MotivoSustento?.Trim();
             NumeroFactura = NumeroFactura?.Trim();
-            OrdenPedido = OrdenPedido?.Trim();
             Observacion = Observacion?.Trim();
         }
 
@@ -221,7 +226,7 @@ namespace BarcoAzul.Api.Modelos.Entidades
         public string Numero { get; set; }
         public int Item { get; set; }
         public string VehiculoId { get; set; }
-        public string Placa {  get; set; }
+        public string NumeroPlaca {  get; set; }
     }
 
     public class oGuiaRemisionTransportista

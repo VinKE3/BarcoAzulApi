@@ -11,7 +11,7 @@ namespace BarcoAzul.Api.Repositorio.Venta
         public async Task Registrar(IEnumerable<oGuiaRemisionVehiculo> vehiculos)
         {
             string query = @"   INSERT INTO VentaVehiculo (Conf_Codigo, TDoc_Codigo, Ven_Serie, Ven_Numero, Ven_Item, Veh_Codigo, Placa)
-                                VALUES (@EmpresaId, @TipoDocumentoId, @Serie, @Numero, @Item, @VehiculoId, @Placa)";
+                                VALUES (@EmpresaId, @TipoDocumentoId, @Serie, @Numero, @Item, @VehiculoId, @NumeroPlaca)";
 
             using (var db = GetConnection())
             {
@@ -24,9 +24,9 @@ namespace BarcoAzul.Api.Repositorio.Venta
                         vehiculo.TipoDocumentoId,
                         vehiculo.Serie,
                         vehiculo.Numero,
-                        vehiculo.VehiculoId,
                         vehiculo.Item,
-                        vehiculo.Placa
+                        vehiculo.VehiculoId,
+                        vehiculo.NumeroPlaca
                     });
                 }
             }
@@ -64,7 +64,7 @@ namespace BarcoAzul.Api.Repositorio.Venta
             string query = @"   SELECT
                                     Ven_Item AS Item,
                                     Veh_Codigo AS VehiculoId,
-                                    Placa AS Placa
+                                    Placa AS NumeroPlaca
                                 FROM 
                                     VentaVehiculo
                                 WHERE 

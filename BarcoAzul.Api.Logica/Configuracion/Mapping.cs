@@ -59,7 +59,7 @@ namespace BarcoAzul.Api.Logica.Configuracion
             CreateMap<DocumentoVentaDTO, oDocumentoVenta>();
             CreateMap<oCorrelativo, oTipoDocumentoSerie>();
             //CreateMap<RetencionDTO, oRetencion>();
-            //CreateMap<GuiaRemisionDTO, oGuiaRemision>();
+            CreateMap<GuiaRemisionDTO, oGuiaRemision>();
             MapConfiguracionGlobal();
             //CreateMap<PlanillaCobroDTO, oPlanillaCobro>();
             //CreateMap<LetraCambioVentaDTO, oLetraCambioVenta>();

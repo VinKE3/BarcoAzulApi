@@ -313,7 +313,7 @@ namespace BarcoAzul.Api.Logica.Venta
             var empresasTransporte = await new dEmpresaTransporte(GetConnectionString()).ListarTodos();
             var conductores = await new dConductor(GetConnectionString()).ListarTodos();
             var vehiculos = await new dVehiculo(GetConnectionString()).ListarTodos();
-            var motivosTraslado = await new dMotivoTraslado(GetConnectionString()).ListarTodos();
+            var motivosTraslado = await new dMotivoTrasladoGuiaRemision(GetConnectionString()).ListarTodos();
             var monedas = dMoneda.ListarTodos();
             var tipos = new[]
             {
