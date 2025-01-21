@@ -21,9 +21,9 @@ namespace BarcoAzul.Api.Repositorio.Finanzas
                                 VALUES (@EmpresaId, @TipoDocumentoId, @Serie, @Numero, @DetalleId, @DocumentoVentaCompraId, @DocumentoVentaCompraNumeroDocumento, @AbonoId, @DocumentoVentaCompraFechaEmision, 
                                 @Concepto, @MonedaId, 0, @TipoCambio, 0, @Abono, 'S', @DocumentoVentaCompraTipoDocumentoId, @DocumentoVentaCompraSerie, @DocumentoVentaCompraNumero, 'N')" :
                            @"  INSERT INTO DetLetraPercepcion (Conf_Codigo, Prov_Codigo, TDoc_Codigo, Com_Serie, Com_Numero, Det_Item, Det_CompaCod, Det_CompraComp, Det_AboCodigo, Det_Emision, 
-                                Det_Concepto, Det_Moneda, Det_MontoPago, Det_TCambio, Det_PorcPercep, Det_AboPercep, Det_AfectarDeuda, Det_CompraTDoc, Det_CompraSerie, Det_CompraNumero, Det_OtroDoc)
+                                Det_Concepto, Det_Moneda, Det_MontoPago, Det_TCambio, Det_PorcPercep, Det_AboPercep, Det_AfectarDeuda, Det_CompraTDoc, Det_CompraSerie, Det_CompraNumero)
                                 VALUES (@EmpresaId, @ProveedorId, @TipoDocumentoId, @Serie, @Numero, @DetalleId, @DocumentoVentaCompraId, @DocumentoVentaCompraNumeroDocumento, @AbonoId, @DocumentoVentaCompraFechaEmision, 
-                                @Concepto, @MonedaId, 0, @TipoCambio, 0, @Abono, 'S', @DocumentoVentaCompraTipoDocumentoId, @DocumentoVentaCompraSerie, @DocumentoVentaCompraNumero, @DocumentoRelacionado)";
+                                @Concepto, @MonedaId, 0, @TipoCambio, 0, @Abono, 'S', @DocumentoVentaCompraTipoDocumentoId, @DocumentoVentaCompraSerie, @DocumentoVentaCompraNumero)";
 
             using (var db = GetConnection())
             {
@@ -98,8 +98,7 @@ namespace BarcoAzul.Api.Repositorio.Finanzas
 	                                Det_CompaCod AS DocumentoVentaCompraId,
 	                                Det_Emision AS DocumentoVentaCompraFechaEmision,
 	                                Det_Concepto AS Concepto,
-	                                Det_AboPercep AS Abono,
-	                                Det_OtroDoc AS DocumentoRelacionado
+	                                Det_AboPercep AS Abono
                                 FROM 
 	                                DetLetraPercepcion
                                 WHERE

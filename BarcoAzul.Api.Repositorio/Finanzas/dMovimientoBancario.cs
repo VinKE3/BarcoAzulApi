@@ -18,10 +18,10 @@ namespace BarcoAzul.Api.Repositorio.Finanzas
         {
             string query = @"  INSERT INTO MovCtaCte01 (Mov_Codigo, Conf_Codigo, CC_Codigo, Mov_Fecha, Mov_TipoOpe, Mov_TipoMov, Mov_Numero, Mov_concepto, Mov_Moneda, Mov_Tcambio,
                                 Mov_Monto, Mov_PorcItf, Mov_Itf, Mov_Total, Mov_IdProvCli, Mov_Nombres, Mov_IdCpraVta, Mov_Detraccion, 
-                                Mov_CierreCaja, Mov_CtaCtaDest, Mov_CtaDestino, Mov_concepto2, Mov_TipoBenif)
+                                Mov_CierreCaja, Mov_CtaCtaDest, Mov_CtaDestino, Mov_TipoBenif)
                                 VALUES (@Id, @EmpresaId, @CuentaCorrienteId, @FechaEmision, @TipoMovimientoId, @TipoOperacionId, @NumeroOperacion, @Concepto, @MonedaId, @TipoCambio,
                                 @Monto, @PorcentajeITF, @MontoITF, @Total, @ClienteProveedorId, @ClienteProveedorNombre, @DocumentoVentaCompraId, @TieneDetraccion, 
-                                @IsCierreCaja, @TieneCuentaDestino, @CuentaDestinoId, @DocumentoReferencia, @TipoBeneficiarioId)";
+                                @IsCierreCaja, @TieneCuentaDestino, @CuentaDestinoId, @TipoBeneficiarioId)";
 
             using (var db = GetConnection())
             {
@@ -49,7 +49,6 @@ namespace BarcoAzul.Api.Repositorio.Finanzas
                     IsCierreCaja = movimientoBancario.IsCierreCaja ? "S" : "N",
                     TieneCuentaDestino = movimientoBancario.TieneCuentaDestino ? "S" : "N",
                     movimientoBancario.CuentaDestinoId,
-                    movimientoBancario.DocumentoReferencia,
                 });
 
                 await RegistroInterno(db, movimientoBancario);
@@ -62,7 +61,7 @@ namespace BarcoAzul.Api.Repositorio.Finanzas
                                 SET Mov_Fecha = @FechaEmision, Mov_TipoMov = @TipoOperacionId, Mov_Numero = @NumeroOperacion, Mov_Concepto = @Concepto, Mov_TCambio = @TipoCambio,
                                 Mov_Monto = @Monto, Mov_PorcItf = @PorcentajeITF, Mov_Itf = @MontoITF, Mov_Total = @Total,  Mov_IdProvCli = @ClienteProveedorId,
                                 Mov_Nombres = @ClienteProveedorNombre, Mov_IdCpraVta = @DocumentoVentaCompraId, Mov_Detraccion = @TieneDetraccion, Mov_CierreCaja = @IsCierreCaja, 
-                                Mov_CtaCtaDest = @TieneCuentaDestino, Mov_CtaDestino = @CuentaDestinoId, Mov_concepto2 = @DocumentoReferencia, Mov_TipoBenif = @TipoBeneficiarioId
+                                Mov_CtaCtaDest = @TieneCuentaDestino, Mov_CtaDestino = @CuentaDestinoId, Mov_TipoBenif = @TipoBeneficiarioId
                                 WHERE Mov_Codigo = @Id";
 
             using (var db = GetConnection())
@@ -86,7 +85,6 @@ namespace BarcoAzul.Api.Repositorio.Finanzas
                     IsCierreCaja = movimientoBancario.IsCierreCaja ? "S" : "N",
                     TieneCuentaDestino = movimientoBancario.TieneCuentaDestino ? "S" : "N",
                     movimientoBancario.CuentaDestinoId,
-                    movimientoBancario.DocumentoReferencia,
                     movimientoBancario.Id
                 });
 
