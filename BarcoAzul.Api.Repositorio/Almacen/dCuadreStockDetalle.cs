@@ -80,7 +80,7 @@ namespace BarcoAzul.Api.Repositorio.Almacen
                                     Det_Descripcion AS Descripcion,
                                     Det_CodBarra AS CodigoBarras,
                                     Det_Unidad AS UnidadMedidaDescripcion,
-                                    Det_Moneda AS MonedaId,git a
+                                    Det_Moneda AS MonedaId,
                                     Uni_Codigo AS UnidadMedidaId
                                 FROM 
 	                                Cuadrar_Stock
