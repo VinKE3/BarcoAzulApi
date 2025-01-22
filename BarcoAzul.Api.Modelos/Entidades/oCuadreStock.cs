@@ -102,5 +102,6 @@ namespace BarcoAzul.Api.Modelos.Entidades
         public string LineaDescripcion { get; set; }
         public string SubLineaDescripcion { get; set; }
         public string TipoExistenciaId { get; set; }
+        public string MonedaId { get; set; }
     }
 }
