@@ -328,6 +328,69 @@ namespace BarcoAzul.Api.Repositorio.Almacen
             }
         }
 
+        public async Task<bool> ValidarPeriodoCerradoAsync(DateTime fecha)
+        {
+            int anio = fecha.Year;
+            int mes = fecha.Month;
+
+            const string queryPeriodoCerrado = @"
+                                                SELECT TOP 1 Ven_Numero
+                                                FROM Venta
+                                                WHERE TDoc_Codigo = 'CI'
+                                                  AND YEAR(Ven_Fecha) = @Anio
+                                                  AND MONTH(Ven_Fecha) = @Mes
+                                                  AND Ven_Anulado = 'N'
+                                                  AND Ven_Cancelado = 'C'";
+
+            const string queryPeriodoPosterior = @"
+                                                    SELECT TOP 1 Ven_Numero
+                                                    FROM Venta
+                                                    WHERE TDoc_Codigo = 'CI'
+                                                      AND Ven_Fecha >= @Fecha
+                                                      AND Ven_Anulado = 'N'
+                                                      AND Ven_Cancelado = 'C'";
+
+            using (var db = GetConnection())
+            {
+                // Validar período cerrado
+                var periodoCerrado = await db.QueryFirstOrDefaultAsync<string>(queryPeriodoCerrado, new { Anio = anio, Mes = mes });
+                if (periodoCerrado != null) return false;
+
+                // Validar períodos posteriores cerrados
+                var periodoPosterior = await db.QueryFirstOrDefaultAsync<string>(queryPeriodoPosterior, new { Fecha = fecha });
+                if (periodoPosterior != null) return false;
+            }
+
+            return true;
+        }
+
+        public async Task<DateTime?> ObtenerFechaCuadreAsync(string id)
+        {
+            // Desglosar el identificador compuesto
+            var splitId = SplitId(id);
+
+            // Consulta SQL para obtener la fecha
+            string query = @"
+        SELECT Ven_Fecha 
+        FROM Venta 
+        WHERE Conf_Codigo = @empresaId 
+          AND TDoc_Codigo = @tipoDocumentoId 
+          AND Ven_Serie = @serie 
+          AND Ven_Numero = @numero";
+
+            // Ejecutar la consulta con Dapper
+            using (var db = GetConnection())
+            {
+                return await db.QueryFirstOrDefaultAsync<DateTime?>(query, new
+                {
+                    empresaId = new DbString { Value = splitId.EmpresaId, IsAnsi = true, IsFixedLength = true, Length = 2 },
+                    tipoDocumentoId = new DbString { Value = splitId.TipoDocumentoId, IsAnsi = true, IsFixedLength = true, Length = 2 },
+                    serie = new DbString { Value = splitId.Serie, IsAnsi = true, IsFixedLength = true, Length = 4 },
+                    numero = new DbString { Value = splitId.Numero, IsAnsi = true, IsFixedLength = true, Length = 10 }
+                });
+            }
+        }
+
         public static oSplitDocumentoVentaId SplitId(string id) => new(id);
         #endregion
     }

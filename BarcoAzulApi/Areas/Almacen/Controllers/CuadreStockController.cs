@@ -119,6 +119,19 @@ namespace BarcoAzulApi.Areas.Almacen.Controllers
                 return NotFound(GenerarRespuesta(false));
             }
 
+            // Obtener la fecha asociada al stock que se desea abrir o cerrar
+            //DateTime fechaCuadre = await _bCuadreStock.ObtenerFechaCuadreAsync(id);
+
+            // Validar periodo cerrado o posterior
+            //var (esValido, mensajeValidacion) = await _bCuadreStock.ValidarPeriodoAsync(fechaCuadre);
+
+            //if (!esValido)
+            //{
+            //    // Si la validación falla, agregar el mensaje de error y retornar respuesta
+            //    AgregarMensaje(new oMensaje(MensajeTipo.Error, mensajeValidacion));
+            //    return BadRequest(GenerarRespuesta(false));
+            //}
+
             bool abiertoCerrado = await _bCuadreStock.AbrirCerrar(id, estado);
             AgregarMensajes(_bCuadreStock.Mensajes);
 

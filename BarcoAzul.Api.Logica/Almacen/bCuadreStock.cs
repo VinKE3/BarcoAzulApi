@@ -218,6 +218,33 @@ namespace BarcoAzul.Api.Logica.Almacen
         public async Task<bool> IsBloqueado(string id) => await new dCuadreStock(GetConnectionString()).IsBloqueado(id);
 
         public async Task<DateTime?> GetFechaUltimoCuadre() => await new dCuadreStock(GetConnectionString()).GetFechaUltimoCuadre();
+        public async Task<(bool EsValido, string Mensaje)> ValidarPeriodoAsync(DateTime fecha)
+        {
+            dCuadreStock dCuadreStock = new(GetConnectionString());
+
+            // Validar período
+            bool esValido = await dCuadreStock.ValidarPeriodoCerradoAsync(fecha);
+            if (!esValido)
+            {
+                int anio = fecha.Year;
+                int mes = fecha.Month;
+                string mensaje = $"Periodo Comprobante: [{f_nombremes_int(mes)}-{anio}] está cerrado o tiene períodos posteriores cerrados. Imposible agregar, modificar o eliminar datos.";
+                return (false, mensaje);
+            }
+
+            return (true, string.Empty);
+        }
+
+        // Helper para obtener el nombre del mes
+        private string f_nombremes_int(int mes)
+        {
+            return new System.Globalization.CultureInfo("es-ES").DateTimeFormat.GetMonthName(mes);
+        }
+
+        //public async Task<DateTime?> ObtenerFechaCuadreAsync(string id)
+        //{
+        //    return await dCuadreStock.ObtenerFechaCuadreAsync(id);
+        //}
 
         public async Task<bool> RecalcularStock(oRecalcularStock recalcularStock)
         {
