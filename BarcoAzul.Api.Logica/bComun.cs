@@ -129,6 +129,21 @@ namespace BarcoAzul.Api.Logica
                 return false;
             }
         }
+
+        public async Task<(bool Valido, string Mensaje)> VerificarPeriodoCerrado(DateTime fecha)
+        {
+            try
+            {
+                dCerrarMes dCerrarMes = new(GetConnectionString());
+                var resultado = await dCerrarMes.VerificarPeriodoCerrado(fecha);
+
+                return resultado;
+            }
+            catch (Exception ex)
+            {
+                return (false, $"Error al verificar el periodo cerrado. Motivo: {ex.Message}");
+            }
+        }
     }
 
     public enum TipoAccion

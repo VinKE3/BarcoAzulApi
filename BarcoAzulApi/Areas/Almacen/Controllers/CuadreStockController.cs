@@ -1,7 +1,9 @@
 ﻿using BarcoAzul.Api.Logica;
+using BarcoAzul.Api.Logica.Configuracion;
 using BarcoAzul.Api.Logica.Almacen;
 using BarcoAzul.Api.Modelos.DTOs;
 using BarcoAzul.Api.Modelos.Otros;
+using BarcoAzul.Api.Repositorio;
 using BarcoAzul.Api.Utilidades;
 using BarcoAzulApi.Configuracion;
 using BarcoAzulApi.Controllers;
@@ -119,18 +121,26 @@ namespace BarcoAzulApi.Areas.Almacen.Controllers
                 return NotFound(GenerarRespuesta(false));
             }
 
-            // Obtener la fecha asociada al stock que se desea abrir o cerrar
-            //DateTime fechaCuadre = await _bCuadreStock.ObtenerFechaCuadreAsync(id);
+            //validar aqui
+            // Obtener la fecha del cuadre
+            DateTime? fechaCuadre = await _bCuadreStock.GetFechaCuadre(id);
 
-            // Validar periodo cerrado o posterior
-            //var (esValido, mensajeValidacion) = await _bCuadreStock.ValidarPeriodoAsync(fechaCuadre);
+            // Validar si existe la fecha del cuadre
+            if (fechaCuadre == null)
+            {
+                AgregarMensaje(new oMensaje(MensajeTipo.Error, $"{_origen}: No se encontró la fecha del cuadre."));
+                return BadRequest(GenerarRespuesta(false));
+            }
 
-            //if (!esValido)
-            //{
-            //    // Si la validación falla, agregar el mensaje de error y retornar respuesta
-            //    AgregarMensaje(new oMensaje(MensajeTipo.Error, mensajeValidacion));
-            //    return BadRequest(GenerarRespuesta(false));
-            //}
+            // Validar si el período está cerrado
+            var (isValido, mensajeError) = await _bCuadreStock.VerificarPeriodoCerrado(fechaCuadre.Value);
+
+            if (!isValido)
+            {
+                AgregarMensaje(new oMensaje(MensajeTipo.Error, $"{_origen}: No se puede modificar el cuadre porque el período está cerrado. {mensajeError}"));
+                return BadRequest(GenerarRespuesta(false));
+            }
+
 
             bool abiertoCerrado = await _bCuadreStock.AbrirCerrar(id, estado);
             AgregarMensajes(_bCuadreStock.Mensajes);
